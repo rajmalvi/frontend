@@ -8,7 +8,7 @@ app.factory('EventsServices', ['$http', '$q', '$rootScope', function ($http, $q,
             });
         };
         ob.getEventDetails = function (id, callback) {
-            var url = $rootScope.backend2 + '/events/getEventDetails/?id=' + id;
+            var url = $rootScope.backend + '/events/getEventDetails/?id=' + id;
             $http.get(url).then(function (response) {
                 callback(response);
             });

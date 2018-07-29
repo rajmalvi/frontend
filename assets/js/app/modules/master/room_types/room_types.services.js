@@ -16,7 +16,7 @@ app.factory('RoomsServices', ['$http', '$q', '$rootScope', function ($http, $q, 
 	};
      
        ob.getRoomsDetails = function(id,callback){
-           var url = $rootScope.backend2 + '/setup/room_types/getRoomsDetails/?id=' + id;
+           var url = $rootScope.backend + '/setup/room_types/getRoomsDetails/?id=' + id;
             $http.get(url).then(function (response) {
                 callback(response);
             });

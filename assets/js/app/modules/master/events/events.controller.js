@@ -16,7 +16,7 @@ app.controller('EventsController', ['$scope', '$rootScope', '$routeParams', '$wi
                         ],
                         root: "events",
                         id: 'id',
-                        url: $rootScope.backend2 + '/events/getAllEvents',
+                        url: $rootScope.backend + '/events/getAllEvents',
                         beforeprocessing: function (data)
                         {
                             source_members.totalrecords = data.totalRows;

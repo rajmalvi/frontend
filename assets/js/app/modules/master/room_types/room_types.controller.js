@@ -24,7 +24,7 @@ app.controller('RoomsController', ['$scope', '$rootScope', '$routeParams', '$win
                         ],
                         root: "room_types",
                         id: 'id',
-                        url: $rootScope.backend2 + '/setup/room_types/getAllroomtypes',
+                        url: $rootScope.backend + '/setup/room_types/getAllroomtypes',
                         beforeprocessing: function (data)
                         {
                             source_members.totalrecords = data.totalRows;
