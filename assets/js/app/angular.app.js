@@ -217,7 +217,7 @@ app.run(['$rootScope', '$location', '$http', '$auth', '$q', function ($rootScope
 //        $rootScope.backend = 'http://demos.revseed.backend.exusys.com/admin';
 //        $rootScope.backend2 = 'http://demos.revseed.backend.exusys.com';
         $rootScope.backend2 = 'http://localhost';
-        $rootScope.backend = 'http://localhost:8080';
+         $rootScope.backend = 'http://localhost:8080';
 
     $rootScope.enableCharts = false;
     
