@@ -1,0 +1,27 @@
+<form id="hotel_import_form" name="hotel_import_form" ng-submit="importFromCountry(hotel_import_form.$valid)"> 
+    <div class="modal-header">   
+        <h4 class="modal-title">{{ modal_title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div ng-show="loadingCountries" style="text-align: center;">
+            <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+            <p>Loading.. Please wait..</p>
+        </div>
+        <div ng-hide="loadingCountries">
+            <label>Select Country</label>
+            <select class="form-control" ng-model="country">
+                <option value="">Select</option>
+                <option ng-repeat="cont in countries" value="{{ cont }}">{{ cont }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div ng-show="hotel_import_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="loading_msg" class="alert alert-info text-left">Please wait, this may take a while...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="submit" class="btn btn-primary" ng-disabled="hotel_import_form.$invalid" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

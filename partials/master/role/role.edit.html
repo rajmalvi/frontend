@@ -1,0 +1,65 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->              
+    <div class="row">
+        <div class="col-lg-5 col-md-6">
+            <!--progress bar start-->
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="/master/role" class="btn btn-back btn-panel-nav"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <span class="hidden-xs"><a href="/master/role">Roles</a> / </span>Edit Role
+                </header>
+                <div class="panel-body">     
+                    <form id="role_form" name="role_form"> 
+        <input ng-model="role_data.id" type="hidden" id="id" name="id" class="form-control" value="{{role_data.id}}"/>
+	
+            <div class="row">
+                 <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Role Name<span style="color:red">*</span></label>
+                        <input ng-model="role_data.name" type="text" id="name" ng-pattern="/^[a-zA-Z\s]*$/" name="name" class="form-control" placeholder="e.g., abc" required>
+                     <label for="name" class="form_errors" ng-show="role_form.name.$invalid && !role_form.name.$pristine">Please enter only characters</label>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                 <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Role Description</label>
+                        <textarea ng-model="role_data.description" type="text" id="password" name="description" class="form-control"  placeholder="e.g., description"></textarea>
+                       </div>
+                </div>
+                 
+            </div> 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                       <label for="role_status">Status<span style="color:red">*</span></label>
+                                 <ui-select ng-model="role_data.status" name="status" theme="bootstrap" id="qm_select" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                    <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="st.name as st in status track by $index"
+                                    refresh="searchStatus($select.search)"
+                                    refresh-delay="0">
+                                    <div ng-bind-html="st.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    </ui-select>
+                                  <label for="status" class="form_errors" ng-show="hotel_chain_form.status.$invalid && !status.$pristine">Please select item type</label>
+                         
+                         </div>
+                </div>
+             </div> 
+             
+    </form>
+     <div ng-show="role_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="role_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>        
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary pull-right" ng-disabled="role_form.$invalid" ng-click="addRole()" style="margin-right:3px;">Submit</button>
+      </div>
+                            </section>
+                        </div>
+                </div>
+                <!-- page end-->
+            </section>

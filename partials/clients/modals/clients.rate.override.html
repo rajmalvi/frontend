@@ -1,0 +1,52 @@
+<form id="override_form" name="override_form" ng-submit="modifyRate(override_form.$valid)" novalidate> 
+    <div class="modal-header">   
+        <h4 class="modal-title">{{modal_heading}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <table class="table table-striped table-bordered table-hover nmb">
+                <tr><td>Hotel</td><td colspan="3">{{ client.property_name }}</td></tr>
+                <tr><td>Date</td><td colspan="3">{{ record[0] }}</td></tr>
+                <tr><th>RCP</th><th>ARI</th><th>PQM</th><th>MPI</th></tr>
+                <tr><td>{{ record[6] }}</td><td>{{ record[7] }}</td><td>{{ record[8] }}</td><td>{{ record[9] }}</td></tr>
+            </table>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Override Algorithm<span style="color:red">*</span></label>
+                    <select name="override_algo" id="override_algo" ng-model="override.algo" class="form-control" ng-change="selectAlgo(override.algo)">
+                        <option value="">Select</option>
+                        <option value="RCP">RCP</option>
+                        <option value="ARI">ARI</option>
+                        <option value="PQM">PQM</option>
+                        <option value="MPI">MPI</option>
+                        <option value="other">Other</option>
+                        <option ng-if="override.algo != '' || override.active == 'No'" value="disabled">Disabled</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div ng-if="override.algo == 'other'">
+                        <label>Override Rate<span style="color:red">*</span></label>
+                        <input ng-model="override.rate" type="number" id="override_rate" name="override_rate" min="0" class="form-control" placeholder="e.g., 4000" required>
+                        <label for="override_rate" class="form_errors" ng-show="override_form.override_rate.$invalid && !override_form.override_rate.$pristine">Please enter an override rate</label>
+                    </div>
+                    <div ng-if="override.algo != 'other' && override.algo != '' && override.algo != 'disabled'">
+                        <label>Final Rate<span style="color:red">*</span></label>
+                        <div class="form-control" readonly="readonly">{{ override.rate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div ng-show="override_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="loading_msg" class="alert alert-info text-left">Please wait...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="submit" class="btn btn-primary" ng-disabled="override_form.$invalid" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+
+</form>

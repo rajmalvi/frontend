@@ -1,0 +1,64 @@
+
+<div class="modal-header">   
+    <h4 class="modal-title">{{event_heading}}</h4>
+</div>
+<div class="modal-body">
+    <form id="event_form" name="event_form" novalidate> 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Event Name<span style="color:red">*</span></label>
+                    <input ng-model="event_data.name" type="text" id="name" name="name" ng-pattern="/^[a-zA-Z\s]*$/" class="form-control" placeholder="e.g., diwali" required>
+                    <label for="name" class="form_errors" ng-show="event_form.name.$invalid && !event_form.name.$pristine">Please enter only characters</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Event Type<span style="color:red">*</span></label>
+                    <input ng-model="event_data.type" type="text" id="event_type" name="type" ng-pattern="/^[a-zA-Z\s]*$/" class="form-control" placeholder="e.g., festival" required>
+                    <label for="event_type" class="form_errors" ng-show="event_form.type.$invalid && !event_form.type.$pristine">Please enter only characters</label>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Start Date<span style="color:red">*</span></label>
+                    <input ng-model="event_data.start_date" type="text" id="date_get" name="start_date" customdatez class="form-control" placeholder="Select start date" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>End Date<span style="color:red">*</span></label>
+                    <input ng-model="event_data.end_date" type="text" id="end_date" name="end_date" customdatez class="form-control" minDate="{{ event_data.start_date }}" ng-disabled="event_data.start_date == ''" placeholder="Select end date" required>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Select Area Impact<span style="color:red">*</span></label>
+                    <ui-select ng-model="event_data.area_impact" name="area_impact" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" id="event_area" required>
+                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="area.name as area in areas track by $index"
+                                           refresh="searchAreaImpact($select.search)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="area.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div> 
+
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="event_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="event_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left" ng-bind-html="sub_message"></div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left" ng-bind-html="sub_message"></div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="event_form.$invalid" ng-click="addEvent()" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>

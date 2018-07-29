@@ -1,0 +1,28 @@
+<div class="modal-header">   
+    <h4 class="modal-title">{{ hotel_name }} / {{ checkin_date }} - Rates</h4>
+</div>
+<div class="modal-body">
+            
+    <div ng-show="loadingRates" style="text-align: center;">
+        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+        <p>Loading details.. Please wait..</p>
+    </div>
+    <div style="max-height: 350px; overflow-y: scroll;">
+        <table ng-hide="loadingRates" class="table table-striped table-hover">
+            <thead>
+                <tr><th>OTA</th><th>Room Type</th><th>Rate</th><th>Rate Type</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rate in rates">
+                    <td>{{ rate.website }}</td>
+                    <td>{{ rate.room_type }}<br />({{ rate.room_type_string }}) ({{ rate.tax_status }}) ({{ rate.meal_plan }})</td>
+                    <td>{{ rate.onsiterate }}</td>
+                    <td>{{ rate.rate_type }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default pull-right" type="button" ng-click="cancel()">Close</button>
+</div>

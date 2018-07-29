@@ -1,0 +1,112 @@
+<!--main content start-->
+<!--<script>
+    $(function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    iSell <!-- <button type="button" class="btn btn-primary btn-xs" ng-click="downloadiSell()">Download</button> -->
+                </div>
+                <div class="panel-body">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <!-- <div ui-grid="gridOptions" class="grid" ui-grid-pinning ng-if="!loadingClient"></div> -->
+                    <div ng-hide="loadingClient" class="pr">
+                        <div class="table-container">
+    </div>
+                        <div class="table-isell-container">
+                            <table class="table table-striped table-bordered table-isell" id="pruebatabla">
+                                <thead>
+                                    <tr>
+                                        <th class="headcolx bgblue" colspan="2">Date and Day</th>
+                                        <th class="bgblue" style="border-left:none;" colspan="2">Events</th>
+                                        <th class="bgblue" style="border-left:none;" colspan="2">Capacity</th>
+                                        <th class="bgblue" colspan="4">OTA Performance</th>
+                                        <th class="bgblue">Rate</th>
+                                        <th class="bgblue" colspan="3">Competitor Pricing</th>
+                                        <!-- <th class="greybg" colspan="{{ otas_cm.length }}">OTA Business on Books</th> -->
+                                    </tr>
+                                    <tr>
+                                        <th class="headcol1 bgblue" style="min-height: 48px; width:91px;">Date<br /></th>
+                                        <th class="headcol2 bgblue" style="min-height: 48px; width:65px;">DOW<br /></th>
+                                        <th class="bgblue" style="border-left:none; width:150px;">Name</th>
+                                        <th class="bgblue" style="width:150px;">Type</th>
+                                        <th class="bgblue" style="width:150px;">Hotel</th>
+                                        <!-- <th style="width:150px;">Rooms Avail <br />to Sell</th> -->
+                                        <th class="bgblue" style="width:150px;">Rooms Available<br />Online</th>
+                                        <th class="bgblue" style="width:150px;">Sold</th>
+                                        <th class="bgblue" style="width:150px;">Pickup</th>
+                                        <th class="bgblue" style="width:150px;">Revenue</th>
+                                        <th class="bgblue" style="width:150px;">ADR</th>
+                                        <th class="bgblue" style="width:150px;">Rate on CM</th>
+                                        <!-- <th class="bgblue" style="width:150px;">Recommended<br />Rate</th> -->
+                                        <th class="bgblue" style="width:150px;">Min</th>
+                                        <th class="bgblue" style="width:150px;">Avg</th>
+                                        <th class="bgblue" style="width:150px;">Max</th>
+                                        <!-- <th style="width:250px; background: #ff3387; color:#fff;" ng-repeat="hotel in competitors">{{ hotel }}</th>
+                                        <th style="width:250px; background: #33bdff; color:#fff;" ng-repeat="ota in otas_cm">{{ ota.name }}</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="isell.length == 0"><td colspan="25">iSell data not available.</td></tr>
+                                    <tr ng-repeat="record in isell">
+                                        <td class="headcol1">{{ record[0] }}</td>
+                                        <td ng-class="{ greybg: (record[1] == 'Fri' || record[1] == 'Sat')}" class="headcol2">{{ record[1] }}</td>
+                                        <td style="border-left:none;">{{ record[2] }}</td>
+                                        <td>{{ record[3] }}</td>
+                                        <td class="text-right">{{ record[4] }}</td>
+                                        <!-- <td>{{ record[5] }}</td> -->
+                                        <td class="text-right">{{ record[6] }}</td>
+                                        <td ng-click="loadiSellModal(record,competitors,otas_cm,'bookings')" class="purplebg">{{ record[7] }}</td>
+                                        <td ng-click="loadiSellModal(record,competitors,otas_cm,'bookings')" class="text-right">{{ record[8] }}</td>
+                                        <td class="text-right">{{ record[9] }}</td>
+                                        <td class="text-right">{{ record[10] }}</td>
+                                        <td class="text-right">{{ record[11] }}</td>
+                                        <!-- <td class="text-right">{{ record[12] }}</td> -->
+                                        <td class="text-right" ng-click="loadiSellModal(record,competitors,otas_cm,'competitors',client_id)">{{ record[14+competitors.length+otas_cm.length] }}</td>
+                                        <td class="text-right" ng-click="loadiSellModal(record,competitors,otas_cm,'competitors',client_id)">{{ record[15+competitors.length+otas_cm.length] }}</td>
+                                        <td class="text-right" ng-click="loadiSellModal(record,competitors,otas_cm,'competitors',client_id)">{{ record[13+competitors.length+otas_cm.length] }}</td>
+                                        <!-- <td ng-repeat="hotel in competitors" ng-click="loadiSellModal(record,competitors,otas_cm,'competitors')">{{ record[$index+13] }}</td> -->
+                                        <!-- <td ng-repeat="ota in otas_cm" ng-click="loadiSellModal(record,competitors,otas_cm,'bookings')">{{ record[$index+13+competitors.length] }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</section>
+<script type="text/ng-template" id="header-template.html">
+    <div class="ui-grid-header custom-ui-grid-header">
+    <div class="ui-grid-top-panel">
+        <div class="ui-grid-header-viewport">
+            <div class="ui-grid-header-canvas" style="width: 100%">
+                <div class="ui-grid-header-cell-wrapper" style="display: block;" ng-style="colContainer.headerCellWrapperStyle()">
+                    <div class="ui-grid-header-cell-row" style="display: block; border-bottom: 1px solid;border-bottom-color: #d4d4d4;">
+                        <div  class="ui-grid-header-cell" ng-repeat="superCol in grid.options.superColDefs track by $index" col-name="{{superCol.name}}">
+                            <div class="ui-grid-cell-contents" data-ng-bind="superCol.displayName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-header-cell-row">
+                        <div class="ui-grid-header-cell ui-grid-clearfix" 
+                        			ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" 
+                        			ui-grid-header-cell col="col" super-col-width-update render-index="$index">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

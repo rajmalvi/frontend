@@ -1,0 +1,190 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->              
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            <!--progress bar start-->
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="/clients" class="btn btn-back btn-panel-nav"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <span class="hidden-xs"><a href="/master/hotels">Hotels</a> / </span>New Hotel
+                 </header>
+                <button ng-click="location()">Location</button>
+                <!--<button ng-click="addStateCity()">Location</button>-->
+                <div class="panel-body">
+                    <form id="client_form" name="client_form" novalidate> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Property Name<span style="color:red">*</span></label>
+                                    <input ng-model="hotel_details.name" type="text" id="name" name="name" ng-pattern="/^[0-9a-zA-Z\s]*$/" class="form-control" placeholder="e.g., hotel">
+                                     <label for="name" class="form_errors" ng-show="client_form.name.$invalid && !client_form.name.$pristine">Please enter proper name</label>
+                                 </div>
+                            </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address<span style="color:red">*</span></label>
+                                    <input type="text" class="form-control" id="us3-address" name="address" ng-model="hotel_details.address"/>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Country<span style="color:red">*</span></label>
+                                    <ui-select ng-model="hotel_details.selected1" name="country" theme="bootstrap" on-select="country_change($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="country in countries track by $index"
+                                                           refresh="searchCountry($select.search)"
+                                                           refresh-delay="0">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">State<span style="color:red">*</span></label>
+                                    <ui-select ng-model="hotel_details.selected2" name="area_impact" on-select="state_change($item,$model)" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="state in states track by $index"
+                                                           refresh="searchStates($select.search)"
+                                                           refresh-delay="0">
+                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                      </ui-select>
+                                    <label class="form_errors" ng-show="show_error_state == true">{{state_no_msg}}</label>
+                                   </div>
+                             </div>
+                             </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">City<span style="color:red">*</span></label>
+                                    <ui-select ng-model="hotel_details.selected" name="area_impact" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="city in cities track by $index"
+                                                           refresh="searchCity($select.search)"
+                                                           refresh-delay="0">
+                                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                     <label class="form_errors" ng-show="show_error_city == true">{{state_no_msg}}</label>
+                                </div>
+                            </div>
+                                <!--                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                       <label for="chain_name">Property Chain<span style="color:red">*</span></label>
+                                                        <input type="text" class="form-control" name="address" ng-model="hotel_details.city"/>
+                                                                <select name="chain_name" id="chain_name" class="select2 form-control" required ng-model="chain.name" data-placeholder="select property chain">
+                                                                    <option>Select property chain</option>
+                                                                    <option ng-repeat="chain in hotel_chains" value="{{chain.id}}">{{chain.name}}</option>
+                                                                  <label for="chain_name" class="form_errors" ng-show="client_form.chain_name.$invalid && !chain_name.$pristine">Please select property chain</label>
+                                                                  </select>
+                                                         </div>
+                                                </div>-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pincode<span style="color:red">*</span></label>
+                                        <input ng-model="hotel_details.zip" type="text" id="pincode" minlength="6" maxlength="6" ng-pattern="/^[0-9]+$/" name="pincode" class="form-control" placeholder="e.g., 411041" required>
+                                         <label for="pincode" class="form_errors" ng-show="client_form.pincode.$invalid && !client_form.pincode.$pristine">Please enter 6 digits pincode</label>
+                                    </div>
+                                </div>
+                                <!--                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Latitude<span style="color:red">*</span></label>
+                                                        <input ng-model="hotel_details.latitude" type="text" id="us3-lat" name="latitude" class="form-control" placeholder="e.g., 411041">
+                                                       </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Longitude<span style="color:red">*</span></label>
+                                                        <input ng-model="hotel_details.longitude" type="text" id="us3-lon" name="longitude" class="form-control" placeholder="e.g., 411041">
+                                                       </div>
+                                                </div>-->
+                                <!--                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Property Capacity<span style="color:red">*</span></label>
+                                                        <input ng-model="hotel_details.property_capacity" type="text" id="property_capacity" name="property_capacity" class="form-control" placeholder="e.g., capacity" required>
+                                                       </div>
+                                                </div>-->
+                            </div> 
+                            <!--             <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                   <label for="channel_manager">Channel Manager<span style="color:red">*</span></label>
+                                                            <select name="channel_manager" id="channel_manager" class="select2 form-control" required ng-model="channel_manager" data-placeholder="select channel manager">
+                                                               <option value="staah">STAAH</option>
+                                                              <label for="channel_manager" class="form_errors" ng-show="client_form.channel_manager.$invalid && !channel_manager.$pristine">Please select Channel Manager</label>
+                                                              </select>
+                                                     </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                   <label for="currency">Property Currency<span style="color:red">*</span></label>
+                                                            <select name="currency" id="currency" class="select2 form-control" required ng-model="curr.name" data-placeholder="select Property Currency">
+                                                               <option ng-repeat="curr in currency" value="{{curr.id}}">{{curr.name}}</option>
+                                                              <label for="currency" class="form_errors" ng-show="client_form.currency.$invalid && !currency.$pristine">Please select Property Currency</label>
+                                                              </select>
+                                                     </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                   <label for="status">Proprty Status<span style="color:red">*</span></label>
+                                                            <select name="status" id="status" class="select2 form-control" required ng-model="status" data-placeholder="select Proprty Status">
+                                                                <option>Select Proprty Status/option>
+                                                                <option value="active">Active</option>
+                                                                <option value="disabled">Disabled</option>
+                                                              <label for="status" class="form_errors" ng-show="client_form.status.$invalid && !status.$pristine">Please select Proprty Status</label>
+                                                              </select>
+                                                     </div>
+                                            </div>
+                                        </div> -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div id="us3" style="height: 400px;margin-top: 10px;"></div>
+                                    <div class="clearfix">&nbsp;</div>
+                                </div></div>
+                            <!--         <div class="row">
+                                         <div class="form-group">
+                                            <label class="p-r-small col-sm-1 col-md-2 col-lg-2 control-label">Latitude:</label>
+                            
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" style="width: 110px" ng-model="hotel_details.latitude" name="latitude"/>
+                                            </div>
+                                           
+                                            <label class="p-r-small col-sm-2 col-md-2 col-lg-2 control-label">Longitude:</label>
+                            
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" style="width: 110px" ng-model="hotel_details.longitude" name="longitude"/>
+                                            </div>
+                                        </div> 
+                                        </div> -->
+                            <!--                    <div class="form-group">
+                                                   <label for="compititors">Compititors<span style="color:red">*</span></label>
+                                                   <select name="compititors[]" id="hotel" class="select2 form-control" required ng-model="comp.name" data-placeholder="select compititors" multiple="">
+                                                                <option ng-repeat="comp in hotels" value="{{comp.id}}">{{comp.name}}</option>
+                                                              <label for="compititors" class="form_errors" ng-show="client_form.compititors.$invalid && !compititors.$pristine">Please select hotel</label>
+                                                              </select>
+                                                     </div>-->
+                    </form><br>
+                    <div ng-show="client_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+                    <div ng-show="client_form.loading" class="alert alert-info text-left">Please wait...</div>
+                    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+                    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>  
+                    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-primary pull-right" ng-disabled="client_form.$invalid" ng-click="addClient()" style="margin-right:3px;">Submit</button>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- page end-->
+</section>
+
+<script>
+           
+</script>

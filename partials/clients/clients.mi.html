@@ -1,0 +1,721 @@
+<!--main content start-->
+<!--<script>
+    $(function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Clients
+                    <a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" href="/clients/new"> <i class="fa fa-plus"></i> New Client </a>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            
+            <div ng-show="loadingClient" style="text-align: center;">
+                <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                <p>Loading details.. Please wait..</p>
+            </div>
+            
+            <div ng-show="client.property_name !== undefined && !loadingClient">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#" ng-bind-html="client.property_name | ucwords"></a>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li ng-class="{active:active_panel == 'dashboard'}" ng-click="switchPanel('dashboard','Dashboard')"><a>Dashboard</a></li>
+                                <li ng-class="{active:active_panel == 'client_details'}" ng-click="switchPanel('client_details','Details')"><a>Details</a></li>
+                                <li ng-class="{active:active_panel == 'isell'}" ng-click="switchPanel('isell','iSell')"><a>iSell</a></li>
+                                <li ng-class="{active:active_panel == 'rro'}" ng-click="switchPanel('rro','Rate Review and Override')"><a>Rate Review And Override</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analysis <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-class="{active:active_panel == 'rate_pace'}" ng-click="switchPanel('rate_pace','Rate Pace')"><a>Rate Pace</a></li>
+                                        <li ng-class="{active:active_panel == 'rate_analysis'}" ng-click="switchPanel('rate_analysis','Rate Analysis')"><a>Rate Analysis</a></li>
+                                        <li ng-class="{active:active_panel == 'historical_analysis'}" ng-click="switchPanel('historical_analysis','Historical Analysis')"><a>Historical Analysis</a></li>
+                                        <li ng-class="{active:active_panel == 'calendar'}" ng-click="switchPanel('calendar','Calendar')"><a>Calendar</a></li>
+                                        <li ng-class="{active:active_panel == 'mi'}" ng-click="switchPanel('mi','Market Intelligence')"><a>Market Intelligence</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configs <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-class="{active:active_panel == 'rate_horizon'}" ng-click="switchPanel('rate_horizon','Rate Horizon Table')"><a>Rate Horizon Table</a></li>
+                                        <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel('events','Events')"><a>Events</a></li>
+                                        <li ng-class="{active:active_panel == 'qm'}" ng-click="switchPanel('qm','Quality Metrics')"><a>Quality Metrics</a></li>
+                                        <li ng-class="{active:active_panel == 'room_types'}" ng-click="switchPanel('room_types','Room Types')"><a>Room Types</a></li>
+                                        <li ng-class="{active:active_panel == 'ota_config'}" ng-click="switchPanel('ota_config','OTA Config')"><a>OTA Config</a></li>
+                                        <li ng-class="{active:active_panel == 'client_users'}" ng-click="switchPanel('client_users','User Accounts')"><a>User Accounts</a></li>
+                                        <li ng-class="{active:active_panel == 'competitors'}" ng-click="switchPanel('competitors','Competitors')"><a>Competitors</a></li>
+                                        <li ng-class="{active:active_panel == 'dow_definitions'}" ng-click="switchPanel('dow_definitions','DOW Definitions')"><a>DOW Definitions</a></li>
+                                        <li ng-class="{active:active_panel == 'seasonality_definitions'}" ng-click="switchPanel('seasonality_definitions','Seasonality Definitions')"><a>Seasonality Definitions</a></li>
+                                        <li ng-class="{active:active_panel == 'rateshop_settings'}" ng-click="switchPanel('rateshop_settings','Rate Shop Settings')"><a>Rate Shop Settings</a></li>
+                                        <li ng-class="{active:active_panel == 'cm_settings'}" ng-click="switchPanel('cm_settings','Channel Manager Settings')"><a>Channel Manager Settings</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a ng-click="clearClientCache()" href="#">Clear Cache</a></li>
+                                        <li><a href="/clients/edit/{{client.id}}">Edit</a></li>
+                                        <li ng-click="addClientUser()"><a>Add User</a></li> 
+                                        <li role="separator" class="divider"></li>
+                                        <li class="alert-danger"><a href="#" ng-click="deleteClient(client.id)">Delete</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading pr" style="color:#255E83;">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">{{active_panel_title}}</li>
+                                </ul>
+                                <button type="button" class="btn btn-primary pull-right" ng-click="downloadClientMI()" ng-show="active_panel == 'mi'" style="position: absolute; right: 3px; top: 3px;">Download</button>
+                            </div>
+                            <div class="panel-body" style="line-height: 1.74;">
+                                <div ng-show="active_panel == 'dashboard'">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="chart_bob"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="chart_pickup_analysis"></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="chart_rate_comparison"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="chart_ota_contribution"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="active_panel == 'client_users'">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Reg. Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="user_account_data.length == 0"><td colspan="6">No users added.</td></tr>
+                                            <tr ng-repeat="user_act in user_account_data">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{user_act.account_fname|ucwords}} {{user_act.account_lname|ucwords}}</td>
+                                                <td>{{user_act.account_email}}</td>
+                                                <td>{{user_act.account_regdate}}</td>
+                                                <td>{{user_act.account_status|ucwords}}</td>
+                                                <td>
+                                                    <button class="btn btn-info btn-xs" ng-click="editClientUser(user_act,$index)"><i class="fa fa-edit"></i></button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="deleteClientUser(user_act.account_id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div ng-show="active_panel == 'client_details'">
+                                    <div class="row">
+                                        <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>Country:</strong> {{ client.country}}</p></div>
+                                        <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>State:</strong> {{ client.state}}</p></div>
+                                        <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>City:</strong> {{ client.city}}</p></div>
+                                        <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>Pincode:</strong> {{ client.pincode}}</p></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-lg-3 col-xs-12">
+                                            <p><strong>Registration Date:</strong><span class="record_date"> {{ client.datetime}} </span><br /></p>
+                                        </div> 
+                                        <div class="col-md-3 col-lg-3 col-xs-12">
+                                            <p><strong>Author:</strong><span class="record_author_name"> {{ client.author_fname|ucwords}} {{ client.author_lname|ucwords}}</span>
+                                        </div>
+                                         <div class="col-md-3 col-lg-3 col-xs-12">
+                                            <p> <strong>Account Manager:</strong> {{ client.account_manager|ucwords}}</p>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xs-12">
+                                         <p> <strong>Status: </strong>
+                                             <span class="active_status" ng-show="client.status == 'active'">{{ client.status|ucwords }}</span>
+                                              <span class="disabled_status" ng-show="client.status == 'disabled'">{{ client.status|ucwords }}</span>
+                                         </p>
+                                        </div>
+                                    </div> 
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6 col-xs-12">
+                                            <p> <strong>Address:</strong> {{ client.address}}</p>
+                                        </div>
+
+
+                                    </div>
+                                </div>  
+                                <div ng-show="active_panel == 'ota_config'" class="ota_config">
+                                    <!-- <div class="row">
+                                    <div class="col-md-11">
+                                        <label for="status">Select Rate Shopping OTAs</label>
+                                        <ui-select ng-model="ota_mapping.rate_ota" name="area_impact" theme="bootstrap" id="room_types" reset-search-input="true" multiple close-on-select="true" class="uiselect_css">
+                                            <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="ota_name in otas_name track by $index"
+                                                               refresh="searchOTAs($select.search)"
+                                                               refresh-delay="0">
+                                                <div ng-bind-html="ota_name.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-primary btn-sm" style="margin-top: 30px;" ng-click="submitOtaMap(client.id)">Submit</button>
+                                    </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-10">
+                                        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+                                         <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>   
+                                         </div>
+                                    </div>
+                                    <hr>
+                                    -->
+                                     <div class="panel">
+                                       <div class="panel-heading pr1">
+                                             <ul>
+                                                <li>OTA Mappings</li>
+                                                <li ng-click="otaModal(false)"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Mapping </a></li>
+                                            </ul>
+                                        </div>
+                                         <div class="panel-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr. No.</th>
+                                                        <th>Client OTA</th>
+                                                        <th>System OTA</th>
+                                                        <th>Type</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="ota_data in ota_config_data">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{ota_data.client_ota|ucwords}}</td>
+                                                        <td>{{ota_data.system_name|ucwords}}</td>
+                                                        <td ng-show="ota_data.type != 'staah'">{{ota_data.type|ucwords}}</td>
+                                                        <td ng-show="ota_data.type == 'staah'">{{ota_data.type|uppercase}}</td>
+                                                        <td><button class="btn btn-info btn-xs" ng-click="editOtaModal(ota_data)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_ota(ota_data.id, ota_data.client_id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                      </div>   
+                                      </div>   
+                                </div>   
+                                <div ng-show="active_panel == 'room_types'">
+                                    <!-- div class="row">
+                                        <div class="col-md-4">
+                                            <label for="status">Select Rate Shopping Room Types</label>
+                                            <ui-select ng-model="room_type_map.rate_name" name="area_impact" id="room_types" theme="bootstrap" close-on-select="true" multiple reset-search-input="true" style="width: 100%;" title="Select a area impact">
+                                                <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                                <ui-select-choices repeat="room_type_name in room_types_name track by $index"
+                                                                   refresh="searchRoomtypes($select.search)"
+                                                                   refresh-delay="0">
+                                                    <div ng-bind-html="room_type_name.name | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="status">Select STAAH Room Types</label>
+                                            <ui-select ng-model="room_type_map.staah_name" id="room_types" name="area_impact" theme="bootstrap" close-on-select="true" multiple reset-search-input="true" style="width: 100%;" title="Select a area impact">
+                                                <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                                <ui-select-choices repeat="room_type_name in room_types_name track by $index"
+                                                                   refresh="searchRoomtypes($select.search)"
+                                                                   refresh-delay="0">
+                                                    <div ng-bind-html="room_type_name.name | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-4">
+
+                                            <button class="btn btn-primary btn-sm" style="margin-top: 30px;" ng-click="submitRoomTypeMap(client.id)">Submit</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+                                         <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>   
+                                         </div>
+                                    </div>
+                                    <hr>
+                                    -->
+                                    <div class="panel">
+                                         <div class="panel-heading pr1">
+                                             <ul>
+                                                <li>Room Type Mappings</li>
+                                                <!-- <li ng-click="roomTypeModal(false)"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Mapping </a></li> -->
+                                                <li ng-click="fetchCMRoomTypes()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-"></i> Fetch from Channel Manager </a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr. No.</th>
+                                                        <th>Hotel Name</th>
+                                                        <th>Source Room Type</th>
+                                                        <th>System Room Type</th>
+                                                        <th>Source</th>
+                                                        <th>Capacity</th>
+                                                        <th>Action</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="room_data in roomtypes_data track by $index">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{room_data.hotel_name}}</td>
+                                                        <td>{{room_data.client_room_type|ucwords}}</td>
+                                                        <td>{{room_data.system_name|ucwords}}</td>
+                                                        <td ng-show="room_data.type != 'staah'">{{room_data.type|ucwords}}</td>
+                                                        <td ng-show="room_data.type == 'staah'">{{room_data.type|uppercase}}</td>
+                                                        <td>{{room_data.capacity}}</td>
+                                                        <td><button type="button" class="btn btn-info btn-xs" ng-click="editRoomTypeModal(room_data,false,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_roomtype(room_data.id, room_data.client_id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                    </div>
+                                    </div>
+                                </div>              
+                                <div ng-show="active_panel == 'events'">
+                                    <div class="panel">
+                                        <div class="panel-heading pr1">
+
+                                            <ul>
+                                                <li>All Events</li>
+                                                <li ng-click="eventModal()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Event </a></li>
+                                            </ul>
+                                        </div>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Name</th>
+                                                    <th>Type</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Area Impact</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="event in events">
+                                                    <td>{{$index + 1}}</td>
+                                                    <td>{{event.name|ucwords}}</td>
+                                                    <td>{{event.type|ucwords}}</td>
+                                                    <td>{{event.start_date}}</td>
+                                                    <td>{{event.end_date}}</td>
+                                                    <td>{{event.area_impact|ucwords}}</td>
+                                                    <td><button class="btn btn-info btn-xs" ng-click="editEventModal(event,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_event(event.id, $index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                </tr>
+                                                <tr ng-show="events.length == 0"><td colspan="8">No events found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                    
+                                <div ng-show="active_panel == 'qm'">
+                                    <div class="panel">
+                                        <div class="panel-heading pr1">
+                                            <ul>
+                                                <li>All Quality Metrics</li>
+                                                <li ng-click="qualityMetricsModal()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Quality Metrics </a></li>
+                                            </ul>
+                                        </div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Hotel</th>
+                                                    <th>Name</th>
+                                                    <th>OTA</th>
+                                                    <th>Parameter</th>
+                                                    <th>Hotel Score</th>
+                                                    <th>Max Score</th>
+                                                    <th>Quantity</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="qm in clients_qm">
+                                                    <td>{{$index + 1}}</td>
+                                                    <td>{{qm.hotel_name}}</td>
+                                                    <td>{{qm.name|ucwords}}</td>
+                                                    <td>{{qm.ota_name|ucwords}}</td>
+                                                    <td>{{qm.parameter|ucwords}}</td>
+                                                    <td>{{qm.hotel_score}}</td>
+                                                    <td>{{qm.max_score}}</td>
+                                                    <td>{{qm.quantity}}</td>
+                                                    <td><button class="btn btn-info btn-xs" ng-click="editQualityMetricsModal(qm,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_qm(qm.id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                </tr>
+                                                <tr ng-show="clients_qm.length == 0"><td colspan="8">No quality metrics found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>               
+                                <div ng-show="active_panel == 'seasonality_definitions'">
+                                    <div class="panel">
+                                        <div class="panel-heading pr1">
+
+                                            <ul>
+                                                <li>All Seasons</li>
+                                                <li ng-click="seasonModal()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Season </a></li>
+                                            </ul>
+                                        </div>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Name</th>
+                                                    <th>Number</th>
+                                                    <th>Start Week</th>
+                                                    <th>End Week</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="season_data in seasonality_definitions">
+                                                    <td>{{$index + 1}}</td>
+                                                    <td>{{season_data.season_name|ucwords}}</td>
+                                                    <td>{{season_data.number}}</td>
+                                                    <td>{{season_data.start_week}}</td>
+                                                    <td>{{season_data.end_week}}</td>
+                                                    <td><button class="btn btn-info btn-xs" ng-click="editSeasonModal(season_data,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_season(season_data.id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                </tr>
+                                                <tr ng-show="seasonality_definitions.length == 0"><td colspan="6">No seasonality definitions found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                    
+                                <div ng-show="active_panel == 'dow_definitions'">
+                                    <div class="panel">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <form name="dow_form" id="dow_form">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Season No.</th>
+                                                                    <th ng-repeat="day in days.get_day_two">{{ day }}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{day}}</td>
+                                                                    <td ng-repeat="day in days.get_day_two">
+                                                                        <select required name="day" ng-model="dow" class="form-control">
+                                                                            <option value="WD">WD</option>
+                                                                            <option value="WE">WE</option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div ng-show="dow_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+                                                        <div ng-show="dow_form.loading" class="alert alert-info text-left">Please wait...</div>
+                                                        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+                                                        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>        
+                                                        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+                                                        <button type="button" class="btn btn-primary pull-right" ng-click="saveDow(client.id, day)" style="margin-right:3px;">Submit</button>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                                <div ng-show="active_panel == 'competitors'">
+                                    <div class="panel">
+                                        <div class="panel-heading pr1">
+                                            <ul>
+                                                <li>All Competitors</li>
+                                                <li ng-click="competitorModal()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Competitor </a></li>
+                                            </ul>
+                                        </div>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:100px;">Sr. No.</th>
+                                                    <th>Hotel Name</th>
+                                                    <th style="width:100px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="competitor in competitors">
+                                                    <td>{{$index + 1}}</td>
+                                                    <td>{{competitor.name|ucwords}}</td>
+                                                    <td><button class="btn btn-danger btn-xs" ng-click="delete_competitiors(competitor.id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                                </tr>
+                                                <tr ng-show="competitors.length == 0"><td colspan="3">No competitors found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-heading pr1">
+                                            <ul>
+                                                <li>Suggested Competitors</li>
+                                            </ul>
+                                        </div>
+                                        <div class="row form-group" style="margin-top: 15px;">
+                                            <div class="col-md-12">
+                                                <label>Filter by distance</label>
+                                                <div ui-slider="{range: true}" min="1.00" max="10.00" step="0.5" use-decimals  data-tip ng-model="distanceRange" style="margin-left: 10px; margin-right: 10px;"></div>
+                                            </div>
+                                        </div>
+                                        <table class="table table-striped" datatable>
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:100px;">Sr. No.</th>
+                                                    <th>Hotel Name</th>
+                                                    <th style="width:100px;">Distance</th>
+                                                    <th style="width:100px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-show="(scompetitor.distance > distanceRange[0]) && (scompetitor.distance < distanceRange[1])" ng-repeat="scompetitor in competitors_suggestions">
+                                                    <td>{{$index + 1}}</td>
+                                                    <td>{{scompetitor.name|ucwords}}</td>
+                                                    <td>{{scompetitor.distance}} mi</td>
+                                                    <td><button class="btn btn-success btn-xs" ng-click="addAsCompetitor(scompetitor.id,scompetitor.name,$index)" style="margin-left:5px;" title="Add as Competitor"><i class="fa fa-check"></i></button></td>
+                                                </tr>
+                                                <tr ng-show="competitors_suggestions.length == 0"><td colspan="3">No suggestions found.</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>       
+                                <div ng-show="active_panel == 'rateshop_settings'">
+                                    <form ng-submit="addRateShopping(presetting_form.$valid)" id="presetting_form" name="presetting_form" novalidate> 
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel">
+                                                    <div class="panel-heading">Client Rate Shop Settings</div>
+                                                    <div class="panel-body">
+
+                                                        <div class="form-group">
+                                                            <label for="los">OTAs<span style="color:red">*</span></label>
+                                                            <ui-select ng-model="rateShopSettings.client.otas" multiple name="area_impact" theme="bootstrap" close-on-select="true" reset-search-input="true" class="uiselect_css" required>
+                                                                <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                                                <ui-select-choices repeat="ota_name in otas_name track by $index"
+                                                                                   refresh="searchOTAs_new($select.search)"
+                                                                                   refresh-delay="0">
+                                                                    <div ng-bind-html="ota_name.name | highlight: $select.search"></div>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                        </div>
+                                                        <div class="">
+                                                            <label>Schedule & Horizon</label>
+                                                            <table class="table table-striped table-bordered" style="margin-bottom:0;">
+                                                                <tr>
+                                                                    <td ng-repeat="day in days.get_day_two">
+                                                                        <div class="col-md-2" style="margin-left: -15px;">
+                                                                            <input class="day_check" ng-model="rateShopSettings.client.horizon[$index].dow" value="{{ day}}" type="checkbox"/>
+                                                                        </div>
+                                                                        <div class="col-md-3" style="margin-top: 3px;">
+                                                                            <label class="day_label">{{day}}</label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[0].days" ng-disabled="!rateShopSettings.client.horizon[0].dow" type="text" class="form-control" name="horizon" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[1].days" ng-disabled="!rateShopSettings.client.horizon[1].dow" type="text" class="form-control" name="horizon1" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[2].days" ng-disabled="!rateShopSettings.client.horizon[2].dow" type="text" class="form-control" name="horizon2" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[3].days" ng-disabled="!rateShopSettings.client.horizon[3].dow" type="text" class="form-control" name="horizon3" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[4].days" ng-disabled="!rateShopSettings.client.horizon[4].dow" type="text" class="form-control" name="horizon4" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[5].days" ng-disabled="!rateShopSettings.client.horizon[5].dow" type="text" class="form-control" name="horizon5" ng-pattern="/^[0-9]*$/" /></td>
+                                                                    <td><input ng-model="rateShopSettings.client.horizon[6].days" ng-disabled="!rateShopSettings.client.horizon[6].dow" type="text" class="form-control" name="horizon6" ng-pattern="/^[0-9]*$/" /></td>
+                                                                </tr>
+                                                            </table>
+                                                             <label for="horizon" class="form_errors" ng-show="presetting_form.horizon.$invalid && !presetting_form.horizon.$pristine || presetting_form.horizon1.$invalid && !presetting_form.horizon1.$pristine || presetting_form.horizon2.$invalid && !presetting_form.horizon2.$pristine || presetting_form.horizon3.$invalid && !presetting_form.horizon3.$pristine || presetting_form.horizon4.$invalid && !presetting_form.horizon4.$pristine || presetting_form.horizon5.$invalid && !presetting_form.horizon5.$pristine || presetting_form.horizon6.$invalid && !presetting_form.horizon6.$pristine">Please enter only digits</label>
+                                                             </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+
+                                                <div class="panel">
+                                                    <div class="panel-heading">Common Settings</div>
+                                                    <div class="panel-body">
+
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label>LOS<span style="color:red">*</span></label>
+                                                                    <input type="number" min="1" required ng-model="rateShopSettings.los" placeholder="Enter number" ng-pattern="/^[0-9]*$/" id="los" name="los" class="form-control"/>
+                                                                    <label for="los" class="form_errors" ng-show="presetting_form.los.$invalid && !presetting_form.los.$pristine">Please enter only digits</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Currency<span style="color:red">*</span></label>
+                                                                    <ui-select ng-model="rateShopSettings.currency" name="currency" theme="bootstrap" reset-search-input="false" required style="width: 100%;">
+                                                                        <ui-select-match placeholder="Enter currency">{{rateShopSettings.currency.iso}}</ui-select-match>
+                                                                        <ui-select-choices repeat="curr in currency track by $index"
+                                                                                           refresh="searchCurrency($select.search)"
+                                                                                           refresh-delay="0">
+                                                                            <div ng-bind-html="curr.iso | highlight: $select.search"></div>
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                    <label for="currency" class="form_errors" ng-show="presetting_form.currency.$invalid && !presetting_form.currency.$pristine">Please enter currency</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="panel">
+                                                    <div class="panel-heading">Competitors Rate Shop Settings</div>
+                                                    <div class="panel-body">
+
+                                                        <div class="form-group">
+                                                            <label for="los">OTAs<span style="color:red">*</span></label>
+                                                            <ui-select ng-model="rateShopSettings.competitors.otas" multiple name="area_impact" theme="bootstrap" reset-search-input="true" close-on-select="true" class="uiselect_css" required>
+                                                                <ui-select-match placeholder="Enter keywords...">{{ $item.name}}</ui-select-match>
+                                                                <ui-select-choices repeat="ota_name in otas_name track by $index"
+                                                                                   refresh="searchOTAs_new($select.search)"
+                                                                                   refresh-delay="0">
+                                                                    <div ng-bind-html="ota_name.name | highlight: $select.search"></div>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                        </div>
+                                                        <div class="">
+                                                            <label>Schedule & Horizon</label>
+                                                            <table class="table table-striped table-bordered" style="margin-bottom: 0;">
+                                                                <tr>
+                                                                    <td ng-repeat="day in days.get_day_two">
+                                                                        <div class="col-md-2" style="margin-left: -15px;">
+                                                                            <input class="day_check" ng-model="rateShopSettings.competitors.horizon[$index].dow" value="{{ day}}" type="checkbox"/>
+                                                                        </div>
+                                                                        <div class="col-md-3" style="margin-top: 3px;">
+                                                                            <label class="day_label">{{day}}</label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[0].days" ng-disabled="!rateShopSettings.competitors.horizon[0].dow" type="text" class="form-control" name="horizon11" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[1].days" ng-disabled="!rateShopSettings.competitors.horizon[1].dow" type="text" class="form-control" name="horizon12" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[2].days" ng-disabled="!rateShopSettings.competitors.horizon[2].dow" type="text" class="form-control" name="horizon13" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[3].days" ng-disabled="!rateShopSettings.competitors.horizon[3].dow" type="text" class="form-control" name="horizon14" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[4].days" ng-disabled="!rateShopSettings.competitors.horizon[4].dow" type="text" class="form-control" name="horizon15" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[5].days" ng-disabled="!rateShopSettings.competitors.horizon[5].dow" type="text" class="form-control" name="horizon16" ng-pattern="/^[0-9]*$/"/></td>
+                                                                    <td><input ng-model="rateShopSettings.competitors.horizon[6].days" ng-disabled="!rateShopSettings.competitors.horizon[6].dow" type="text" class="form-control" name="horizon17" ng-pattern="/^[0-9]*$/"/></td>
+                                                                </tr>
+                                                            </table>
+                                                         <label for="horizon" class="form_errors" ng-show="presetting_form.horizon11.$invalid && !presetting_form.horizon11.$pristine || presetting_form.horizon12.$invalid && !presetting_form.horizon12.$pristine || presetting_form.horizon13.$invalid && !presetting_form.horizon13.$pristine || presetting_form.horizon14.$invalid && !presetting_form.horizon14.$pristine || presetting_form.horizon15.$invalid && !presetting_form.horizon15.$pristine || presetting_form.horizon16.$invalid && !presetting_form.horizon16.$pristine || presetting_form.horizon117.$invalid && !presetting_form.horizon17.$pristine">Please enter only digits</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="panel-heading">Priority Settings</div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label class="">Rate Types</label>
+                                                        <div class="border_sortable">
+                                                            <ul ui-sortable ui-sortable-update="update" ui-sortable-stop="stop" ng-model="rateShopSettings.ratetypes" class="list">
+                                                                <li ng-repeat="item in rateShopSettings.ratetypes" class="item">
+                                                                   <span class="index_css">{{$index+1}}</span>{{item.name}} 
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Room Types</label>
+                                                        <div class="border_sortable">
+                                                            <ul ui-sortable ui-sortable-update="update" ui-sortable-stop="stop" ng-model="rateShopSettings.roomtypes" class="list">
+                                                                <li ng-repeat="roomtype in rateShopSettings.roomtypes" class="item">
+                                                                    <span class="index_css">{{$index+1}}</span>   {{roomtype.name}}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div ng-show="rateshopping_settings == 'loading'" class="alert alert-info text-left">Please wait...</div>
+                                        <div ng-show="rateshopping_settings == 'success'" class="alert alert-success text-left">{{rs_message}}</div>
+                                        <div ng-show="rateshopping_settings == 'error'" class="alert alert-danger text-left">{{rs_message}}</div>
+                                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="presetting_form.$invalid">Save</button>
+                                    </form>
+
+                                </div>
+                                <div ng-show="active_panel == 'cm_settings'">
+                                    <form ng-submit="saveChannelManagerSettings(cm_form.$valid)" id="cm_form" name="cm_form" novalidate> 
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                                <label>Hotel ID*</label>
+                                                <div class='input-group'>            
+                                                    <span class='input-group-addon'><i class="fa fa-building-o"></i></span>
+                                                    <input type="text" name="hotel_id" ng-model="cm_form.cm_hotel" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>User ID*</label>
+                                                <div class='input-group'>            
+                                                    <span class='input-group-addon'><i class="fa fa-user"></i></span>
+                                                    <input type="text" name="manager_id" ng-model="cm_form.cm_id" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Password*</label>
+                                                <div class='input-group'>            
+                                                    <span class='input-group-addon'><i class="fa fa-key"></i></span>
+                                                    <input type="text" name="manager_password" ng-model="cm_form.cm_password" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="cm_settings == 'loading'" class="alert alert-info text-left">Please wait...</div>
+                                        <div ng-show="cm_settings == 'success'" class="alert alert-success text-left">{{cm_message}}</div>
+                                        <div ng-show="cm_settings == 'error'" class="alert alert-danger text-left">{{cm_message}}</div>
+                                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="cm_form.$invalid">Save</button>
+                                    </form>
+                                </div>
+                                <div ng-show="active_panel == 'mi'">
+                                    <jqx-grid jqx-create="createMIWidget" jqx-settings="gridMISettings"></jqx-grid>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-right">
+                                Cached On: {{ cache_time }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</section>

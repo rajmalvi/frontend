@@ -1,0 +1,251 @@
+.nml  {
+    margin-left: 0px !important;
+}
+label span, .form_errors
+{color: red;
+ font-weight: normal;
+}
+/* remove right left padding- margin*/
+.removeRowLmargin{
+    margin-left:0px !important;
+}
+.removeRowRmargin{
+    margin-right:0px !important;
+}
+.removeColumnLPadding{
+    padding-left:0px !important;
+}
+.removeColumnRPadding{
+    padding-right:0px !important;
+}
+/** service provider contact people css **/
+#serviceprovider_form .input-group-addon ~ input{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 4px;
+}
+
+#serviceprovider_form .input-group-addon{
+    width:40px;
+}
+
+#serviceprovider_form .input-group{
+    width:100%;
+}
+#serviceprovider_form .add-more{
+    padding: 6px 10px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: rgb(222, 222, 222);
+}
+.plusminus-span .remove-btn{
+    padding: 6px 10px;
+    border-top: 1px solid rgb(222, 222, 222);
+    border-bottom: 1px solid rgb(222, 222, 222);
+    border-right: 1px solid rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);
+}
+
+/** image uploads container**/
+.uploads_containers, .uploads_container {
+    margin-top: 7px;
+}
+.uploads_containers li, .uploads_container li {
+    float:left;
+    position:relative;
+    width: 68px;
+    margin-bottom:3px;
+    margin-left: 3px;
+}
+.uploads_containers li img, .uploads_container li img {
+    width:100%;
+}
+.uploads_containers li .remove_att, .uploads_container li .remove_att {
+    position: absolute;
+    right:0px;
+    top:0px;
+}
+.uploads_containers .download_attachment, .uploads_container .download_attachment{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 20px;
+    background: rgba(0,0,0,0.4);
+    border: 0px;
+}
+
+/** Login part **/
+.login-part .form_errors{
+    font-weight: normal;
+}
+.login-part .login-input{
+    margin-bottom:0px !important;
+}
+.login-part {
+    background-color: #f1f2f7;
+}
+.form-login {
+    max-width: 330px;
+    margin: 100px auto 0;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.form-login h2.form-login-heading {
+    margin: 0;
+    padding:20px 15px;
+    text-align: center;
+    background: #41cac0;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.form-login .checkbox {
+    margin-bottom: 14px;
+}
+.form-login .checkbox {
+    font-weight: normal;
+    color: #b6b6b6;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+.form-login .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-login .form-control:focus {
+    z-index: 2;
+}
+.form-login input[type="text"], .form-login input[type="password"] {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-shadow: none;
+    font-size: 12px;
+}
+.form-login .btn-login {
+    background: #f67a6e;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
+    margin-bottom: 20px;
+}
+.form-login p {
+    text-align: center;
+    color: #b6b6b6;
+    font-size: 16px;
+    font-weight: 300;
+}
+.form-login a {
+    color: #41cac0;
+}
+.form-login a:hover {
+    color: #b6b6b6;
+}
+.form-login .login-wrap {
+    padding: 20px;
+}
+.login-page .site-min-height {
+    min-height: 886px;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    background-color: #cfdde9 !important;
+    color: #555;
+}
+.dropdown-menu a {
+    cursor: pointer;
+}
+.nav.navbar-nav.navbar-right > li {
+    cursor: pointer;
+}
+.panel-heading.pr1 li {
+    display:inline;
+}
+.logo > img {
+     height: 49px;
+    margin-left: 10px;
+    margin-top: -10px;
+    width:auto;
+}
+.client_section .btn-default {
+    background-color: white !important;
+    border-color: #e2e2e4;
+    color: #666;
+}
+#presetting_form .btn-default {
+    background-color: white !important;
+    border-color: #e2e2e4;
+    color: #666;
+}
+#event_area .btn-default, #qm_select .btn-default, #room_types .btn-default{
+    background-color: white !important;
+    border-color: #e2e2e4;
+   color: #666;
+}
+.item {
+	width: 100%;
+	padding: 5px 10px;
+	margin: 5px 0;
+	border-radius: 5px;
+	background-color: #EA8A8A;
+        text-align: center;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+}
+
+.ui-sortable > li {
+    background: #D3D3D3 none repeat scroll 0 0;
+    margin-bottom: 0;
+    padding: 5px !important;
+    position: relative;
+    color: #696969;
+}
+.border_sortable {
+    border: 1px solid;
+    padding: 5px 10px;
+}
+.index_css{
+     background-color: #3b838a;
+    border-radius: 50%;
+    color: white;
+    float: left;
+    margin-left: 5%;
+    padding-bottom: 1px;
+    padding-left: 8px;
+    padding-right: 9px;
+}
+.active_status{
+    background-color: #5eba21;
+    padding: 2px 7px 3px;
+    color:white;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+.disabled_status{
+    background-color: #FF6C60;
+    padding: 2px 7px 3px;
+    color:white;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+.uiselect_css{
+width: 100%;
+height:35px;
+padding-top: 5px;
+}

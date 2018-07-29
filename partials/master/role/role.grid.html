@@ -1,0 +1,59 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Roles
+                     <a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" href="/master/role/new"> <i class="fa fa-plus"></i> New Role </a>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="role_details != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Role Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/master/role/edit/{{role_details.id}}">Edit</a></li>
+<!--                                <li><a href="#" ng-click="changeStatus(account.account_id, 'block')"  ng-show="account.account_status == 'active' || account.account_status == 'pending'">Block</a></li> 
+                                <li><a href="#" ng-click="changeStatus(account.account_id, 'active')"  ng-show="account.account_status == 'block' || account.account_status == 'pending'">Activate</a></li>-->
+                                <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteRole(role_details.id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p> <strong>Name:</strong> {{ role_details.name|ucwords}}</p>
+                        </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                           <p><strong>Registration Date:</strong><span class="record_date"> {{ role_details.datetime }} </span><br /></p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                               <p><strong>Author:</strong><span class="record_author_name"> {{ role_details.author_fname|ucwords}} {{ role_details.author_lname|ucwords}}</span><br />
+                        </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                          <p> <strong>Status:</strong> 
+                           <span class="active_status" ng-show="role_details.status == 'active'">{{ role_details.status|ucwords }}</span>
+                           <span class="disabled_status" ng-show="role_details.status == 'disabled'">{{ role_details.status|ucwords }}</span>
+                          </p>
+                        </div>
+                         <div class="col-md-12 col-lg-12 col-xs-12" ng-show="role_details.description != null">
+                            <p> <strong>Description:</strong> {{ role_details.description}}</p>
+                         </div> 
+                    </div> 
+                </div>                    
+            </div>
+        </div>
+    </div>
+    
+
+
+</section>

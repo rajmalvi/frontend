@@ -1,0 +1,199 @@
+.nml  {
+    margin-left: 0px !important;
+}
+label span, .form_errors
+{color: red;
+ font-weight: normal;
+}
+/* remove right left padding- margin*/
+.removeRowLmargin{
+    margin-left:0px !important;
+}
+.removeRowRmargin{
+    margin-right:0px !important;
+}
+.removeColumnLPadding{
+    padding-left:0px !important;
+}
+.removeColumnRPadding{
+    padding-right:0px !important;
+}
+/** service provider contact people css **/
+#serviceprovider_form .input-group-addon ~ input{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 4px;
+}
+
+#serviceprovider_form .input-group-addon{
+    width:40px;
+}
+
+#serviceprovider_form .input-group{
+    width:100%;
+}
+#serviceprovider_form .add-more{
+    padding: 6px 10px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: rgb(222, 222, 222);
+}
+.plusminus-span .remove-btn{
+    padding: 6px 10px;
+    border-top: 1px solid rgb(222, 222, 222);
+    border-bottom: 1px solid rgb(222, 222, 222);
+    border-right: 1px solid rgb(222, 222, 222);
+    border-color: rgb(222, 222, 222);
+}
+
+/** image uploads container**/
+.uploads_containers, .uploads_container {
+    margin-top: 7px;
+}
+.uploads_containers li, .uploads_container li {
+    float:left;
+    position:relative;
+    width: 68px;
+    margin-bottom:3px;
+    margin-left: 3px;
+}
+.uploads_containers li img, .uploads_container li img {
+    width:100%;
+}
+.uploads_containers li .remove_att, .uploads_container li .remove_att {
+    position: absolute;
+    right:0px;
+    top:0px;
+}
+.uploads_containers .download_attachment, .uploads_container .download_attachment{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 20px;
+    background: rgba(0,0,0,0.4);
+    border: 0px;
+}
+
+/** Login part **/
+.login-part .form_errors{
+    font-weight: normal;
+}
+.login-part .login-input{
+    margin-bottom:0px !important;
+}
+.login-part {
+    background-color: #f1f2f7;
+}
+.form-login {
+    max-width: 330px;
+    margin: 100px auto 0;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.form-login h2.form-login-heading {
+    margin: 0;
+    padding:20px 15px;
+    text-align: center;
+    background: #41cac0;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.form-login .checkbox {
+    margin-bottom: 14px;
+}
+.form-login .checkbox {
+    font-weight: normal;
+    color: #b6b6b6;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}
+.form-login .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-login .form-control:focus {
+    z-index: 2;
+}
+.form-login input[type="text"], .form-login input[type="password"] {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-shadow: none;
+    font-size: 12px;
+}
+.form-login .btn-login {
+    background: #f67a6e;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 4px #e56b60;
+    margin-bottom: 20px;
+}
+.form-login p {
+    text-align: center;
+    color: #b6b6b6;
+    font-size: 16px;
+    font-weight: 300;
+}
+.form-login a {
+    color: #41cac0;
+}
+.form-login a:hover {
+    color: #b6b6b6;
+}
+.form-login .login-wrap {
+    padding: 20px;
+}
+.login-page .site-min-height {
+    min-height: 886px;
+}
+/*
+.login-social-link  {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.login-social-link a {
+    color: #fff;
+    padding: 15px 28px;
+    border-radius: 4px;
+}
+
+.login-social-link a:hover {
+    color: #fff;
+}
+
+.login-social-link a i {
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+.login-social-link a.facebook {
+    background: #5193ea;
+    margin-right: 22px;
+    box-shadow: 0 4px #2775e2;
+    float:left;
+}
+
+.login-social-link a.twitter {
+    background: #44ccfe;
+    box-shadow: 0 4px #2bb4e8;
+    float:left;
+}*/
+

@@ -1,0 +1,172 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Hotel Chains
+                    <button class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" ng-click="openModal()"> <i class="fa fa-plus"></i> New Hotel Chain </button>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="hotel_chain != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Hotel Chain Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-click="openModal1(hotel_chain.id)"><a>Edit</a></li>
+<!--                                <li><a href="#" ng-click="changeStatus(hotel_chain.id, 'block')"  ng-show="hotel_chain.status == 'active' || hotel_chain.status == 'pending'">Block</a></li> 
+                                <li><a href="#" ng-click="changeStatus(hotel_chain.id, 'active')"  ng-show="hotel_chain.status == 'block' || hotel_chain.status == 'pending'">Activate</a></li>-->
+                                <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteHotelChain(hotel_chain.id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p> <strong>Name:</strong> {{ hotel_chain.name|ucwords}}</p>
+                        </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                           <p><strong>Registration Date:</strong><span class="record_date"> {{ hotel_chain.datetime }} </span><br /></p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p><strong>Author:</strong><span class="record_author_name"> {{ hotel_chain.author_fname|ucwords}} {{ hotel_chain.author_lname|ucwords}}</span><br />
+                        </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                                <p> <strong>Status:</strong>
+                                    <span class="active_status" ng-show="hotel_chain.status == 'active'">{{ hotel_chain.status|ucwords }}</span>
+                                    <span class="disabled_status" ng-show="hotel_chain.status == 'disabled'">{{ hotel_chain.status|ucwords }}</span>
+                                </p>    
+                        </div>
+                         <div class="col-md-12 col-lg-12 col-xs-12">
+                            <p> <strong>Description:</strong> {{ hotel_chain.description}}</p>
+                         </div> 
+                           </div>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+<!-- page end-->
+<!------------------Add hotel chain modal-------------------->
+<script type="text/ng-template" id="hotel_chain_add.html">
+<div class="modal-header">   
+    <h4 class="modal-title">Add Hotel Chain</h4>
+</div>
+<div class="modal-body">
+    <form id="hotel_chain_form" name="hotel_chain_form" novalidate> 
+        <input ng-model="hotel_chain_data.id" type="hidden" id="id" name="id" class="form-control" value="new"/>
+	  <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group">
+                        <label>Hotel Name<span style="color:red">*</span></label>
+                        <input ng-model="hotel_chain_data.name" type="text" id="name" ng-pattern="/^[a-zA-Z\s]*$/"  name="name" class="form-control" placeholder="e.g., hotel1" required>
+                         <label for="name" class="form_errors" ng-show="hotel_chain_form.name.$invalid && !hotel_chain_form.name.$pristine">Please enter only characters</label>
+                        </div>
+                </div>
+            </div> 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                       <label for="status">Hotel Status<span style="color:red">*</span></label>
+                       <ui-select ng-model="hotel_chain_data.status" name="area_impact" theme="bootstrap" id="qm_select" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                    <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="st.name as st in status track by $index"
+                                    refresh="searchStatus($select.search)"
+                                    refresh-delay="0">
+                                    <div ng-bind-html="st.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    </ui-select>
+                                  <label for="status" class="form_errors" ng-show="hotel_chain_form.status.$invalid && !status.$pristine">Please select item type</label>
+                          </div>
+                </div>
+            </div> 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea ng-model="hotel_chain_data.description" type="text" id="description" name="description" class="form-control"></textarea>
+                       </div>
+                </div>
+            </div> 
+   
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="hotel_chain_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="hotel_chain_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="hotel_chain_form.$invalid" ng-click="addHotelChain()" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+</script>
+
+
+<!------------------Edit hotel chain modal-------------------->
+<script type="text/ng-template" id="hotel_chain_edit.html">
+<div class="modal-header">   
+    <h4 class="modal-title">Edit Hotel Chain</h4>
+</div>
+<div class="modal-body">
+    <form id="hotel_chain_form" name="hotel_chain_form" novalidate> 
+        <input ng-model="hotel_chain_data.id" type="hidden" id="id" name="id" class="form-control" value="{{hotel_chain_data.id}}"/>
+	  <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group">
+                        <label>Hotel Name<span style="color:red">*</span></label>
+                        <input ng-model="hotel_chain_data.name" type="text" id="name" ng-pattern="/^[a-zA-Z\s]*$/" name="name" class="form-control" placeholder="e.g., hotel1" required>
+                         <label for="name" class="form_errors" ng-show="hotel_chain_form.name.$invalid && !hotel_chain_form.name.$pristine">Please enter only characters</label>
+                        </div>
+                </div>
+            </div> 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                       <label for="status">Hotel Status<span style="color:red">*</span></label>
+                               <ui-select ng-model="hotel_chain_data.status" name="status" id="qm_select" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                    <ui-select-match placeholder="Enter keywords...">
+                                     <p ng-show="hotel_chain_data.status.name == null">{{hotel_chain_data.status}}</p>
+                                    <p ng-show="hotel_chain_data.status.name != null">{{hotel_chain_data.status.name}}</p>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="st.name as st in status track by $index"
+                                    refresh="searchStatus($select.search)"
+                                    refresh-delay="0">
+                                    <div ng-bind-html="st.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    </ui-select>
+                                  <label for="status" class="form_errors" ng-show="hotel_chain_form.status.$invalid && !status.$pristine">Please select item type</label>
+                         </div>
+                </div>
+            </div> 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description<span style="color:red">*</span></label>
+                        <textarea ng-model="hotel_chain_data.description" type="text" id="description" value="" name="description" class="form-control"></textarea>
+                       </div>
+                </div>
+            </div> 
+   
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="hotel_chain_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="hotel_chain_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="hotel_chain_form.$invalid" ng-click="addHotelChain(hotel_chain_form.$valid)" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+</script>
+</section>

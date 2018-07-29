@@ -1,0 +1,93 @@
+
+    <form id="qm_form" name="qm_form" ng-submit="addQualityMet(qm_form.$valid)"> 
+<div class="modal-header">   
+    <h4 class="modal-title">{{modal_heading}}</h4>
+</div>
+<div class="modal-body">
+        <div class="form-group">
+            <label for="status">Hotel<span style="color:red">*</span></label>
+            <ui-select ng-model="qm_data.hotel_id" id="qm_hotel" name="qm_hotel" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select a hotel" required on-select="selectH($select.selected)">
+                <ui-select-match placeholder="Enter keywords...">
+                    <p>{{$select.selected.name}}</p>
+                </ui-select-match>
+                <ui-select-choices repeat="hotel.id as hotel in hotels track by $index">
+                    <div ng-bind-html="hotel.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name<span style="color:red">*</span></label>
+                    <input ng-model="qm_data.name" type="text" id="name" name="name" class="form-control" placeholder="e.g., Customer Ratings" required>
+                    <label for="name" class="form_errors" ng-show="qm_form.name.$invalid && !qm_form.name.$pristine">Please enter a name</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Parameter<span style="color:red">*</span></label>
+                    <ui-select ng-model="qm_data.parameter" name="parameter" theme="bootstrap" reset-search-input="false" style="width: 100%;" id="qm_select" required>
+                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="parameter.name as parameter in parameters track by $index"
+                                           refresh="searchQParameters($select.search)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="parameter.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <label for="parameter" class="form_errors" ng-show="qm_form.parameter.$invalid && !qm_form.parameter.$pristine">Please enter only characters</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>OTA<span style="color:red">*</span></label>
+                    <ui-select ng-model="qm_data.ota" name="ota" theme="bootstrap" id="qm_select" reset-search-input="false" style="width: 100%;" title="Select a system OTA" required on-select="selectOTA($item)">
+                        <ui-select-match placeholder="Enter keywords...">
+                            <p>{{$select.selected.name}}</p>
+                        </ui-select-match>
+                        <ui-select-choices repeat="ota.id as ota in ota_name_data track by $index"
+                                           refresh="searchSystemOtaName($select.search)"
+                                           refresh-delay="3">
+                            <div ng-bind-html="ota.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <label for="ota" class="form_errors" ng-show="qm_form.ota.$invalid && !qm_form.ota.$pristine">Please select an OTA</label>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hotel Score<span style="color:red">*</span></label>
+                    <input ng-model="qm_data.hotel_score" type="text" id="hotelscore" ng-pattern="/^[0-9.]+$/" placeholder="Enter high score" name="hotel_score" class="form-control" required>
+                    <label for="hotel_score" class="form_errors" ng-show="qm_form.hotel_score.$invalid && !qm_form.hotel_score.$pristine">Please enter only digits</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Max Score<span style="color:red">*</span></label>
+                    <input ng-model="qm_data.max_score" type="text" id="maxscore" name="max_score" placeholder="Enter max score" ng-pattern="/^[0-9.]+$/" class="form-control" required>
+                    <label for="max_score" class="form_errors" ng-show="qm_form.max_score.$invalid && !qm_form.max_score.$pristine">Please enter only digits</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="quantity">Quantity<span style="color:red">*</span></label>
+                    <input ng-model="qm_data.quantity" type="text" id="quantity" name="quantity" placeholder="Enter quantity" ng-pattern="/^[0-9.]+$/" class="form-control" required>
+                    <label for="quantity" class="form_errors" ng-show="qm_form.quantity.$invalid && !qm_form.quantity.$pristine">Please enter only digits</label>
+                </div>
+            </div>
+        </div> 
+</div>
+<div class="modal-footer">
+
+    <div ng-show="qm_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="loading_msg" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="submit" class="btn btn-primary" ng-disabled="qm_form.$invalid" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+
+    </form>

@@ -1,0 +1,78 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Hotels
+                    <!--<a  href="/hotel/new" class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"> <i class="fa fa-plus"></i> New Hotel </a>-->
+                </div>
+                <div class="panel-body">
+                    <!--<jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>-->
+                </div>
+            </div>
+<!--            <div class="panel panel-primary" ng-show="account != ''">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Member Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/member/edit/{{account.account_id}}">Edit</a></li>
+                                <li><a href="#" ng-click="changeStatus(account.account_id, 'block')"  ng-show="account.account_status == 'active' || account.account_status == 'pending'">Block</a></li> 
+                                <li><a href="#" ng-click="changeStatus(account.account_id, 'active')"  ng-show="account.account_status == 'block' || account.account_status == 'pending'">Activate</a></li>
+                                <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteAccount(account.account_id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <p> <strong>Name:</strong> {{ account.account_fname|ucwords}} {{ account.account_lname|ucwords}}</p>
+                            <p> <strong>Email:</strong> {{ account.account_email}}</p>
+                            <p> <strong>Mobile:</strong> +91 {{ account.account_mobile1}}</p>
+                            <p ng-show="account.account_mobile2"> <strong>Mobile:</strong> +91 {{ account.account_mobile2}}</p>
+                            <p> <strong>Status:</strong> <span ng-show="account.account_status == 'block'" class="btn btn-danger btn-xs">{{ account.account_status|ucwords}}</span><span ng-show="account.account_status == 'active'" class="btn btn-success btn-xs">{{ account.account_status|ucwords}}</span></p>
+                            <p><strong>Address:</strong> <span ng-show="account.account_address1">{{ account.account_address1|ucwords}}</span><span ng-show="account.account_address2">, {{ account.account_address2|ucwords}}</span><span ng-show="account.account_city">, {{ account.account_city|ucwords}}</span><span ng-show="account.account_state">, {{ account.account_state|ucwords}}</span><span ng-show="account.account_pincode"> - {{ account.account_pincode}}</span></p>
+                            <p><strong>Author:</strong><span class="record_author_name"> {{ account.author_fname|ucwords}} {{ account.author_lname|ucwords}}</span><br />
+                                <strong>Reg. Date:</strong><span class="record_date"> {{ account.reg_date}} </span><br />
+                                <span ng-show="account.edit_date"><strong>Last Edit Date:</strong><span class="record_date"> {{ account.edit_date}} </span></span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div ng-hide="account.attachment.showimg == 'default'">
+                                <div ng-show="account.attachment">
+                                    <strong>Profile Picture:</strong><br />
+                                    <ul class="uploads_container clearfix">
+                                        <li>
+                                            <span title="{{account.attachment.attachment_original_name}}">
+                                                <img ng-src="{{ uploadsURL}}/{{account.attachment.attachment_file_path}}" />
+                                                <a class="download_attachment btn btn-info btn-xs" href="{{backend}}/media/downloadAtt/?token={{account.attachment.attachment_token}}" target="_blank"><i class="fa fa-download"></i></a>
+                                            </span>
+                                        </li>                            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="account.attachments.length > 0">
+                            <strong>Attachments:</strong><br />
+                            <ul class="uploads_containers clearfix">
+                                <li ng-repeat="attachments in account.attachments">
+                                    <span title="{{attachments.attachment_original_name}}">
+                                        <img ng-src="{{ uploadsURL}}/{{attachments.attachment_file_path}}" />
+                                        <a class="download_attachment btn btn-info btn-xs" href="{{backend}}/media/downloadAtt/?token={{attachments.attachment_token}}" target="_blank"><i class="fa fa-download"></i></a>
+                                    </span>
+                                </li>                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>                    
+            </div>
+        </div>-->
+    </div>
+</div>
+<!-- page end-->
+</section>

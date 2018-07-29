@@ -1,0 +1,138 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Hotels
+                    <a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" href="/master/hotels/new"> <i class="fa fa-plus"></i> New Hotel </a>
+                    <a class="btn btn-primary btn-xs mbr" ng-click="addFromCountry()" style="margin-left: 10px;" href="#"> <i class="fa fa-plus"></i> Add from Country </a>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="hotel != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Hotel Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/master/hotels/edit/{{hotel.id}}">Edit</a></li>
+                                <li ng-click="openMergeModal(hotel.id)"><a>Merge</a></li>
+                                <li><a ng-click="hotel_as_client(hotel.id)">Add as Client</a></li>
+                                <li ng-click="openModal(hotel.id)"><a>Add as Competitor</a></li>
+                                <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteClient(hotel.id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="panel-body" style="line-height: 1.74;">  
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                                <p> <strong>Name:</strong> {{ hotel.name|ucwords}}</p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                                <p><strong>Registration Date:</strong><span class="record_date"> {{ hotel.datetime}} </span><br /></p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                                <p> <strong>Status:</strong> {{ hotel.status|ucwords}}</p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xs-12">
+                                <p><strong>RM Code:</strong><span class="record_author_name"> {{ hotel.rm_code}} </span><br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>Country:</strong> {{ hotel.country}}</p></div>
+                            <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>State:</strong> {{ hotel.state}}</p></div>
+                            <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>City:</strong> {{ hotel.city}}</p></div>
+                            <div class="col-md-3 col-lg-3 col-xs-12"><p><strong>Pincode:</strong> {{ hotel.zip}}</p></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xs-12">
+                                <p> <strong>Address:</strong> {{ hotel.address}}</p>
+                            </div> 
+                            
+                        </div> 
+
+                    </div> 
+                </div>                    
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="competitors_add.html">
+        <div class="modal-header">   
+        <h4 class="modal-title">Add As Competitor</h4>
+        </div>
+        <div class="modal-body">
+        <form id="comp_form" name="comp_form" novalidate> 
+        <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label>Client<span style="color:red">*</span></label>
+        <ui-select ng-model="client_data.selected" name="client_name" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a hotel">
+        <ui-select-match placeholder="Enter keywords...">{{$select.selected.formatted_name}}</ui-select-match>
+        <ui-select-choices repeat="client in clients track by $index"
+                           refresh="searchClient($select.search)"
+                           refresh-delay="0">
+        <div ng-bind-html="client.formatted_name | highlight: $select.search"></div>
+        </ui-select-choices>
+        </ui-select>
+        </div>
+        </div>
+        </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+
+        <div ng-show="comp_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="comp_form.loading" class="alert alert-info text-left">Please wait...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="button" class="btn btn-primary" ng-disabled="comp_form.$invalid" ng-click="hotelCompAdd()" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+
+    </script>
+    <script type="text/ng-template" id="merger_hotel.html">
+        <div class="modal-header">   
+        <h4 class="modal-title">Merge Hotel</h4>
+        </div>
+        <div class="modal-body">
+        <form id="comp_form" name="comp_form" novalidate> 
+        <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label>Master Hotel<span style="color:red">*</span></label>
+        <ui-select ng-model="hotel_det.selectedItem" name="hotel_det" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a hotel">
+        <ui-select-match placeholder="Enter keywords...">{{$select.selected.formatted_name}}</ui-select-match>
+        <ui-select-choices repeat="hotel_det in hotel_details track by $index"
+                           refresh="searchClient($select.search)"
+                           refresh-delay="0">
+        <div ng-bind-html="hotel_det.formatted_name | highlight: $select.search"></div>
+        </ui-select-choices>
+        </ui-select>
+        </div>
+        </div>
+        </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+
+        <div ng-show="comp_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="comp_form.loading" class="alert alert-info text-left">Please wait...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="button" class="btn btn-primary" ng-disabled="comp_form.$invalid" ng-click="groupHotelAdd(hotel_det.selected)" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+
+    </script>
+</section>

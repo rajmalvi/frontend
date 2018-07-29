@@ -1,0 +1,31 @@
+<form id="refresh_form" name="refresh_form" ng-submit="refreshData(refresh_form.$valid)"> 
+    <div class="modal-header">   
+        <h4 class="modal-title">{{ modal_title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <label><input ng-model="refresh.bookings_update" type="checkbox" id="name" name="refresh_bookings" /> Update Bookings (~15 mins)</label>
+        </div>
+        <div>
+            <label><input ng-model="refresh.bookings" type="checkbox" id="name" name="refresh_bookings" /> Calibrate Bookings (~15 mins)</label>
+        </div>
+        <div>
+            <label><input ng-model="refresh.recommendations" type="checkbox" id="name" name="refresh_bookings" /> Update Rate Recommendations (~3 mins)</label>
+        </div>
+        <div>
+            <label><input ng-model="refresh.cm_rates" type="checkbox" id="name" name="refresh_cm_rates" /> Fetch Rate from CM (~3 mins)</label>
+        </div>
+        <div>
+            <!-- <label><input ng-model="refresh.mi" type="checkbox" id="name" name="refresh_bookings" /> Update Competitor Pricing (~45 mins)</label> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div ng-show="refresh_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="loading_msg" class="alert alert-info text-left">Please wait, this may take a while...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="submit" class="btn btn-primary" ng-disabled="refresh_form.$invalid" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

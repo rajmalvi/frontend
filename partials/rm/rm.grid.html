@@ -1,0 +1,144 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    Market Intelligence - On Request
+                </div>
+                <div class="panel-body">
+                    <form ng-show="showForm" name="rm_form" ng-submit="fetchRates()">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label for="country">Select Country</label>
+                                <ui-select ng-model="rate.country" close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select a country">
+                                    <ui-select-match allow-clear="true" placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="country in countries track by $index"
+                                                       refresh="searchCountries($select.search)"
+                                                       refresh-delay="0">
+                                        <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="state">Select State</label>
+                                <ui-select ng-disabled="rate.country == ''" ng-model="rate.state" close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select a state">
+                                    <ui-select-match allow-clear="true" placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="state in states track by $index"
+                                                       refresh="searchStates($select.search)"
+                                                       refresh-delay="0">
+                                        <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="city">Select City</label>
+                                <ui-select ng-disabled="rate.country == ''" ng-model="rate.city" multiple close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select a city">
+                                    <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="city in cities track by $index"
+                                                       refresh="searchCities($select.search)"
+                                                       refresh-delay="0">
+                                        <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hotel">Select Hotels*</label>
+                            <ui-select ng-disabled="rate.city == ''" ng-model="rate.hotels" multiple close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select hotels">
+                                <ui-select-match placeholder="Enter keywords...">{{$item.formatted_name}}</ui-select-match>
+                                <ui-select-choices repeat="hotelx in hotels track by $index"
+                                                   refresh="searchHotels($select.search)"
+                                                   refresh-delay="0">
+                                    <div ng-bind-html="hotelx.formatted_name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <label for="los">OTAs*</label>
+                                <ui-select ng-disabled="rate.hotels.length == 0" ng-model="rate.otas" multiple close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select OTAs">
+                                    <ui-select-match placeholder="Enter keywords...">{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="ota in otas track by $index"
+                                                       refresh="searchOTAs($select.search)"
+                                                       refresh-delay="0">
+                                        <div ng-bind-html="ota.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="dates">Check-In Dates*</label>
+                                <div class="input-group">
+                                    <input ng-disabled="rate.otas.length == 0" readonly="readonly" required type="text" class="form-control drpicker" id="dates" name="dates" ng-model="rate.dates" />
+                                    <label for="dates" class="input-group-addon"><i class="fa fa-calendar"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="los">LOS*</label>
+                                <div class="input-group">
+                                    <input min="1" ng-disabled="rate.dates == ''" required placeholder="e.g., 1" type="number" class="form-control" id="los" name="los" ng-model="rate.los" />
+                                    <span class="input-group-addon">Days</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" ng-disabled="rate.otas.length == 0 || rm_form.$invalid || rate.hotels.length == 0 || rate.dates == ''" class="btn btn-primary pull-right" style="margin-top:23px;">Fetch Rates</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div ng-show="showSummary" class="alert alert-warning">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <strong>Request Summary <a href="#" ng-click="showForm = true; showSummary = false">Edit</a></strong><br />
+                                Hotels: <span ng-repeat="hotel in rate.hotels">{{ hotel.name }}<span ng-hide="$index == rate.hotels.length-1">, </span></span><br />
+                                OTAs: <span ng-repeat="ota in rate.otas">{{ ota.name }}<span ng-hide="$index == rate.otas.length-1">, </span></span><br />
+                                LOS: {{ rate.los }}<br />
+                                Dates: {{ rate.dates }}
+                            </div>
+                            <div class="col-md-4" ng-show="showGrid">
+                                <button type="button" class="btn btn-primary pull-right" ng-disabled="fetchingRates" style="width: 130px;">Refresh Data</button>
+                                <div class="clearfix"></div>
+                                <button type="button" class="btn btn-success pull-right" ng-disabled="fetchingRates" style="width: 130px; margin-top:15px;" ng-click="exportXLS()">Download Data</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="fetchingRates" class="alert alert-info">Fetching data... Please wait.. This may take a while.</div>
+                    <div ng-show="fetchingFailed" class="alert alert-danger">{{ failedMessage }}</div>
+                    <div ng-show="queued">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="alert alert-info">
+                                    Your data request has been queued and will take a few minutes to complete.<br />
+                                    You can wait here or request an email notification about completion status by entering your email address below.
+                                    <br />
+                                    <span ng-show="notifyEmailUpdated"><strong>{{ qEmail }} will be notified on completion!</strong></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <p style="margin-bottom: 0px;">Approx. Time Remaining</p>
+                                <div style="font-size: 40px; font-weight: bold;" id="countdown"></div>
+                            </div>
+                        </div>
+                        <div style="width:300px; position: relative;" ng-hide="notifyEmailUpdated" class="pull-left">
+                            <form name="qEmailForm">
+                                <div class="input-group">
+                                    <input required type="email" ng-model="qEmail" name="qEmail" class="form-control" placeholder="Email">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" ng-disabled="qEmailForm.qEmail.$invalid || updatingQEmail" ng-click="updateQEmail()"> Notify Me</button>
+                                    </span>
+                                </div>
+                            </form>
+                            <div ng-show="updatingQEmail" class='uil-ripple-css' style='transform:scale(0.6); position: absolute;transform:scale(0.6);right: -77px;top: -33px;'><div></div><div></div></div>
+                        </div>
+                    </div>
+                    <div ng-show="showGrid">
+                        <hr />
+                        <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

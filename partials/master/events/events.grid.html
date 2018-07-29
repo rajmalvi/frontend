@@ -1,0 +1,124 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Events
+                    <button class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" ng-click="openEventModal()"> <i class="fa fa-plus"></i> New Event </button>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="event != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Event Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" ng-click="openEventEditModal(event)">Edit</a></li>
+                                 <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteEvent(event.id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-3 col-xs-12">
+                            <p> <strong>Name:</strong> {{ event.name|ucwords}}</p>
+                            <p> <strong>Area Impact:</strong> {{ event.area_impact|ucwords}}</p>
+                         </div>                      
+                        <div class="col-md-3 col-xs-12">
+                            <p> <strong>Type:</strong> {{ event.type|ucwords}}</p>
+                            <p> <strong>Registration Date:</strong> {{ event.regdate|ucwords}}</p>
+                         </div>                      
+                        <div class="col-md-3 col-xs-12">
+                            <p> <strong>Start Date:</strong> {{ event.start_date}}</p>
+                            <p> <strong>Author:</strong> {{ event.author_fname|ucwords}} {{ event.author_lname|ucwords}}</p>
+                         </div>                      
+                        <div class="col-md-3 col-xs-12">
+                            <p> <strong>End Date:</strong> {{ event.end_date}}</p>
+                            <p> <strong>Status:</strong> 
+                              <span class="active_status" ng-show="event.status == 'active'">{{ event.status|ucwords }}</span>
+                              <span class="disabled_status" ng-show="event.status == 'disabled'">{{ event.status|ucwords }}</span>
+                            </p>
+                         </div>                      
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </div>
+<!-- page end-->
+<!------------------Add event modal-------------------->
+<script type="text/ng-template" id="event_add.html">
+<div class="modal-header">   
+    <h4 class="modal-title">Add Event</h4>
+</div>
+<div class="modal-body">
+    <form id="item_form" name="item_form" novalidate> 
+       <div class="row">
+                <div class="col-md-6">
+                   <div class="form-group">
+                        <label>Event Name<span style="color:red">*</span></label>
+                        <input ng-model="event_data.name" type="text" id="name" name="name" ng-pattern="/^[a-zA-Z\s]*$/" class="form-control" placeholder="e.g., diwali" required>
+                        <label for="name" class="form_errors" ng-show="item_form.name.$invalid && !item_form.name.$pristine">Please enter only characters</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="form-group">
+                        <label>Event Type<span style="color:red">*</span></label>
+                        <input ng-model="event_data.type" type="text" id="type" name="type" ng-pattern="/^[a-zA-Z\s]*$/" class="form-control" placeholder="e.g., festival" required>
+                        <label for="type" class="form_errors" ng-show="item_form.type.$invalid && !item_form.type.$pristine">Please enter only characters</label>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-6">
+                   <div class="form-group">
+                        <label>Start Date<span style="color:red">*</span></label>
+                        <input ng-model="event_data.start_date" type="text" id="date_get" name="start_date" placeholder="Select event start date" customdatez class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="form-group">
+                        <label>End Date<span style="color:red">*</span></label>
+                        <input ng-model="event_data.end_date" type="text" id="end_date" name="end_date" placeholder="Select event end date" customdatez class="form-control" required>
+                    </div>
+                </div>
+            </div> 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                       <label for="area_impact">Area Impact<span style="color:red">*</span></label>
+                                <ui-select ng-model="event_data.area_impact" name="area_impact" id="qm_select" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="area.name as area in areas track by $index"
+                                refresh="searchAreaImpact($select.search)"
+                                refresh-delay="0">
+                                <div ng-bind-html="area.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                                </ui-select>
+                         </div>
+                </div>
+            </div> 
+	   
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="item_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="item_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="item_form.$invalid" ng-click="addEvent()" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+</script>
+
+
+</section>

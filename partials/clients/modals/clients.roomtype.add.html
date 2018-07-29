@@ -1,0 +1,75 @@
+<form id="room_form" name="room_form" ng-submit="clientRoomtypesAdd()" novalidate>
+    <div class="modal-header">   
+        <h4 class="modal-title">Map Room Type</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-show="modal_type != 'new'">
+            <label for="status">Hotel</label>
+            <div class="form-control">{{ roomtypesmap_data.hotel_name  }}</div>
+        </div>
+        <div class="form-group" ng-if="client_id == 'new' && modal_type == 'new'">
+            <label for="status">Hotel<span style="color:red">*</span></label>
+            <ui-select ng-model="hotelx" id="rtmapping_hotel" name="rtmapping_hotel" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select a hotel" required on-select="selectH($select.selected)">
+                <ui-select-match placeholder="Enter keywords...">
+                    <p>{{$select.selected.name}}</p>
+                </ui-select-match>
+                <ui-select-choices repeat="hotel in hotels track by $index">
+                    <div ng-bind-html="hotel.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="status">Source<span style="color:red">*</span></label>
+                    <div class="form-control">{{ roomtypesmap_data.type_name  }}</div>
+                    <!-- <ui-select readonly ng-model="roomtypesmap_data.type_name" id="qm_select" name="type_name" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select source" required>
+                        <ui-select-match placeholder="Enter keywords...">
+                            <p>{{$select.selected.name}}</p>
+                        </ui-select-match>
+                        <ui-select-choices repeat="type.name as type in types track by $index"
+                                           refresh="searchType($select.search)"
+                                           refresh-delay="3">
+                            <div ng-bind-html="type.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select> -->
+                </div>
+                <div ng-if="roomtypesmap_data.type_name == 'staah'" class="col-md-6">
+                    <label>Capacity<span style="color:red">*</span></label>
+                    <input ng-model="roomtypesmap_data.capacity" type="number" id="room_capacity" name="room_capacity" class="form-control" placeholder="e.g., 3" min="1" required>
+                    <label for="room_capacity" class="form_errors" ng-show="room_form.room_capacity.$invalid && !room_form.room_capacity.$pristine">Please enter room capacity</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Source Room Type<span style="color:red">*</span></label>
+                <div class="form-control">{{ roomtypesmap_data.client_room_type  }}</div>
+                <!-- <input ng-model="roomtypesmap_data.client_room_type" type="text" id="client_room_type" name="client_room_type" class="form-control" placeholder="e.g., Beach View" required readonly>
+                <label for="client_room_type" class="form_errors" ng-show="room_form.client_room_type.$invalid && !room_form.client_room_type.$pristine">Please enter hotel's room type reference.</label> -->
+            </div>
+            <div class="col-md-6">
+                <label for="status">System Room Type<span style="color:red">*</span></label>
+                <ui-select ng-model="roomtypesmap_data.system_name_data" id="qm_select" name="system_name_data" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select system room type" on-select="selectSystemRoomType($select.selected)" required>
+                    <ui-select-match placeholder="Enter keywords...">
+                        <p>{{$select.selected.name}}</p>
+                    </ui-select-match>
+                    <ui-select-choices repeat="rt.id as rt in roomtypesname_data track by $index"
+                                       refresh="searchSystemName($select.search)"
+                                       refresh-delay="3">
+                        <div ng-bind-html="rt.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div ng-show="room_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="loading_msg" class="alert alert-info text-left">Please wait...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="submit" class="btn btn-primary" ng-disabled="room_form.$invalid" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

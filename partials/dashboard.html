@@ -1,0 +1,364 @@
+<section class="wrapper">
+    <!--state overview start-->
+    <div class="row state-overview">
+        <div class="col-lg-3 col-sm-6" >
+            <section class="panel pr">
+                <div class="symbol red">
+                    <i class="fa fa-money"></i>
+                </div>
+                <div class="value" uib-popover-template="statBoxRevenuePopover.templateUrl" popover-title="History" popover-trigger="mouseenter" popover-placement="bottom">
+                    <h1 class="count">
+                        {{ stats.revenue }}
+                    </h1>
+                    <p>OTA Revenue</p>
+                    <div class="tri-indicator">
+                        <span ng-class="{'up':stats.revenue_growth>=0, 'down':stats.revenue_growth<0}">{{ stats.revenue_growth }}%</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="panel pr">
+                <div class="symbol green">
+                    <i class="fa fa-tags"></i>
+                </div>
+                <div class="value" uib-popover-template="statBoxADRPopover.templateUrl" popover-title="History" popover-trigger="mouseenter" popover-placement="bottom">
+                    <h1 class=" count2">
+                        {{ stats.arr }}
+                    </h1>
+                    <p>OTA ADR</p>
+                    <div class="tri-indicator">
+                        <span ng-class="{'up':stats.arr_growth>=0, 'down':stats.arr_growth<0}">{{ stats.arr_growth }}%</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="panel pr">
+                <div class="symbol blue">
+                    <i class="fa fa-line-chart"></i>
+                </div>
+                <div class="value" uib-popover-template="statBoxOccupancyPopover.templateUrl" popover-title="History" popover-trigger="mouseenter" popover-placement="bottom">
+                    <h1 class=" count3">
+                        {{ stats.occupancy }}
+                    </h1>
+                    <p>OTA Rooms Occupied</p>
+                    <div class="tri-indicator">
+                        <span ng-class="{'up':stats.occupancy_growth>=0, 'down':stats.occupancy_growth<0}">{{ stats.occupancy_growth }}%</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="panel pr">
+                <div class="symbol yellow">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="value" uib-popover-template="statBoxPickupPopover.templateUrl" popover-title="History" popover-trigger="mouseenter" popover-placement="bottom">
+                    <h1 class=" count4">
+                        {{ stats.pickups }}
+                    </h1>
+                    <p>OTA Pickups</p>
+                    <div class="tri-indicator">
+                        <span ng-class="{'up':stats.pickups_growth>=0, 'down':stats.pickups_growth<0}">{{ stats.pickups_growth }}%</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--state overview end-->
+
+    <div class="row">
+        <div class="col-lg-6">
+            <section class="panel">
+                <div class="booking-head">
+                    <span>
+                        <i class="fa fa-binoculars"></i>
+                    </span>
+                    <h3>Overview</h3>
+                    <span class="rev-combo pull-right">
+                        Next 10 Days
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <table ng-show="!loadingClient" class="table table-striped table-hover table-bordered nmb" style="margin-bottom: 0px;">
+                        <tr>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Avl</th>
+                            <th class="text-center">BOB</th>
+                            <th class="text-center">Rev</th>
+                            <th class="text-center">ADR</th>
+                            <th class="text-center">Rate</th>
+                            <th class="text-center">Min</th>
+                            <th class="text-center">Avg</th>
+                            <th class="text-center">Max</th>
+                        </tr>
+                        <tr ng-repeat="fig in grid.records">
+                            <td class="text-right">{{ fig[0] }}</td>
+                            <td class="text-right">{{ fig[8] }}</td>
+                            <td class="text-right">{{ fig[1] }}</td>
+                            <td class="text-right">{{ fig[2] }}</td>
+                            <td class="text-right">{{ fig[3] }}</td>
+                            <td class="text-right">{{ fig[4] }}</td>
+                            <td class="text-right">{{ fig[6] }}</td>
+                            <td class="text-right">{{ fig[7] }}</td>
+                            <td class="text-right">{{ fig[5] }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <!--custom chart start-->
+            <section class="panel">
+                <div class="revenue-head">
+                    <span>
+                        <i class="fa fa-money"></i>
+                    </span>
+                    <h3>Pickup Revenue</h3>
+                    <span class="rev-combo pull-right">
+                        Last 30 Days
+                    </span>
+                </div>
+                <div class="panel-body pr" style="padding-bottom: 0px;">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_revenue_pickup"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_revenue_pickup"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_revenue_pickup"></div>
+                    </div>
+                </div>
+            </section>
+            <!--custom chart end-->
+            <!--custom chart start-->
+            <section class="panel">
+                <div class="occupancy-head">
+                    <span>
+                        <i class="fa fa-line-chart"></i>
+                    </span>
+                    <h3>Pickup Rooms</h3>
+                    <span class="rev-combo pull-right">
+                        Last 30 Days
+                    </span>
+                </div>
+                <div class="panel-body pr" style="padding-bottom: 0px;">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_occupancy_pickup"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_occupancy_pickup"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_occupancy_pickup"></div>
+                    </div>
+                </div>
+            </section>
+            <!--custom chart end-->
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <div class="revenue-head">
+                    <span>
+                        <i class="fa fa-binoculars"></i>
+                    </span>
+                    <h3>Competitor Pricing</h3>
+                    <span class="rev-combo pull-right">
+                        Next 10 Days
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <table ng-show="!loadingClient" class="table table-striped table-hover table-bordered">
+                        <tr>
+                            <th style="width:100px;">Date</th>
+                            <th style="width:75px;">DOW</th>
+                            <th ng-repeat="competitor in competitor_pricing.competitors">{{ competitor }}</th>
+                        </tr>
+                        <tr ng-show="$index <= 9" ng-repeat="record in competitor_pricing.records track by $index">
+                            <td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <!--custom chart start-->
+            <section class="panel">
+                <div class="orange-head">
+                    <span>
+                        <i class="fa fa-money"></i>
+                    </span>
+                    <h3>Revenue</h3>
+                    <span class="rev-combo pull-right">
+                        Current Trends
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_revenue"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_revenue"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_revenue"></div>
+                    </div>
+                </div>
+            </section>
+            <!--custom chart end-->
+        </div>
+        <div class="col-lg-6">
+            <!--custom chart start-->
+            <section class="panel">
+                <div class="booking-head">
+                    <span>
+                        <i class="fa fa-line-chart"></i>
+                    </span>
+                    <h3>Occupancy</h3>
+                    <span class="rev-combo pull-right">
+                        Current Trends
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_occupancy"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_occupancy"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_occupancy"></div>
+                    </div>
+                </div>
+            </section>
+            <!--custom chart end-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <section class="panel">
+                <div class="booking-head">
+                    <span>
+                        <i class="fa fa-money"></i>
+                    </span>
+                    <h3>Revenue</h3>
+                    <span class="rev-combo pull-right">
+                        Last 30 Days
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_revenue_30days"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_revenue_30days"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_revenue_30days"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="panel">
+                <div class="yellow-head">
+                    <span>
+                        <i class="fa fa-line-chart"></i>
+                    </span>
+                    <h3>Rooms</h3>
+                    <span class="rev-combo pull-right">
+                        Last 30 Days
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_booking_count"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_booking_count"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_booking_count"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="panel">
+                <div class="purple-head">
+                    <span>
+                        <i class="fa fa-money"></i>
+                    </span>
+                    <h3>Revenue</h3>
+                    <span class="rev-combo pull-right">
+                        Last 1 Year
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_revenue_365days"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_revenue_365days"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_revenue_365days"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3">
+            <section class="panel">
+                <div class="orange-head">
+                    <span>
+                        <i class="fa fa-line-chart"></i>
+                    </span>
+                    <h3>Rooms</h3>
+                    <span class="rev-combo pull-right">
+                        Last 1 Year
+                    </span>
+                </div>
+                <div class="panel-body pr">
+                    <div ng-show="loadingClient" style="text-align: center;">
+                        <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
+                        <p>Loading details.. Please wait..</p>
+                    </div>
+                    <div class="chart-container dashboard-chart-container">
+                        <button class="btn btn-default btn-chart-zoom" data-chart="dashboard_room_count"><i class="fa fa-search-plus"></i></button>
+                        <button class="btn btn-default btn-chart-zoom-out" data-chart="dashboard_room_count"><i class="fa fa-search-minus"></i></button>
+                        <div id="dashboard_room_count"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</section>
+<script type="text/ng-template" id="statBoxRevenuePopover.html">
+    <table><tr><td>Yesterday</td><td>: {{ statBoxRevenuePopover.revenue_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxRevenuePopover.revenue_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxRevenuePopover.revenue_lm }}</td></tr></table>
+</script>
+<script type="text/ng-template" id="statBoxADRPopover.html">
+    <table><tr><td>Yesterday</td><td>: {{ statBoxADRPopover.arr_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxADRPopover.arr_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxADRPopover.arr_lm }}</td></tr></table>
+</script>
+<script type="text/ng-template" id="statBoxOccupancyPopover.html">
+    <table><tr><td>Yesterday</td><td>: {{ statBoxOccupancyPopover.occupancy_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxOccupancyPopover.occupancy_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxOccupancyPopover.occupancy_lm }}</td></tr></table>
+</script>
+<script type="text/ng-template" id="statBoxPickupPopover.html">
+    <table><tr><td>Yesterday</td><td>: {{ statBoxPickupPopover.pickups_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxPickupPopover.pickups_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxPickupPopover.pickups_lm }}</td></tr></table>
+</script>

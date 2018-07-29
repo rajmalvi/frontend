@@ -1,0 +1,185 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->              
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <!--progress bar start-->
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="/clients" class="btn btn-back btn-panel-nav"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <span class="hidden-xs"><a href="/clients">Clients</a> / </span>Edit Client / {{ hotel_details.property_name }}
+                </header>
+                <div class="panel-body">     
+                    <form id="client_form" name="client_form" ng-submit="updateClient(client_form.$valid)"> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Property Name<span style="color:red">*</span></label>
+                                    <input ng-model="hotel_details.property_name" type="text" id="name" name="property_name" class="form-control" placeholder="e.g., hotel" required>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address<span style="color:red">*</span></label>
+                                    <input type="text" class="form-control" name="address" ng-model="hotel_details.address"/>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="country">Country<span style="color:red">*</span></label>
+                                    <ui-select ng-model="hotel_details.country" name="country" theme="bootstrap" on-select="country_change($itemy)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                            <ui-select-match placeholder="Enter keywords...">{{hotel_details.country}}</ui-select-match>
+                                            <ui-select-choices repeat="country in countries track by $index"
+                                                               refresh="searchCountry($select.search)"
+                                                               refresh-delay="0">
+                                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="state">State<span style="color:red">*</span></label>
+                                      <ui-select ng-model="hotel_details.state" name="state" on-select="state_change($item,$model)" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                            <ui-select-match placeholder="Enter keywords...">
+                                                <p ng-show="hotel_details.state.name == null">{{hotel_details.state}}</p>
+                                                <p ng-show="hotel_details.state.name != null">{{hotel_details.state.name}}</p>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="state in states track by $index"
+                                                               refresh="searchStates($select.search,hotel_details.country)"
+                                                               refresh-delay="0">
+                                                <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="city">City<span style="color:red">*</span></label>
+                                  <ui-select ng-model="hotel_details.city"  name="city" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                                            <ui-select-match placeholder="Enter keywords...">
+                                                <p ng-show="hotel_details.city.name == null">{{hotel_details.city}}</p>
+                                                <p ng-show="hotel_details.city.name != null">{{hotel_details.city.name}}</p>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="city in cities track by $index"
+                                                               refresh="searchCity($select.search,hotel_details.state)"
+                                                               refresh-delay="0">
+                                                <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                  </ui-select>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                           
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pincode<span style="color:red">*</span></label>
+                                    <input ng-model="hotel_details.pincode" type="text" id="pincode" name="pincode" class="form-control" placeholder="e.g., 411041" required>
+                                </div>
+                            </div>
+                           <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="manager">Account Manager <span style="color:red">*</span></label>
+                                        <ui-select ng-model="hotel_details.account_manager" on-select="selectAccountManager($item,$model)" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a hotel">
+                                            <ui-select-match placeholder="Enter keywords...">
+                                            <p ng-show="hotel_details.account_manager.account_fname == null">{{hotel_details.account_manager}}</p>
+                                            <p ng-show="hotel_details.account_manager.account_fname != null">{{hotel_details.account_manager.account_fname}} {{hotel_details.account_manager.account_lname}}</p>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="manager in managers track by $index"
+                                                               refresh="searchAccountManager($select.search)"
+                                                               refresh-delay="0">
+                                                <div ng-bind-html="manager.formatted_name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                        </div> 
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Hotel Flag<span style="color:red">*</span></label>
+                                    <select ng-model="hotel_details.flag" id="flag" name="flag" class="form-control" required>
+                                        <option value="">Select</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Green">Green</option>
+                                        <option value="Yellow">Yellow</option>
+                                        <option value="Red">Red</option>
+                                    </select>
+                                    <label class="form_errors" ng-show="client_form.flag.$invalid && basicSubmitted == true">Please select a flag.</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Hotel Type<span style="color:red">*</span></label>
+                                    <select ng-model="hotel_details.type" id="type" name="type" class="form-control" required>
+                                        <option value="">Select</option>
+                                        <option value="Leisure">Leisure</option>
+                                        <option value="Business">Business</option>
+                                    </select>
+                                    <label class="form_errors" ng-show="client_form.type.$invalid && basicSubmitted == true">Please select a type.</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Yield Type<span style="color:red">*</span></label>
+                                    <select ng-model="hotel_details.yield" id="yield" name="yield" class="form-control" required>
+                                        <option value="">Select</option>
+                                        <option value="Volume">Volume</option>
+                                        <option value="Revenue">Revenue</option>
+                                    </select>
+                                    <label class="form_errors" ng-show="client_form.yield.$invalid && basicSubmitted == true">Please select a yield type.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Hotel Capacity<span style="color:red">*</span></label>
+                                    <input ng-model="hotel_details.capacity" type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="e.g., 100" required>
+                                    <label class="form_errors" ng-show="client_form.max_capacity.$invalid && basicSubmitted == true">Please enter hotel capacity</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="us3" style="height: 400px;"></div>
+                                <div class="clearfix">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div ng-show="client_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+                        <div ng-show="loading_msg" class="alert alert-info text-left">Please wait...</div>
+                        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+                        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>  
+                        <a href="/clients" class="btn btn-danger pull-right">Cancel</a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="client_form.$invalid" style="margin-right:3px;">Submit</button>
+                        
+                    </form>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- page end-->
+</section>
+
+<script>
+            $('#us3').locationpicker({
+                location: {
+                    latitude: null,
+                    longitude: null
+                },
+                radius: 300,
+                inputBinding: {
+                    latitudeInput: $('#us3-lat'),
+                    longitudeInput: $('#us3-lon'),
+                    locationNameInput: $('#us3-address')
+                },
+                enableAutocomplete: true,
+                onchanged: function (currentLocation, radius, isMarkerDropped) {
+                    // Uncomment line below to show alert on each Location Changed event
+                    //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+                }
+            });
+</script>

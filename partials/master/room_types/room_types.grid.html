@@ -1,0 +1,218 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Room Types
+                    <button class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" ng-click="openRoomTypeModal()"> <i class="fa fa-plus"></i> New Room Type </button>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="rooms != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">Room Types Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-click="editRoomTypeModal(rooms)"><a>Edit</a></li>
+                                 <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteRoom(rooms.id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p> <strong>Name:</strong> {{ rooms.name|ucwords}}</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p><strong>Registration Date:</strong><span class="record_date"> {{ rooms.datetime}} </span><br /></p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <p><strong>Author:</strong><span class="record_author_name"> {{ rooms.author_fname|ucwords}} {{ rooms.author_lname|ucwords}}</span><br />
+                         </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                         <p><strong>Status:</strong> 
+                              <span class="active_status" ng-show="rooms.status == 'active'">{{ rooms.status|ucwords }}</span>
+                              <span class="disabled_status" ng-show="rooms.status == 'disabled'">{{ rooms.status|ucwords }}</span>
+                         </p>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xs-12" ng-show="rooms.description != ''">
+                            <p> <strong>Description:</strong> {{ rooms.description}}</p>
+                        </div> 
+                    </div>
+                </div> 
+            </div>                              
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="color:#255E83;">
+                        <ul class="nav nav-tabs">
+                            <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">System To API Room Type Mappings</li>
+
+                        </ul>
+                    </div>
+                    <div class="panel-body" style="line-height: 1.74;">
+                        <div class="panel-heading pr1">
+                            <ul>
+                                <li>Room Type Mappings</li>
+                                <li ng-click="openRoomTypeMapModal()"><a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;"><i class="fa fa-plus"></i> New Mapping </a></li>
+                            </ul>
+                        </div>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Source</th>
+                                    <th>Source Room Type</th>
+                                    <th>System Room Type</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="room_data in roomtypes_data">
+                                    <td>{{$index+1}}</td>
+                                    <td ng-show="room_data.type == 'rateshopping'">{{room_data.type|ucwords}}</td>
+                                    <td ng-show="room_data.type == 'staah'">{{room_data.type|uppercase}}</td>
+                                    <td>{{room_data.client_room_type|ucwords}}</td>
+                                    <td>{{room_data.system_name|ucwords}}</td>
+                                    <td><button class="btn btn-info btn-xs" ng-click="editRoomTypeMapModal(room_data)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_roomMapping(room_data.id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page end-->
+    <!------------------Add room type modal-------------------->
+    <script type="text/ng-template" id="room_type_add.html">
+        <div class="modal-header">   
+        <h4 class="modal-title">{{modal_heading}}</h4>
+        </div>
+        <div class="modal-body">
+        <form id="room_form" name="room_form" novalidate> 
+        <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label>Room Name<span style="color:red">*</span></label>
+        <input ng-model="room_data.name" type="text" id="name" name="name" class="form-control" placeholder="e.g., room1" required>
+        <label for="name" class="form_errors" ng-show="room_form.name.$invalid && !room_form.name.$pristine">Please enter a room name</label>
+        </div>
+        </div>
+        </div> 
+        <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label for="status">Room Status<span style="color:red">*</span></label>
+        <ui-select ng-model="room_data.status" name="status" id="qm_select" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="st.name as st in status track by $index"
+        refresh="searchStatus($select.search)"
+        refresh-delay="0">
+        <div ng-bind-html="st.name | highlight: $select.search"></div>
+        </ui-select-choices>
+        </ui-select>
+        <label for="status" class="form_errors" ng-show="hotel_chain_form.status.$invalid && !status.$pristine">Please select item type</label>
+
+        </div>
+        </div>
+        </div> 
+        <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+        <label>Room Description</label>
+        <textarea ng-model="room_data.description" type="text" id="description" name="description" class="form-control"></textarea>
+        </div>
+        </div>
+        </div> 
+
+        </form>
+        </div>
+        <div class="modal-footer">
+
+        <div ng-show="room_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+        <div ng-show="room_form.loading" class="alert alert-info text-left">Please wait...</div>
+        <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+        <button type="button" class="btn btn-primary" ng-disabled="room_form.$invalid" ng-click="addRoom(room_form.$valid)" style="margin-right:3px;">Submit</button>
+        <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+
+    </script>
+
+    <!------------------add room mappings modal-------------------->
+    <script type="text/ng-template" id="room_mapping.html">
+<div class="modal-header">   
+    <h4 class="modal-title">{{modal_heading}}</h4>
+</div>
+<div class="modal-body">
+    <form id="room_mapping" name="room_mapping" novalidate> 
+        
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                       <label for="status">{{for_label}} Source Room Type<span style="color:red">*</span></label>
+                                <input ng-model="room_detail.client_room_type" type="text" id="client_room_type" name="client_room_type" class="form-control" placeholder="e.g., Beach View" required>
+                    </div>
+                </div>
+            </div>
+	<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                       <label for="status">System Room Type<span style="color:red">*</span></label>
+                        <ui-select ng-model="room_detail.room_detail" name="room_detail" id="qm_select" on-select="selectHotel($item,$model)" theme="bootstrap" reset-search-input="false" style="width: 100%;" title="Select a hotel">
+                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="room_detail.id as room_detail in room_details track by $index"
+                        refresh="searchRoomTypes($select.search)"
+                        refresh-delay="0">
+                        <div ng-bind-html="room_detail.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="form-group">
+                        <label>Source<span style="color:red">*</span></label>
+                        <ui-select ng-model="room_detail.type" name="type" theme="bootstrap" id="qm_select" on-select="selectfor($item)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                        <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="type.name as type in types track by $index"
+                        refresh="searchType($select.search)"
+                        refresh-delay="0">
+                        <div ng-bind-html="type.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                        </ui-select>
+                       </div>
+                </div>
+                </div> 
+            </div> 
+	  
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="room_mapping.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="room_mapping.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="room_mapping.$invalid" ng-click="addRoomMapping()" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+    </script>
+
+</section>

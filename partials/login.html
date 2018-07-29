@@ -1,0 +1,63 @@
+<!--main content start-->
+<div class="login-page">
+    <section class="wrapper site-min-height">
+        <section class="login-part">
+            <div class="container">
+                <form class="form-login" name="login_form" id="login_form"  novalidate>
+                    <h2 class="form-login-heading">RevSeed</h2>
+                    <div class="login-wrap">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control login-input" placeholder="Email" name="account_email" autofocus ng-model="login.account_email" required ng-pattern="/[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Za-z]{2,6}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/">
+                                    <label for="account_email" class="form_errors" ng-show="login_form.account_email.$invalid && !login_form.account_email.$pristine">Please enter valid email address</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">  
+                                <div class="form-group">
+                                    <input type="password" class="form-control login-input" placeholder="Password" name="account_password" ng-model="login.account_password" required minlength="6" maxlength="6">
+                                    <label for="account_password" class="form_errors" ng-show="login_form.account_password.$invalid && !login_form.account_password.$pristine">Please enter 6  characters password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="checkbox">
+                            <!--<input type="checkbox" value="remember-me"> Remember me-->
+                            <span class="pull-right">
+                                <a data-toggle="modal" href="#forgot-password"> Forgot Password?</a>
+                            </span><br />
+                        </label>
+                        <div ng-show="login_form.loading" class="alert alert-info">Please wait...</div>
+                        <div ng-show="login_form.success" class="alert alert-success">{{ login_form.message}}</div>
+                        <div ng-show="login_form.danger" class="alert alert-danger" ng-bind-html="login_form.message"></div>   
+                        <button class="btn btn-lg btn-login btn-block" type="button" ng-click="doLogin()" ng-disabled="login_form.$invalid">Sign in</button>
+                    </div>
+                </form>
+
+                <!-- Modal -->
+                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="forgot-password" class="modal fade">
+                    <div class="modal-dialog">
+                        <form name="forgot_form" id="forgot_form" ng-submit="doForgot(forgot_form.$valid)" novalidate>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Forgot Password ?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Enter your e-mail address below to reset your password.</p>
+                                    <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" ng-model="forgot.email" required ng-pattern="/[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Za-z]{2,6}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/">
+                                    <label for="email" class="form_errors" ng-show="forgot_form.email.$invalid && !forgot_form.email.$pristine">Please enter valid email address</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                    <button class="btn btn-success" type="submit" ng-disabled="forgot_form.$invalid">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- modal -->
+        </section>
+    </section>
+</div>

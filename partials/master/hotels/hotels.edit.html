@@ -1,0 +1,194 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->              
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            <!--progress bar start-->
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="/clients" class="btn btn-back btn-panel-nav"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <span class="hidden-xs"><a href="/master/hotels">Hotels</a> / </span>New Hotel<br><br>
+                        <div class="form-group">
+                        </div>
+                </header>
+                <div class="panel-body">
+                      <form id="client_form" name="client_form" novalidate> 
+        <input ng-model="hotel_edit.id" type="hidden" id="id" name="id" class="form-control" value="new"/>
+	<div class="row">
+                <div class="col-md-12">
+                   <div class="form-group">
+                        <label>Property Name<span style="color:red">*</span></label>
+                        <input ng-model="hotel_edit.name" type="text" id="name" name="name" class="form-control" placeholder="e.g., hotel">
+                       </div>
+                </div>
+            </div> 
+	 
+	   <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Address<span style="color:red">*</span></label>
+                        <input type="text" class="form-control" id="us3-address" name="address" ng-model="hotel_edit.address"/>
+                       </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="country">Country<span style="color:red">*</span></label>{{hotel_edit.country}}
+                        <!--<input type="text" class="form-control" name="country" ng-model="hotel_edit.country"/>-->
+                                <select name="country" id="country" class="select2 form-control" required ng-model="hotel_edit.country" ng-change="get_state(hotel_edit.country)" data-placeholder="select country">
+                                        <option ng-repeat="country in countries" value="{{country.id}}">{{country.name}}</option>
+                                        <label for="country" class="form_errors" ng-show="client_form.country.$invalid && !country.$pristine">Please select country</label>
+                                    </select>
+                         </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="state">State<span style="color:red">*</span></label>
+                        <!--<input type="text" class="form-control" name="state" ng-model="hotel_edit.state" readonly/>-->
+                                <select name="state" id="state" class="select2 form-control" required ng-model="hotel_edit.state" ng-change="get_cities(hotel_edit.state)" data-placeholder="select state">
+				    <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+				   <label for="state" class="form_errors" ng-show="client_form.state.$invalid && !state.$pristine">Please select state</label>
+                                  </select>
+                         </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="city">City<span style="color:red">*</span></label>
+                        <!--<input type="text" class="form-control" name="city" ng-model="hotel_edit.city" readonly/>-->
+                                <select name="city" id="city_name" class="select2 form-control" required ng-model="hotel_edit.city" data-placeholder="select city">
+				    <option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</option>
+				   <label for="city" class="form_errors" ng-show="client_form.city.$invalid && !city.$pristine">Please select city</label>
+                                  </select>
+                         </div>
+                </div>
+            </div> 
+            <div class="row">
+<!--                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="chain_name">Property Chain<span style="color:red">*</span></label>
+                        <input type="text" class="form-control" name="address" ng-model="hotel_edit.city"/>
+                                <select name="chain_name" id="chain_name" class="select2 form-control" required ng-model="chain.name" data-placeholder="select property chain">
+				    <option>Select property chain</option>
+				    <option ng-repeat="chain in hotel_chains" value="{{chain.id}}">{{chain.name}}</option>
+                                  <label for="chain_name" class="form_errors" ng-show="client_form.chain_name.$invalid && !chain_name.$pristine">Please select property chain</label>
+                                  </select>
+                         </div>
+                </div>-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Pincode<span style="color:red">*</span></label>
+                        <input ng-model="hotel_edit.zip" type="text" id="pincode" name="pincode" class="form-control" placeholder="e.g., 411041">
+                       </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Latitude<span style="color:red">*</span></label>
+                        <input ng-model="hotel_edit.latitude" type="text" id="us3-lat" name="latitude" class="form-control" placeholder="e.g., 411041">
+                       </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Longitude<span style="color:red">*</span></label>
+                        <input ng-model="hotel_edit.longitude" type="text" id="us3-lon" name="longitude" class="form-control" placeholder="e.g., 411041">
+                       </div>
+                </div>
+<!--                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Property Capacity<span style="color:red">*</span></label>
+                        <input ng-model="hotel_edit.property_capacity" type="text" id="property_capacity" name="property_capacity" class="form-control" placeholder="e.g., capacity" required>
+                       </div>
+                </div>-->
+            </div> 
+<!--             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="channel_manager">Channel Manager<span style="color:red">*</span></label>
+                                <select name="channel_manager" id="channel_manager" class="select2 form-control" required ng-model="channel_manager" data-placeholder="select channel manager">
+				   <option value="staah">STAAH</option>
+                                  <label for="channel_manager" class="form_errors" ng-show="client_form.channel_manager.$invalid && !channel_manager.$pristine">Please select Channel Manager</label>
+                                  </select>
+                         </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="currency">Property Currency<span style="color:red">*</span></label>
+                                <select name="currency" id="currency" class="select2 form-control" required ng-model="curr.name" data-placeholder="select Property Currency">
+				   <option ng-repeat="curr in currency" value="{{curr.id}}">{{curr.name}}</option>
+                                  <label for="currency" class="form_errors" ng-show="client_form.currency.$invalid && !currency.$pristine">Please select Property Currency</label>
+                                  </select>
+                         </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="status">Proprty Status<span style="color:red">*</span></label>
+                                <select name="status" id="status" class="select2 form-control" required ng-model="status" data-placeholder="select Proprty Status">
+				    <option>Select Proprty Status/option>
+				    <option value="active">Active</option>
+                                    <option value="disabled">Disabled</option>
+                                  <label for="status" class="form_errors" ng-show="client_form.status.$invalid && !status.$pristine">Please select Proprty Status</label>
+                                  </select>
+                         </div>
+                </div>
+            </div> -->
+              <div class="row">
+              <div class="col-lg-12">
+        <div id="us3" style="height: 400px;"></div>
+        <div class="clearfix">&nbsp;</div>
+              </div></div>
+<!--         <div class="row">
+             <div class="form-group">
+                <label class="p-r-small col-sm-1 col-md-2 col-lg-2 control-label">Latitude:</label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" style="width: 110px" ng-model="hotel_edit.latitude" name="latitude"/>
+                </div>
+               
+                <label class="p-r-small col-sm-2 col-md-2 col-lg-2 control-label">Longitude:</label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" style="width: 110px" ng-model="hotel_edit.longitude" name="longitude"/>
+                </div>
+            </div> 
+            </div> -->
+<!--                    <div class="form-group">
+                       <label for="compititors">Compititors<span style="color:red">*</span></label>
+                       <select name="compititors[]" id="hotel" class="select2 form-control" required ng-model="comp.name" data-placeholder="select compititors" multiple="">
+				    <option ng-repeat="comp in hotels" value="{{comp.id}}">{{comp.name}}</option>
+                                  <label for="compititors" class="form_errors" ng-show="client_form.compititors.$invalid && !compititors.$pristine">Please select hotel</label>
+                                  </select>
+                         </div>-->
+                      </form><br>
+  <div ng-show="client_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="client_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>  
+       <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary pull-right" ng-disabled="client_form.$invalid" ng-click="addClient()" style="margin-right:3px;">Submit</button>
+ 
+                            </div>
+                            </section>
+                        </div>
+                </div>
+                <!-- page end-->
+            </section>
+
+ <script>
+            $('#us3').locationpicker({
+                location: {
+                    latitude: null,
+                    longitude: null
+                },
+                radius: 300,
+                inputBinding: {
+                    latitudeInput: $('#us3-lat'),
+                    longitudeInput: $('#us3-lon'),
+                    locationNameInput: $('#us3-address')
+                },
+                enableAutocomplete: true,
+                onchanged: function (currentLocation, radius, isMarkerDropped) {
+                    // Uncomment line below to show alert on each Location Changed event
+                    //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+                }
+            });
+        </script>

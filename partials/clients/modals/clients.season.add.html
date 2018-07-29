@@ -1,0 +1,63 @@
+<form id="season_form" name="season_form" ng-submit="addSeason()" novalidate> 
+<div class="modal-header">   
+    <h4 class="modal-title">{{modal_heading}}</h4>
+</div>
+<div class="modal-body">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Season Name<span style="color:red">*</span></label>
+                    <input ng-model="season_data.season_name" type="text" id="season_name" name="season_name" class="form-control" placeholder="e.g., Season 1" required>
+                    <label for="season_name" class="form_errors" ng-show="season_form.season_name.$invalid && !season_form.season_name.$pristine">Please enter a season name</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Season Number<span style="color:red">*</span></label>
+                    <input ng-model="season_data.number" type="number" id="season_number" name="season_number" min="0" class="form-control" placeholder="e.g., 1" required>
+                    <label for="season_number" class="form_errors" ng-show="season_form.season_number.$invalid && !season_form.season_number.$pristine">Please enter a season number</label>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Start Week<span style="color:red">*</span></label>
+                    <input ng-model="season_data.start_date" type="number" id="start_date" placeholder="e.g., 49" name="start_date" class="form-control" required>
+                    <label for="start_date" class="form_errors" ng-show="season_form.start_date.$invalid && !season_form.start_date.$pristine">Please enter a start week</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>End Week<span style="color:red">*</span></label>
+                    <input ng-model="season_data.end_date" type="number" id="end_date" name="end_date" placeholder="e.g., 2" class="form-control" required>
+                     <label for="end_date" class="form_errors" ng-show="season_form.end_date.$invalid && !season_form.end_date.$pristine">Please enter an end week</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Max Capacity<span style="color:red">*</span></label>
+                    <input ng-model="season_data.max_capacity" type="number" id="max_capacity" placeholder="e.g., 25" name="max_capacity" class="form-control" required min="1">
+                    <label for="max_capacity" class="form_errors" ng-show="season_form.max_capacity.$invalid && !season_form.max_capacity.$pristine">Please enter a max capacity for this season.</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Min Price<span style="color:red">*</span></label>
+                    <input ng-model="season_data.min_price" type="number" id="min_price" placeholder="e.g., 2000" name="min_price" class="form-control" required min="1">
+                    <label for="min_price" class="form_errors" ng-show="season_form.min_price.$invalid && !season_form.min_price.$pristine">Please enter a min price for this season.</label>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="season_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="season_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="submit" class="btn btn-primary" ng-disabled="season_form.$invalid" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+</form>

@@ -1,0 +1,81 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading pr">
+                    All Users
+                     <a class="btn btn-primary btn-xs mbr" style="margin-left: 10px;" href="/users/new"> <i class="fa fa-plus"></i> New User </a>
+                </div>
+                <div class="panel-body">
+                    <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-show="user != null">
+                <div class="panel-heading" style="color:#255E83;">
+                    <ul class="nav nav-tabs">
+                        <li class="active" style="font-size: 16px; color:#fff; padding: 10px;">User Details</li>
+                        <li class="dropdown pull-right" >
+                            <button class="btn btn-sm btn-white dropdown-toggle" style="margin: 5px 10px 0px 0px; color:black;" type="button" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/member/edit/{{account.account_id}}">Edit</a></li>
+<!--                                <li><a href="#" ng-click="changeStatus(account.account_id, 'block')"  ng-show="account.account_status == 'active' || account.account_status == 'pending'">Block</a></li> 
+                                <li><a href="#" ng-click="changeStatus(account.account_id, 'active')"  ng-show="account.account_status == 'block' || account.account_status == 'pending'">Activate</a></li>-->
+                                <li class="divider"></li>
+                                <li class="alert-danger"><a href="#" ng-click="deleteClient(user.user_id)">Delete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body" style="line-height: 1.74;">  
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <p> <strong>Name:</strong> {{ user.user_name|ucwords}}</p>
+                            <p> <strong>Email:</strong> {{ user.user_email}}</p>
+                            <p> <strong>Password:</strong> {{ user.user_password}}</p>
+                            <p> <strong>Property:</strong> {{ user.user_property_id}}</p>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <p> <strong>Mobile:</strong> +91 {{ user.user_phone_no}}</p>
+                            <p> <strong>Registration Date:</strong>  {{ user.user_reg_date}}</p>
+                            <p> <strong>Role:</strong> {{ user.user_role|ucwords}}</p>
+                            <p> <strong>Status:</strong> {{ user.user_status}}</p>
+                        </div>
+<!--                        <div class="col-md-6 col-xs-12">
+                            <div ng-hide="account.attachment.showimg == 'default'">
+                                <div ng-show="account.attachment">
+                                    <strong>Profile Picture:</strong><br />
+                                    <ul class="uploads_container clearfix">
+                                        <li>
+                                            <span title="{{account.attachment.attachment_original_name}}">
+                                                <img ng-src="{{ uploadsURL}}/{{account.attachment.attachment_file_path}}" />
+                                                <a class="download_attachment btn btn-info btn-xs" href="{{backend}}/media/downloadAtt/?token={{account.attachment.attachment_token}}" target="_blank"><i class="fa fa-download"></i></a>
+                                            </span>
+                                        </li>                            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>-->
+<!--                        <div ng-show="account.attachments.length > 0">
+                            <strong>Attachments:</strong><br />
+                            <ul class="uploads_containers clearfix">
+                                <li ng-repeat="attachments in account.attachments">
+                                    <span title="{{attachments.attachment_original_name}}">
+                                        <img ng-src="{{ uploadsURL}}/{{attachments.attachment_file_path}}" />
+                                        <a class="download_attachment btn btn-info btn-xs" href="{{backend}}/media/downloadAtt/?token={{attachments.attachment_token}}" target="_blank"><i class="fa fa-download"></i></a>
+                                    </span>
+                                </li>                            
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </div>
+    
+
+
+</script>
+
+</section>

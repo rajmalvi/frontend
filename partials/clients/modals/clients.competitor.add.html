@@ -1,0 +1,81 @@
+<div class="modal-header">   
+    <h4 class="modal-title">Add Competitor</h4>
+</div>
+<div class="modal-body">
+    <form id="competitor_form" name="competitor_form" novalidate> 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="status">Country<span style="color:red">*</span></label>
+                    <ui-select ng-model="competitor_data.country" name="country" theme="bootstrap" on-select="country_change($item)" id="qm_select" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                        <ui-select-match placeholder="Enter keywords...">{{competitor_data.country.name}}</ui-select-match>
+                        <ui-select-choices repeat="country in countries track by $index"
+                                           refresh="searchCountry($select.search)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="status">State<span style="color:red">*</span></label>
+                    <ui-select ng-model="competitor_data.state" ng-disabled="competitor_data.country == ''" name="state" on-select="state_change($item,$model)" theme="bootstrap" id="qm_select" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                        <ui-select-match placeholder="Enter keywords...">
+                            <p ng-show="competitor_data.state.name == null">{{competitor_data.state}}</p>
+                            <p ng-show="competitor_data.state.name != null">{{competitor_data.state.name}}</p>
+                        </ui-select-match>
+                        <ui-select-choices repeat="state in states track by $index"
+                                           refresh="searchStates($select.search,competitor_data.country)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <label class="form_errors" ng-show="show_error_state == true">{{state_no_msg}}</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="status">City<span style="color:red">*</span></label>
+                    <ui-select ng-model="competitor_data.city" name="city" ng-disabled="competitor_data.state == ''" theme="bootstrap" on-select="city_change($item,$model)" id="qm_select" reset-search-input="false"  style="width: 100%;" title="Select a area impact" required>
+                        <ui-select-match placeholder="Enter keywords...">
+                            <p ng-show="competitor_data.city.name == null">{{competitor_data.city}}</p>
+                            <p ng-show="competitor_data.city.name != null">{{competitor_data.city.name}}</p>
+                        </ui-select-match>
+                        <ui-select-choices repeat="city in cities track by $index"
+                                           refresh="searchCity($select.search,competitor_data.state)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <label class="form_errors" ng-show="show_error_city == true">{{state_no_msg}}</label>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="hotel">Hotel <span style="color:red">*</span></label>
+                    <ui-select ng-model="competitor_data.formatted_name" name="formatted_name" ng-disabled="competitor_data.city == ''" multiple on-select="selectHotel($item,$model)" id="qm_select" theme="bootstrap" reset-search-input="true" class="uiselect_css" required>
+                        <ui-select-match placeholder="Enter keywords...">{{$item.formatted_name}}</ui-select-match>
+                        <ui-select-choices repeat="hotel in hotels track by $index"
+                                           refresh="searchHotels1($select.search)"
+                                           refresh-delay="0">
+                            <div ng-bind-html="hotel.formatted_name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+
+    <div ng-show="competitor_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
+    <div ng-show="competitor_form.loading" class="alert alert-info text-left">Please wait...</div>
+    <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
+    <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>                    
+    <button type="button" class="btn btn-primary" ng-disabled="competitor_form.$invalid" ng-click="addCompetitors()" style="margin-right:3px;">Submit</button>
+    <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
+</div>

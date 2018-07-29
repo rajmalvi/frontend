@@ -1,0 +1,35 @@
+<div class="modal-header">   
+    <h4 class="modal-title">{{ modal_title }}</h4>
+</div>
+<div class="modal-body">
+    <div class="table-responsive">
+        <table ng-show="mode == 'competitors'" class="table table-striped table-bordered table-isell nmb" id="pruebatabla">
+            <!-- <thead>
+                <tr>
+                    <th style="width:250px; background: #ff3387; color:#fff;" ng-repeat="hotel in competitors">{{ hotel}}</th>
+                </tr>
+            </thead> -->
+            <tbody>
+                <tr ng-show="records.length == 0"><td colspan="25">iSell data not available.</td></tr>
+                <!-- <tr>
+                    <td ng-repeat="hotel in competitors">{{ record[$index + 13]}}</td>
+                </tr> -->
+                <tr ng-repeat="recordx in records track by $index">
+                    <td ng-repeat="cell in recordx track by $index">{{ cell }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table ng-show="mode == 'bookings'" class="table table-striped table-bordered table-isell nmb" id="pruebatabla">
+            <tbody>
+                <tr ng-show="record.length == 0"><td colspan="25">iSell data not available.</td></tr>
+                <tr ng-repeat="ota in otas_cm">
+                    <th style="width:50%; background: #33bdff; color:#fff;">{{ ota.name}}</th>
+                    <td>{{ record[$index + 13 + competitors.length]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary pull-right" type="button" ng-click="cancel()">Close</button>
+</div>

@@ -1,0 +1,166 @@
+<!--main content start-->
+<section class="wrapper site-min-height">
+    <!-- page start-->              
+    <div class="row">
+        <div class="col-lg-12">
+            <!--progress bar start-->
+            <section class="panel">
+                <header class="panel-heading">
+                    <a href="/members" class="btn btn-back btn-panel-nav"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    <span class="hidden-xs"><a href="/members">Members</a> / </span>New Member
+                </header>
+                <div class="panel-body">     
+                    <form id="wizard-form" class="ng-pristine ng-valid" novalidate="novalidate" name="member_form" ng-submit="postMemberForm()">
+                        <div role="application" class="wizard clearfix" id="steps-uid-0">
+                            <div class="steps clearfix">
+                                <ul role="tablist">
+                                    <li role="tab" ng-class="{current:stage.first.current, done:stage.first.done, disabled:stage.first.disabled}" aria-disabled="false" aria-selected="false">
+                                        <a id="steps-uid-0-t-0" href="#" aria-controls="steps-uid-0-p-0">
+                                            <span class="number">1.</span> Personal Details
+                                        </a>
+                                    </li>
+                                    <li role="tab" ng-class="{current:stage.second.current, done:stage.second.done, disabled:stage.second.disabled}" aria-disabled="false" aria-selected="true">
+                                        <a id="steps-uid-0-t-1" href="#" aria-controls="steps-uid-0-p-1">
+                                            <span class="number">2. </span> Documents
+                                        </a>
+                                    </li>
+                                    <li role="tab" ng-class="{current:stage.third.current, done:stage.third.done, disabled:stage.third.disabled}" aria-disabled="false" aria-selected="false">
+                                        <a id="steps-uid-0-t-2" href="#" aria-controls="steps-uid-0-p-2">
+                                            <span class="number">3.</span> Payments
+                                        </a>
+                                    </li>
+                                    <li role="tab" ng-class="{current:stage.fourth.current, done:stage.fourth.done, disabled:stage.fourth.disabled}" aria-disabled="true">
+                                        <a id="steps-uid-0-t-3" href="#" aria-controls="steps-uid-0-p-3">
+                                            <span class="number">4.</span> Activation
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="content clearfix">
+                                <h3 id="steps-uid-0-h-0" tabindex="-1" class="title">Personal Details</h3>
+                                <section id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body current" aria-hidden="true" style="left: 0px; display: block;">
+
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-6">
+                                            <label class="control-label " for="account_fname">First Name<span>*</span></label>
+                                            <input class="form-control" name="account_fname" type="text" ng-model="member.account_fname" required>
+                                            <label for="account_fname" class="form_errors" ng-show="member_form.account_fname.$invalid && !member_form.account_fname.$pristine">Please enter first name</label>
+                                        </div>
+                                        <div class="col-lg-6">                                        
+                                            <label class="control-label " for="account_lname">Last Name<span>*</span></label>
+                                            <input class="form-control" name="account_lname" type="text" ng-model="member.account_lname" required>
+                                            <label for="account_lname" class="form_errors" ng-show="member_form.account_fname.$invalid && !member_form.account_fname.$pristine">Please enter first name</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-4">
+                                            <label class="control-label " for="account_email">Email<span>*</span></label>
+                                            <input class="form-control" name="account_email" type="text" ng-model="member.account_email" ng-pattern="/[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Za-z]{2,6}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/" required>
+                                            <label for="account_email" class="form_errors" ng-show="member_form.account_email.$invalid && !member_form.account_email.$pristine">Please enter valid email address</label>
+                                        </div>
+                                        <div class="col-lg-4">                                        
+                                            <label class="control-label " for="account_mobile1">Mobile<span>*</span></label>
+                                            <input class="form-control" name="account_mobile1" type="text" ng-model="member.account_mobile1" ng-pattern="/^[0-9]{10}$/" maxlength="10" minlength="10" required>
+                                            <label for="account_mobile1" class="form_errors" ng-show="member_form.account_mobile1.$invalid && !member_form.account_mobile1.$pristine">Please enter 10 digits mobile number</label>
+                                        </div>
+                                        <div class="col-lg-4">                                        
+                                            <label class="control-label " for="account_mobile2">Alternate Mobile</label>
+                                            <input class="form-control" name="account_mobile2" type="text" ng-model="member.account_mobile2" ng-pattern="/^[0-9]{10}$/" maxlength="10" minlength="10">
+                                            <label for="account_mobile2" class="form_errors" ng-show="member_form.account_mobile2.$invalid && !member_form.account_mobile2.$pristine">Please enter 10 digits alternate mobile number</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-12">
+                                            <label class="control-label " for="account_address1">Address Line 1<span>*</span></label>
+                                            <input class="form-control" name="account_address1" type="text" required ng-model="member.account_address1">
+                                            <label for="account_address1" class="form_errors" ng-show="member_form.account_address1.$invalid && !member_form.account_address1.$pristine">Please enter address line 1</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix"> 
+                                        <div class="col-lg-12">
+                                            <label class="control-label " for="account_address2">Address Line 2</label>
+                                            <input class="form-control" name="account_address2" type="text" ng-model="member.account_address2">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-4">
+                                            <label class="control-label " for="account_city">City<span>*</span></label>
+                                            <input class="form-control" name="account_city" type="text" ng-model="member.account_city" required>
+                                            <label for="account_city" class="form_errors" ng-show="member_form.account_city.$invalid && !member_form.account_city.$pristine">Please select city</label>
+                                        </div>
+                                        <div class="col-lg-4">                                        
+                                            <label class="control-label " for="account_state">State<span>*</span></label>
+                                            <input class="form-control" name="account_state" type="text" ng-model="member.account_state" required>
+                                            <label for="account_state" class="form_errors" ng-show="member_form.account_state.$invalid && !member_form.account_state.$pristine">Please select state</label>
+                                        </div>
+                                        <div class="col-lg-4">                                        
+                                            <label class="control-label " for="account_pincode">Pin Code<span>*</span></label>
+                                            <input class="form-control" name="account_pincode" type="text" ng-model="member.account_pincode" required ng-pattern="/^[0-9]{10}$/" maxlength="6" minlength="6">
+                                            <label for="account_pincode" class="form_errors" ng-show="member_form.account_pincode.$invalid && !member_form.account_pincode.$pristine">Please enter 6 digits pincode</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix"> 
+                                        <div class="col-lg-12">
+                                            <strong><label>(<span>*</span>) Indicates required fields.</label></strong>
+                                        </div>
+                                    </div>
+                                </section>
+                                <h3 id="steps-uid-0-h-1" tabindex="-1" class="title current">Documents</h3>
+                                <section id="steps-uid-0-p-1" role="tabpanel" aria-labelledby="steps-uid-0-h-1" class="body" style="display: none; left: 0px;" aria-hidden="false">
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-4">
+                                            <label class="control-label " for="account_aadhaarno">Aadhaar Number<span>*</span></label>
+                                            <input class="form-control" name="account_aadhaarno" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div class="col-lg-6">
+                                            <label class="control-label" for="account_profile">Profile Picture<span>*</span></label>
+                                            <input class="form-control" name="account_profile " type="file" >
+                                            </section>
+                                            <h3 id="steps-uid-0-h-2" tabindex="-1" class="title">Payments</h3>
+                                            <section id="steps-uid-0-p-2" role="tabpanel" aria-labelledby="steps-uid-0-h-2" class="body" style="display: none; left: 1560px;" aria-hidden="true">
+                                            </section>
+                                            <h3 id="steps-uid-0-h-3" tabindex="-1" class="title">Activation</h3>
+                                            <section id="steps-uid-0-p-3" role="tabpanel" aria-labelledby="steps-uid-0-h-3" class="body" style="display: none;" aria-hidden="true">
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <ul class="list-unstyled w-list">
+                                                            <li>First Name : Mosaddek </li>
+                                                            <li>Last Name : Hossain </li>
+                                                            <li>Emial: dkmosa@gmail.com</li>
+                                                            <li>Address: 123 Dream City, Dreamland. </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <input id="acceptTerms" name="acceptTerms" class="" type="checkbox">
+                                                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                                    </div>
+                                                </div>
+
+                                            </section>
+                                        </div>
+                                        <div class="actions clearfix">
+                                            <ul role="menu" aria-label="Pagination">
+                                                <li class="" aria-disabled="false">
+                                                    <button type="button" class="btn btn-danger btn-md" ng-click="previous(-1)">Previous</button>
+                                                </li>
+                                                <li aria-hidden="false" aria-disabled="false">
+                                                    <button type="submit" class="btn btn-info btn-md" ng-click="next(1)">Next</button>
+                                                </li>
+                                                <li style="display: none;" aria-hidden="true">
+                                                    <button type="submit" class="btn btn-info btn-md" ng-click="finish()">Next</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    </form>
+                            </div>
+                            </section>
+                        </div>
+                </div>
+                <!-- page end-->
+            </section>

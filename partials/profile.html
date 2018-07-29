@@ -1,0 +1,286 @@
+<section class="wrapper site-min-height">
+    <!-- page start-->
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img ng-src="{{ uploadsURL}}/{{profile.attachment.attachment_file_path}}" alt="">
+                    </a>
+                    <h1>{{profile.account_fname| ucwords}} {{profile.account_lname| ucwords}}</h1>
+                    <p>{{profile.account_email}}</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="javascript:;" ng-click="viewProfile()"> <i class="fa fa-user"></i> Profile</a></li>
+                    <li><a href="javascript:;" ng-click="editProfile()"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section class="panel" ng-hide="profile.edit_profile">
+                <div class="panel-heading">                    
+                    View Profile
+                </div>
+                <div class="panel-body bio-graph-info">
+                    <div class="row">
+                        <div class="bio-row">
+                            <p><span>First Name </span>: {{profile.account_fname| ucwords}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Last Name </span>: {{profile.account_lname| ucwords}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Email </span>: {{profile.account_email}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Mobile 1</span>: +91 {{profile.account_mobile1}}</p>
+                        </div>
+                        <div class="bio-row" ng-show="profile.account_mobile2">
+                            <p><span>Mobile 2</span>: +91 {{profile.account_mobile2}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Address Line 1</span>: {{profile.account_address1| ucwords}}</p>
+                        </div>
+                        <div class="bio-row" ng-show="profile.account_address2">
+                            <p><span>Address Line 2</span>: {{profile.account_address2}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>City </span>: {{profile.city_name}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>State </span>: {{profile.state_name}}</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Pincode </span>: {{profile.account_pincode}}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="panel" ng-show="profile.edit_profile">
+                <div class="panel-heading">
+                    Edit Profile
+                </div>
+                <div class="panel-body bio-graph-info">
+                    <form id="systemuser_form" name="systemuser_form" ng-submit="postSystemUser(systemuser_form.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="account_fname">First Name<span>*</span></label>
+                                    <input class="form-control" name="account_fname" type="text" ng-model="profile.account_fname" required placeholder="e.g., dilip">
+                                    <label for="account_fname" class="form_errors" ng-show="systemuser_form.account_fname.$invalid && !systemuser_form.account_fname.$pristine">Please enter user first name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">  
+                                <div class="form-group">
+                                    <label class="control-label" for="account_lname">Last Name<span>*</span></label>
+                                    <input class="form-control" name="account_lname" type="text" ng-model="profile.account_lname" required placeholder="e.g., datta">
+                                    <label for="account_lname" class="form_errors" ng-show="systemuser_form.account_lname.$invalid && !systemuser_form.account_lname.$pristine">Please enter user last name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">  
+                                <div class="form-group">
+                                    <label class="control-label" for="account_email">Email<span>*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                        <input class="form-control" name="account_email" type="text" ng-model="profile.account_email" ng-pattern="/[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Za-z]{2,6}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/" required placeholder="e.g., dilip@gmail.com">
+                                    </div>
+                                    <label for="account_email" class="form_errors" ng-show="systemuser_form.account_email.$invalid && !systemuser_form.account_email.$pristine">Please enter valid email address</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">                                    
+                                    <label class="control-label" for="account_mobile1">Mobile<span>*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                        <input class="form-control" name="account_mobile1" type="text" ng-model="profile.account_mobile1" ng-pattern="/^[0-9]{10}$/" maxlength="10" minlength="10" required placeholder="e.g., 9999999999">
+                                    </div>
+                                    <label for="account_mobile1" class="form_errors" ng-show="systemuser_form.account_mobile1.$invalid && !systemuser_form.account_mobile1.$pristine">Please enter 10 digits mobile number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">                                   
+                                    <label class="control-label" for="account_mobile2">Alternate Mobile</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                        <input class="form-control" name="account_mobile2" type="text" ng-model="profile.account_mobile2" ng-pattern="/^[0-9]{10}$/" maxlength="10" minlength="10" placeholder="e.g., 8989898989">
+                                    </div>
+                                    <label for="account_mobile2" class="form_errors" ng-show="systemuser_form.account_mobile2.$invalid && !systemuser_form.account_mobile2.$pristine">Please enter 10 digits alternate mobile number</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="account_address1">Address Line 1<span>*</span></label>
+                                    <input class="form-control" name="account_address1" type="text" required ng-model="profile.account_address1" placeholder="e.g., dange chowk">
+                                    <label for="account_address1" class="form_errors" ng-show="systemuser_form.account_address1.$invalid && !systemuser_form.account_address1.$pristine">Please enter address line 1</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="account_address2" >Address Line 2</label>
+                                    <input class="form-control" name="account_address2" type="text" ng-model="profile.account_address2" placeholder="e.g., chinchwad">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="account_city">City<span>*</span></label>
+                                    <select class="form-control select2" data-placeholder="e.g., pune" name="account_city" required ng-model="profile.account_city">
+                                        <option value="">pune</option>
+                                        <option ng-repeat="city in LocationList.cities" value="{{city.location_id}}"> {{city.location_name}}</option>
+                                    </select>
+                                    <label for="account_city" class="form_errors" ng-show="systemuser_form.account_city.$invalid && !systemuser_form.account_city.$pristine">Please select city</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">                                     
+                                    <label class="control-label " for="account_state">State<span>*</span></label>
+                                    <select class="form-control select2" data-placeholder="e.g., maharashtra" name="account_state" ng-model="profile.account_state" required>
+                                        <option value="">maharashtra</option>
+                                        <option ng-repeat="state in LocationList.states" value="{{state.location_id}}"> {{state.location_name}}</option>
+                                    </select>
+                                    <label for="account_state" class="form_errors" ng-show="systemuser_form.account_state.$invalid && !systemuser_form.account_state.$pristine">Please select state</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">                                       
+                                    <label class="control-label" for="account_pincode">Pin Code<span>*</span></label>
+                                    <input class="form-control" name="account_pincode" type="text" ng-model="profile.account_pincode" required ng-pattern="/^[0-9]{6}$/" maxlength="6" minlength="6" placeholder="e.g., 411033">
+                                    <label for="account_pincode" class="form_errors" ng-show="systemuser_form.account_pincode.$invalid && !systemuser_form.account_pincode.$pristine">Please enter 6 digits pin code</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="account_note">About Me</label>
+                                    <textarea id="account_note"  class="form-control" name="account_note" ng-model="profile.account_note" placeholder="e.g., something about you."></textarea>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div ng-show="systemuser_form.$invalid" class="alert alert-info"><em>Please complete all the mandatory fields to submit this form.</em></div>
+                        <div ng-show="systemuser_form.loading" class="alert alert-info">Please wait...</div>
+                        <div ng-show="systemuser_form.success" class="alert alert-success">{{ systemuser_form.message}}</div>
+                        <div ng-show="systemuser_form.danger" class="alert alert-danger" ng-bind-html="systemuser_form.message"></div>          
+                        <input type="hidden" name="account_id" ng-model="profile.account_id" value="{{ profile.account_id}}" />             
+                        <a href="/master/users" class="btn btn-danger pull-left">Back</a>
+                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="systemuser_form.$invalid || systemuser_form.loading">Submit</button>
+                    </form>
+                </div>
+            </section>
+            <section ng-show="profile.edit_profile">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> Sets New Password & Profile Picture</div>
+                    <div class="panel-body">
+                        <form id="systemuser_form" name="systemuser_form" ng-submit="postSystemUser(systemuser_form.$valid)" novalidate>
+                            <div class="row">
+                                <div class="col-md-4">  
+                                    <div class="form-group">
+                                        <label class="control-label" for="account_email">Current Password<span>*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> <i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                            <input class="form-control" name="account_email" type="text" ng-model="profile.account_email" ng-pattern="/[a-zA-Z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-zA-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[A-Za-z]{2,6}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$/" required placeholder="e.g., dilip@gmail.com">
+                                        </div>
+                                        <label for="account_email" class="form_errors" ng-show="systemuser_form.account_email.$invalid && !systemuser_form.account_email.$pristine">Please enter valid email address</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                                    
+                                        <label class="control-label" for="account_password">New Password<span>*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+                                            <input class="form-control" name="account_password" type="password" ng-model="profile.account_password" required maxlength="6" minlength="6" placeholder="e.g., ******">
+                                        </div>
+                                        <label for="account_password" class="form_errors" ng-show="systemuser_form.account_password.$invalid && !systemuser_form.account_password.$pristine">Please enter 6 characters password</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                                    
+                                        <label class="control-label" for="account_cpassword">Re-type New Password<span>*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+                                            <input class="form-control" name="account_cpassword" type="password" ng-model="profile.account_cpassword" maxlength="6" minlength="6" required placeholder="e.g., ******">
+                                        </div>
+                                        <label for="account_cpassword" class="form_errors" ng-show="systemuser_form.account_cpassword.$invalid && !systemuser_form.account_cpassword.$pristine">Please enter 6 characters password</label>
+                                        <span ng-show="profile.account_cpassword">
+                                            <label class="form_errors" ng-show="profile.account_cpassword != profile.account_password">Wrong password. Please re-enter password</label></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="attachment">Change Profile Picture</label>
+                                        <span type="hidden" ng-click="profileuploader.uploadAll()" class="hidden" id="attachment_btn"></span>
+                                        <label for="attachment" class="btn btn-primary btn-xs" ng-click="SelectAttachmentButton()">Select File</label>
+                                        <input type="file" class="hidden" nv-file-select="" name="attachment_single" uploader="profileuploader" id="attachment"/>
+                                        <div class="row">
+                                            <div class="col-md-12" style="margin-bottom: 0px;">
+                                                <div id="attachment_Token">
+                                                    <input type="hidden" class="remove_{{profile.attachment.attachment_id}}" value="{{profile.attachment.attachment_token}}" name="att_single">
+                                                </div> 
+                                                <ul class="uploads_container clearfix">
+                                                    <li style="list-style-type:none;" ng-show="profile.attachment" class="remove_{{profile.attachment.attachment_id}}">
+                                                        <img ng-src="{{ uploadsURL}}/{{profile.attachment.attachment_file_path}}" title="{{profile.attachment.attachment_original_name}}"/>
+                                                        <span class="remove_att btn btn-danger btn-xs" ng-hide="profile.attachment.showimg == 'default'" ng-click="deleteAtt(profile.attachment.attachment_id)"><i class="fa fa-times"></i></span>
+                                                        <a style="z-index: 1;" ng-hide="profile.attachment.showimg == 'default'" title="Download" href="{{backend}}/media/downloadAtt/?token={{profile.attachment.attachment_token}}" target="_blank" class="download_att btn btn-info btn-xs mysoc-download">Download</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="alert alert-info" ng-show="attachment.loading == true">Please wait..</div>   
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            <div class="form-group">
+                                                            <label  class="col-lg-2 control-label">Current Password</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="password" class="form-control" id="c-pwd" placeholder=" ">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-lg-2 control-label">New Password</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="password" class="form-control" id="n-pwd" placeholder=" ">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-lg-2 control-label">Re-type New Password</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="password" class="form-control" id="rt-pwd" placeholder=" ">
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <label  class="col-lg-2 control-label">Change Avatar</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="file" class="file-pos" id="exampleInputFile">
+                                                            </div>
+                                                        </div>-->
+
+                            <div ng-show="systemuser_form.$invalid" class="alert alert-info"><em>Please complete all the mandatory fields to submit this form.</em></div>
+                            <div ng-show="systemuser_form.loading" class="alert alert-info">Please wait...</div>
+                            <div ng-show="systemuser_form.success" class="alert alert-success">{{ systemuser_form.message}}</div>
+                            <div ng-show="systemuser_form.danger" class="alert alert-danger" ng-bind-html="systemuser_form.message"></div>          
+                            <input type="hidden" name="account_id" ng-model="profile.account_id" value="{{ profile.account_id}}" />             
+                            <a href="/master/users" class="btn btn-danger pull-left">Back</a>
+                            <button type="submit" class="btn btn-primary pull-right" ng-disabled="systemuser_form.$invalid || systemuser_form.loading">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+    <!-- page end-->
+</section>
