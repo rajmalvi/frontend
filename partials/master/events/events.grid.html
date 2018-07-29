@@ -30,18 +30,18 @@
                     <div class="row">
                         <div class="col-md-3 col-xs-12">
                             <p> <strong>Name:</strong> {{ event.name|ucwords}}</p>
-                            <p> <strong>Area Impact:</strong> {{ event.area_impact|ucwords}}</p>
+                            <p> <strong>Area Impact:</strong> {{ event.areaImpact|ucwords}}</p>
                          </div>                      
                         <div class="col-md-3 col-xs-12">
                             <p> <strong>Type:</strong> {{ event.type|ucwords}}</p>
                             <p> <strong>Registration Date:</strong> {{ event.regdate|ucwords}}</p>
                          </div>                      
                         <div class="col-md-3 col-xs-12">
-                            <p> <strong>Start Date:</strong> {{ event.start_date}}</p>
+                            <p> <strong>Start Date:</strong> {{ event.startDate}}</p>
                             <p> <strong>Author:</strong> {{ event.author_fname|ucwords}} {{ event.author_lname|ucwords}}</p>
                          </div>                      
                         <div class="col-md-3 col-xs-12">
-                            <p> <strong>End Date:</strong> {{ event.end_date}}</p>
+                            <p> <strong>End Date:</strong> {{ event.endDate}}</p>
                             <p> <strong>Status:</strong> 
                               <span class="active_status" ng-show="event.status == 'active'">{{ event.status|ucwords }}</span>
                               <span class="disabled_status" ng-show="event.status == 'disabled'">{{ event.status|ucwords }}</span>
@@ -80,21 +80,21 @@
                 <div class="col-md-6">
                    <div class="form-group">
                         <label>Start Date<span style="color:red">*</span></label>
-                        <input ng-model="event_data.start_date" type="text" id="date_get" name="start_date" placeholder="Select event start date" customdatez class="form-control" required>
+                        <input ng-model="event_data.startDate" type="text" id="date_get" name="startDate" placeholder="Select event start date" customdatez class="form-control" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                    <div class="form-group">
                         <label>End Date<span style="color:red">*</span></label>
-                        <input ng-model="event_data.end_date" type="text" id="end_date" name="end_date" placeholder="Select event end date" customdatez class="form-control" required>
+                        <input ng-model="event_data.endDate" type="text" id="end_date" name="endDate" placeholder="Select event end date" customdatez class="form-control" required>
                     </div>
                 </div>
             </div> 
 	   <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                       <label for="area_impact">Area Impact<span style="color:red">*</span></label>
-                                <ui-select ng-model="event_data.area_impact" name="area_impact" id="qm_select" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
+                       <label for="areaImpact">Area Impact<span style="color:red">*</span></label>
+                                <ui-select ng-model="event_data.areaImpact" name="areaImpact" id="qm_select" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" required>
                                 <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices repeat="area.name as area in areas track by $index"
                                 refresh="searchAreaImpact($select.search)"

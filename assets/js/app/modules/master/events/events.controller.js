@@ -10,8 +10,8 @@ app.controller('EventsController', ['$scope', '$rootScope', '$routeParams', '$wi
                         datafields: [
                             {name: 'id', type: 'int'},
                             {name: 'name', type: 'string'},
-                            {name: 'start_date', type: 'string'},
-                            {name: 'end_date', type: 'string'},
+                            {name: 'startDate', type: 'string'},
+                            {name: 'endDate', type: 'string'},
                             {name: 'status', type: 'string'},
                         ],
                         root: "events",
@@ -71,8 +71,8 @@ app.controller('EventsController', ['$scope', '$rootScope', '$routeParams', '$wi
                         columns: [
                             {text: 'ID', datafield: 'id', width: '10%'},
                             {text: 'Name', datafield: 'name', width: '40%'},
-                            {text: 'Start Date', datafield: 'start_date', width: '20%'},
-                            {text: 'End Date', datafield: 'end_date', width: '20%'},
+                            {text: 'Start Date', datafield: 'startDate', width: '20%'},
+                            {text: 'End Date', datafield: 'endDate', width: '20%'},
                             {text: 'Status', datafield: 'status', cellsrenderer: cellsrenderer, width: '10%'}
                         ]
                     };

@@ -32,9 +32,9 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                         datatype: "json",
                         datafields: [
                             {name: 'id', type: 'int'},
-                            {name: 'property_name', type: 'string'},
+                            {name: 'propertyName', type: 'string'},
                             {name: 'address', type: 'string'},
-                            {name: 'account_manager', type: 'string'},
+                            {name: 'accountManager', type: 'string'},
                             {name: 'status', type: 'string'}
                         ],
                         root: "clients",
@@ -94,9 +94,9 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                         selectionmode: 'singlerow',
                         columns: [
                             {text: 'ID', datafield: 'id', width: '10%'},
-                            {text: 'Property Name', datafield: 'property_name', width: '20%'},
+                            {text: 'Property Name', datafield: 'propertyName', width: '20%'},
                             {text: 'Address', datafield: 'address', width: '40%'},
-                            {text: 'Account Manager', datafield: 'account_manager', width: '20%'},
+                            {text: 'Account Manager', datafield: 'accountManager', width: '20%'},
                             {text: 'Status', datafield: 'status', cellsrenderer: cellsrenderer, width: '10%'}
                         ]
                     };
