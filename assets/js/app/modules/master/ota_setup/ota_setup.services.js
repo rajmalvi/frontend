@@ -16,7 +16,7 @@ app.factory('OtpServices', ['$http', '$q', '$rootScope', function ($http, $q, $r
 	};
      
        ob.getOtaDetails = function(id,callback){
-           var url = $rootScope.backend2 + '/setup/otasetup/getOtaDetails/?id=' + id;
+           var url = $rootScope.backend + '/setup/otasetup/getOtaDetails/?id=' + id;
             $http.get(url).then(function (response) {
                 callback(response);
             });

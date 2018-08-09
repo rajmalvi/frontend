@@ -499,7 +499,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.searchCountry = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/import/searchCountries',
+                    $rootScope.backend + '/import/searchCountries',
                     {params: params}
             ).then(function (response) {
                 $scope.countries = response.data.results;
@@ -517,7 +517,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
             var params = {keywords: keywords};
 //              if(country == '' || country == null){
             return $http.get(
-                    $rootScope.backend2 + '/import/searchStates/?country=' + $scope.country_id,
+                    $rootScope.backend + '/import/searchStates/?country=' + $scope.country_id,
                     {params: params}
             ).then(function (response) {
                 $scope.states = response.data.results;
@@ -551,7 +551,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
             var params = {keywords: keywords, country: $scope.country_id, state: $scope.state_id};
 //            if(state == ''){
             return $http.get(
-                    $rootScope.backend2 + '/import/searchCities',
+                    $rootScope.backend + '/import/searchCities',
                     {params: params}
             ).then(function (response) {
                 $scope.cities = response.data.results;

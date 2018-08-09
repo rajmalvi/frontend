@@ -43,7 +43,7 @@ app.factory('RoomsServices', ['$http', '$q', '$rootScope', function ($http, $q, 
        };
        
         ob.getRoomTypes = function (callback) {
-         var url = $rootScope.backend2 + '/setup/room_types/getRoomTypes';
+         var url = $rootScope.backend + '/setup/room_types/getRoomTypes';
          $http.get(url).then(function (response) {
              callback(response);
          });

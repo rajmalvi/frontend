@@ -198,7 +198,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
         };
         var params = {keywords: keywords, cities: cities($scope.rate.city) };
         return $http.get(
-                $rootScope.backend2 + '/hotels/hotels/searchHotels',
+                $rootScope.backend + '/hotels/hotels/searchHotels',
                 {params: params}
         ).then(function (response) {
             $scope.hotels = response.data.results;
@@ -213,7 +213,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
     $scope.searchCountries = function (keywords) {
         var params = {keywords: keywords};
         return $http.get(
-                $rootScope.backend2 + '/import/searchCountries',
+                $rootScope.backend + '/import/searchCountries',
                 {params: params}
         ).then(function (response) {
             $scope.countries = response.data.results;
@@ -226,7 +226,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
     $scope.searchStates = function (keywords) {
         var params = {keywords: keywords, country: $scope.rate.country.id };
         return $http.get(
-                $rootScope.backend2 + '/import/searchStates',
+                $rootScope.backend + '/import/searchStates',
                 {params: params}
         ).then(function (response) {
             $scope.states = response.data.results;
@@ -239,7 +239,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
     $scope.searchCities = function (keywords) {
         var params = {keywords: keywords, state: $scope.rate.state.id, country: $scope.rate.country.id };
         return $http.get(
-                $rootScope.backend2 + '/import/searchCities',
+                $rootScope.backend + '/import/searchCities',
                 {params: params}
         ).then(function (response) {
             $scope.cities = response.data.results;
@@ -252,7 +252,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
     $scope.searchOTAs = function (keywords) {
         var params = {keywords: keywords };
         return $http.get(
-                $rootScope.backend2 + '/import/searchOTAs',
+                $rootScope.backend + '/import/searchOTAs',
                 {params: params}
         ).then(function (response) {
             $scope.otas = response.data.results;

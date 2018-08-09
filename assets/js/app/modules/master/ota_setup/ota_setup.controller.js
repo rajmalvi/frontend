@@ -18,14 +18,14 @@ app.controller('OtpController', ['$scope', '$rootScope', '$routeParams', '$windo
                         datafields: [
                             {name: 'id', type: 'int'},
                             {name: 'name', type: 'string'},
-                            {name: 'domain_name', type: 'string'},
+                            {name: 'domainName', type: 'string'},
                             {name: 'regdate', type: 'datetime'},
                             {name: 'author', type: 'int'},
                             {name: 'status', type: 'string'},
                         ],
                         root: "otas",
                         id: 'id',
-                        url: $rootScope.backend2 + '/setup/otasetup/getAllota',
+                        url: $rootScope.backend + '/setup/otasetup/getAllota',
                         beforeprocessing: function (data)
                         {
                             source_members.totalrecords = data.totalRows;
@@ -81,7 +81,7 @@ app.controller('OtpController', ['$scope', '$rootScope', '$routeParams', '$windo
                         columns: [
                             {text: 'ID', datafield: 'id', width: '10%'},
                             {text: 'Name', datafield: 'name', width: '40%'},
-                            {text: 'Domain Name', datafield: 'domain_name', width: '30%'},
+                            {text: 'Domain Name', datafield: 'domainName', width: '30%'},
                             {text: 'Registration Date', datafield: 'regdate', width: '10%'},
                             {text: 'Status', datafield: 'status', cellsrenderer: cellsrenderer, width: '10%'}
                         ]

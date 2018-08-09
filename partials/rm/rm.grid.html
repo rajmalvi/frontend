@@ -47,11 +47,11 @@
                         <div class="form-group">
                             <label for="hotel">Select Hotels*</label>
                             <ui-select ng-disabled="rate.city == ''" ng-model="rate.hotels" multiple close-on-select="true" theme="bootstrap" reset-search-input="true" style="width: 100%;" title="Select hotels">
-                                <ui-select-match placeholder="Enter keywords...">{{$item.formatted_name}}</ui-select-match>
+                                <ui-select-match placeholder="Enter keywords...">{{$item.formattedName}}</ui-select-match>
                                 <ui-select-choices repeat="hotelx in hotels track by $index"
                                                    refresh="searchHotels($select.search)"
                                                    refresh-delay="0">
-                                    <div ng-bind-html="hotelx.formatted_name | highlight: $select.search"></div>
+                                    <div ng-bind-html="hotelx.formattedName | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
