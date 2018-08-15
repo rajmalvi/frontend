@@ -788,24 +788,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-show="isell.records.length == 0"><td colspan="25">iSell data not available.</td></tr>
-                                                <tr ng-repeat="record in isell.records">
-                                                    <td class="headcol1">{{ record[0] }}</td>
-                                                    <td ng-class="{ greybg: (record[1] == 'Fri' || record[1] == 'Sat')}" class="headcol2">{{ record[1] }}</td>
+                                                <tr ng-show="iSell_otaPerformance.length == 0"><td colspan="25">iSell data not available.</td></tr>
+                                                <tr ng-repeat="(key ,value ) in iSell_otaPerformance">
+                                                    <td class="headcol1">{{ value['occupancyDate'] }}</td>
+                                                    <td ng-class="{ greybg: (value['dow'] == 'Fri' || value['dow'] == 'Sat')}" class="headcol2">{{ value['dow']  }}</td>
                                                     <td style="border-left:none;">{{ record[2] }}</td>
-                                                    <td>{{ record[3] }}</td>
-                                                    <td class="text-right">{{ record[4] }}</td>
+                                                    <td>{{ record[2]}}</td>
+                                                    <td class="text-right">{{ value['capacity']  }}</td>
                                                     <!-- <td>{{ record[5] }}</td> -->
-                                                    <td class="text-right">{{ record[6] }}</td>
-                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="purplebg">{{ record[7] }}</td>
-                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="text-right">{{ record[8] }}</td>
-                                                    <td class="text-right">{{ record[9] }}</td>
-                                                    <td class="text-right">{{ record[10] }}</td>
-                                                    <td class="text-right">{{ record[11] }}</td>
-                                                    <td class="text-right">{{ record[12] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ record[14+isell.competitors.length+isell.otas_cm.length] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ record[15+isell.competitors.length+isell.otas_cm.length] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ record[13+isell.competitors.length+isell.otas_cm.length] }}</td>
+                                                    <td class="text-right">{{ value['availableCapacity'] }}</td>
+                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="purplebg">{{ value['sold']  }}</td>
+                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="text-right">{{ value['pickup']  }}</td>
+                                                    <td class="text-right">{{ value['revenue']  }}</td>
+                                                    <td class="text-right">{{ value['adr'] }}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['rateOnCm'] }}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['recommended'] }}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']}}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg'] }}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max'] }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

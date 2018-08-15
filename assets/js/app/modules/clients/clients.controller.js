@@ -134,6 +134,17 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $rootScope.gridSettings.rowselect = function (response) {
             if (typeof (response.args.row !== undefined)) {
                 $scope.loadingClient = true;
+                ClientsServices.getOtaPerformance(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.iSell_otaPerformance = response.data;
+                });
+                ClientsServices.getCompetitorPricingForISell(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.iSell_competitorPricing = response.data;
+                });
+
+                ClientsServices.getRatesForISell(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.iSell_rates = response.data;
+                });
+
                 ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
                     $scope.client = response.data.details;
                     $scope.client_id = $scope.client.id;

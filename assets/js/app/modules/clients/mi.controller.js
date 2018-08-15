@@ -129,6 +129,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $rootScope.gridSettings.rowselect = function (response) {
             if (typeof (response.args.row !== undefined)) {
                 $scope.loadingClient = true;
+
                 ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
                     $scope.client = response.data.details;
                     $scope.client_id = $scope.client.id;
