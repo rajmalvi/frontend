@@ -18,12 +18,12 @@
                     <jqx-grid jqx-create="createWidget" jqx-settings="gridSettings"></jqx-grid>
                 </div>
             </div>
-            
+
             <div ng-show="loadingClient" style="text-align: center;">
                 <div class='uil-ripple-css' style='transform:scale(0.6);transform:scale(0.6); display: inline-block; font-size: 16px;'><div></div><div></div></div>
                 <p>Loading details.. Please wait..</p>
             </div>
-            
+
             <div ng-show="client.property_name !== undefined && !loadingClient">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -50,14 +50,14 @@
                                         <!-- <li ng-class="{active:active_panel == 'rate_pace'}" ng-click="switchPanel('rate_pace','Rate Pace')"><a>Rate Pace</a></li> -->
                                         <!-- <li ng-class="{active:active_panel == 'rate_analysis'}" ng-click="switchPanel('rate_analysis','Rate Analysis')"><a>Rate Analysis</a></li> -->
                                         <!-- <li ng-class="{active:active_panel == 'historical_analysis'}" ng-click="switchPanel('historical_analysis','Performance Analysis')"><a>Performance Analysis</a></li> -->
-                                        <!-- <li ng-class="{active:active_panel == 'calendar'}" ng-click="switchPanel('calendar','Calendar')"><a>Calendar</a></li> 
+                                        <!-- <li ng-class="{active:active_panel == 'calendar'}" ng-click="switchPanel('calendar','Calendar')"><a>Calendar</a></li>
                                     </ul>
                                 </li> -->
                                 <li ng-class="{active:active_panel == 'mi'}" ng-click="switchPanel('mi','Market Rates')"><a>Market Rates</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configs <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li ng-class="{active:active_panel == 'client_details'}" ng-click="switchPanel('client_details','Details')"><a>Details</a></li>
+                                        <li ng-class="{active:active_panel == 'client_details'}" ng-click="switchPanel('client_details','Details')"><a>Details1</a></li>
                                         <li ng-class="{active:active_panel == 'rate_horizon'}" ng-click="switchPanel('rate_horizon','Rate Horizon Table')"><a>Rate Horizon Table</a></li>
                                         <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel('events','Events')"><a>Events</a></li>
                                         <li ng-class="{active:active_panel == 'qm'}" ng-click="switchPanel('qm','Quality Metrics')"><a>Quality Metrics</a></li>
@@ -79,7 +79,7 @@
                                         <li><a ng-click="clearClientCache()" href="#">Clear Cache</a></li>
                                         <li><a ng-click="refreshData()" href="#">Refresh Data</a></li>
                                         <li><a href="/clients/edit/{{client.id}}">Edit</a></li>
-                                        <li ng-click="addClientUser()"><a>Add User</a></li> 
+                                        <li ng-click="addClientUser()"><a>Add User</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li class="alert-danger"><a href="#" ng-click="deleteClient(client.id)">Delete</a></li>
                                     </ul>
@@ -159,7 +159,7 @@
                                     <div class="row">
                                         <div class="col-md-3 col-lg-3 col-xs-12">
                                             <p><strong>Registration Date:</strong><span class="record_date"> {{ client.datetime}} </span><br /></p>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-3 col-lg-3 col-xs-12">
                                             <p><strong>Author:</strong><span class="record_author_name"> {{ client.author_fname|ucwords}} {{ client.author_lname|ucwords}}</span>
                                         </div>
@@ -172,7 +172,7 @@
                                               <span class="disabled_status" ng-show="client.status == 'disabled'">{{ client.status|ucwords }}</span>
                                          </p>
                                         </div>
-                                    </div> 
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-6 col-lg-6 col-xs-12">
@@ -181,7 +181,7 @@
 
 
                                     </div>
-                                </div>  
+                                </div>
                                 <div ng-show="active_panel == 'ota_config'" class="ota_config">
                                     <!-- <div class="row">
                                     <div class="col-md-11">
@@ -239,9 +239,9 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                      </div>   
-                                      </div>   
-                                </div>   
+                                      </div>
+                                      </div>
+                                </div>
                                 <div ng-show="active_panel == 'room_types'">
                                     <!-- div class="row">
                                         <div class="col-md-4">
@@ -316,7 +316,7 @@
                                             </table>
                                     </div>
                                     </div>
-                                </div>              
+                                </div>
                                 <div ng-show="active_panel == 'events'">
                                     <div class="panel">
                                         <div class="panel-heading pr1">
@@ -353,7 +353,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>                    
+                                </div>
                                 <div ng-show="active_panel == 'qm'">
                                     <div class="panel">
                                         <div class="panel-heading pr1">
@@ -392,7 +392,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>               
+                                </div>
                                 <div ng-show="active_panel == 'seasonality_definitions'">
                                     <div class="panel">
                                         <div class="panel-heading pr1">
@@ -431,7 +431,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>                    
+                                </div>
                                 <div ng-show="active_panel == 'dow_definitions'">
                                     <div class="panel">
                                         <div class="panel-body">
@@ -462,7 +462,7 @@
                                                         <div ng-show="dow_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
                                                         <div ng-show="loading_msg" class="alert alert-info text-left">Please wait...</div>
                                                         <div ng-show="success_msg" class="alert alert-success text-left">{{sub_message}}</div>
-                                                        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>        
+                                                        <div ng-show="danger_msg" class="alert alert-danger text-left">{{sub_message}}</div>
                                                         <button class="btn btn-danger pull-right" type="button" ng-click="cancel()">Cancel</button>
                                                         <button type="submit" class="btn btn-primary pull-right" style="margin-right:3px;">Submit</button>
 
@@ -471,7 +471,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>     
+                                </div>
                                 <div ng-show="active_panel == 'competitors'">
                                     <div class="panel">
                                         <div class="panel-heading pr1">
@@ -535,9 +535,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>       
+                                </div>
                                 <div ng-show="active_panel == 'rateshop_settings'">
-                                    <form ng-submit="addRateShopping(presetting_form.$valid)" id="presetting_form" name="presetting_form" novalidate> 
+                                    <form ng-submit="addRateShopping(presetting_form.$valid)" id="presetting_form" name="presetting_form" novalidate>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="panel">
@@ -665,7 +665,7 @@
                                                         <div class="border_sortable">
                                                             <ul ui-sortable ui-sortable-update="update" ui-sortable-stop="stop" ng-model="rateShopSettings.ratetypes" class="list">
                                                                 <li ng-repeat="item in rateShopSettings.ratetypes" class="item">
-                                                                   <span class="index_css">{{$index+1}}</span>{{item.name}} 
+                                                                   <span class="index_css">{{$index+1}}</span>{{item.name}}
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -694,25 +694,25 @@
 
                                 </div>
                                 <div ng-show="active_panel == 'cm_settings'">
-                                    <form ng-submit="saveChannelManagerSettings(cm_form.$valid)" id="cm_form" name="cm_form" novalidate> 
+                                    <form ng-submit="saveChannelManagerSettings(cm_form.$valid)" id="cm_form" name="cm_form" novalidate>
                                         <div class="row form-group">
                                             <div class="col-md-3">
                                                 <label>Hotel ID*</label>
-                                                <div class='input-group'>            
+                                                <div class='input-group'>
                                                     <span class='input-group-addon'><i class="fa fa-building-o"></i></span>
                                                     <input type="text" name="hotel_id" ng-model="cm_form.cm_hotel" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>User ID*</label>
-                                                <div class='input-group'>            
+                                                <div class='input-group'>
                                                     <span class='input-group-addon'><i class="fa fa-user"></i></span>
                                                     <input type="text" name="manager_id" ng-model="cm_form.cm_id" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>Password*</label>
-                                                <div class='input-group'>            
+                                                <div class='input-group'>
                                                     <span class='input-group-addon'><i class="fa fa-key"></i></span>
                                                     <input type="text" name="manager_password" ng-model="cm_form.cm_password" class="form-control" required>
                                                 </div>
@@ -743,7 +743,7 @@
                                     </form>
                                 </div>
                                 <div ng-show="active_panel == 'cm_import'">
-                                    <form ng-submit="importBookings(cm_import_form.$valid)" id="cm_import_form" name="cm_import_form" novalidate> 
+                                    <form ng-submit="importBookings(cm_import_form.$valid)" id="cm_import_form" name="cm_import_form" novalidate>
                                         <label for="bookings_file">Select Import File (.CSV only)</label>
                                         <input type="file" name="bookings_file" id="bookings_file" />
                                         <div class="progress" style="margin-top:15px;">
@@ -794,18 +794,18 @@
                                                     <td ng-class="{ greybg: (value['dow'] == 'Fri' || value['dow'] == 'Sat')}" class="headcol2">{{ value['dow']  }}</td>
                                                     <td style="border-left:none;">{{ record[2] }}</td>
                                                     <td>{{ record[2]}}</td>
-                                                    <td class="text-right">{{ value['capacity']  }}</td>
+                                                    <td class="text-right">{{ value['capacity']==null ? 0 : value['capacity'] }}</td>
                                                     <!-- <td>{{ record[5] }}</td> -->
-                                                    <td class="text-right">{{ value['availableCapacity'] }}</td>
-                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="purplebg">{{ value['sold']  }}</td>
-                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="text-right">{{ value['pickup']  }}</td>
-                                                    <td class="text-right">{{ value['revenue']  }}</td>
-                                                    <td class="text-right">{{ value['adr'] }}</td>
-                                                    <td class="text-right">{{ iSell_rates[key]['rateOnCm'] }}</td>
-                                                    <td class="text-right">{{ iSell_rates[key]['recommended'] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']}}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg'] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max'] }}</td>
+                                                    <td class="text-right">{{ value['availableCapacity']==null ? 0 : value['availableCapacity'] }}</td>
+                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="purplebg">{{ value['sold']==null ? 0 : value['sold']  }}</td>
+                                                    <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="text-right">{{ value['pickup']==null ? 0 : value['pickup']  }}</td>
+                                                    <td class="text-right">{{ value['revenue']==null ? 0 : value['revenue']}}</td>
+                                                    <td class="text-right">{{ value['adr']==null ? 0 : value['adr'] }}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm'] }}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended']}}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']==null?0:iSell_competitorPricing[key]['min']}}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg']==null?0:iSell_competitorPricing[key]['avg'] }}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max']==null?0:iSell_competitorPricing[key]['max'] }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -836,26 +836,26 @@
                                                     <th class="blackbg" style="width:150px;">Override</th>
                                                     <th class="blackbg" style="width:150px;">Final<br />Rate</th>
                                                     <th class="blackbg" style="width:150px;">Rate<br />on CM</th>
-                                                    <th style="width:250px; background: #ff3387; color:#fff;" ng-repeat="hotel in rro.competitors">{{ hotel }}</th>
+                                                    <th style="width:250px; background: #ff3387; color:#fff;" ng-repeat="(hotel,value) in iSell_min_all_competitor['names']">{{ hotel }}</th>
                                                 </tr>
                                                         </thead>
                                             <tbody>
-                                                <tr ng-show="rro.records.length == 0"><td colspan="25">Data not available.</td></tr>
-                                                <tr ng-repeat="record in rro.records">
-                                                    <td class="headcol1">{{ record[0] }}</td>
-                                                    <td ng-class="{ bgblue: (record[1] == 'Fri' || record[1] == 'Sat')}" class="headcol2">{{ record[1] }}</td>
+                                                <tr ng-show="iSell_otaPerformance.length == 0"><td colspan="25">Data not available.</td></tr>
+                                                <tr ng-repeat="(key ,value ) in iSell_otaPerformance">
+                                                    <td class="headcol1">{{ value['occupancyDate'] }}</td>
+                                                    <td ng-class="{ bgblue: (value['dow'] == 'Fri' || value['dow'] == 'Sat')}" class="headcol2">{{ value['dow'] }}</td>
                                                     <td style="border-left:none;">{{ record[2] }}</td>
-                                                    <td>{{ record[3] }}</td>
-                                                    <td>{{ record[4] }}</td>
-                                                    <td>{{ record[5] }}</td>
+                                                    <td>{{ value['availableCapacity']==null ? 0 : value['availableCapacity']}}</td>
+                                                    <td>{{ value['sold']==null ? 0 : value['sold']}}</td>
+                                                    <td>{{ value['pickup']==null ? 0 : value['pickup'] }}</td>
                                                     <td>{{ record[6] }}</td>
-                                                    <td>{{ record[7] }}</td>
-                                                    <td>{{ record[8] }}</td>
-                                                    <td>{{ record[9] }}</td>
-                                                    <td><a href="#" ng-click="overrideRate(record,$index)">{{ record[10] }}</a></td>
-                                                    <td><a href="#" ng-click="pushRate(record,$index)">{{ record[11] }}</a></td>
-                                                    <td>{{ record[12] }}</td>
-                                                    <td ng-repeat="hotel in rro.competitors">{{ record[$index+13] }}</td>
+                                                    <td>{{ iSell_all_recommendation[key]['rateRcp']== null? 0:iSell_all_recommendation[key]['rateRcp'] }}</td>
+                                                    <td>{{ iSell_all_recommendation[key]['rateAri']== null? 0:iSell_all_recommendation[key]['rateAri'] }}</td>
+                                                    <td>{{ iSell_all_recommendation[key]['ratePqm']== null? 0:iSell_all_recommendation[key]['ratePqm'] }}</td>
+                                                    <td><a href="#" ng-click="overrideRate(record,$index)">{{ iSell_all_recommendation[key]['rateMpi']== null? 0:iSell_all_recommendation[key]['rateMpi'] }}</a></td>
+                                                    <td><a href="#" ng-click="pushRate(record,$index)">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm']  }}</a></td>
+                                                    <td>{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended']  }}</td>
+                                                    <td ng-repeat="hotel in (iSell_min_all_competitor[key]==null ? iSell_min_all_competitor['names'] : iSell_min_all_competitor[key])">{{ hotel }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -938,5 +938,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </section>

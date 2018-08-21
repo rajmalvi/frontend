@@ -164,7 +164,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
                         {text: 'Rate', datafield: 'onsiterate', cellsrenderer: cellsrenderer, width: '10%'},
                         {text: 'Rate Type', datafield: 'rate_type', width: '12%'},
                         {text: 'Room Type', datafield: 'room_type', width: '12%'},
-                        {text: 'Date Collected', datafield: 'date_collected', width: '10%'}
+                        {text: 'Date Collected-3', datafield: 'date_collected', width: '10%'}
                     ]
                 };
         $scope.createWidget = true;

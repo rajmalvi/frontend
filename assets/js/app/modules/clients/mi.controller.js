@@ -290,7 +290,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
                     {text: 'Website/OTA', datafield: 'website', width: '15%'},
                     {text: 'Rate Type', datafield: 'rate_type', width: '12%'},
                     {text: 'Rate', datafield: 'onsiterate', cellsrenderer: cellsrenderer, width: '10%'},
-                    {text: 'Date Collected', datafield: 'date_collected', width: '10%'}
+                    {text: 'Date Collected 1', datafield: 'date_collected', width: '10%'}
                 ]
             };
             $scope.createMIWidget = true;

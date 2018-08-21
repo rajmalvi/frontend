@@ -6,6 +6,8 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
     $scope.iSell_otaPerformance={};
     $scope.iSell_competitorPricing={};
     $scope.iSell_rates={};
+    $scope.iSell_all_recommendation={};
+    $scope.iSell_min_all_competitor={};
 
     $scope.renderGrid = function () {
 

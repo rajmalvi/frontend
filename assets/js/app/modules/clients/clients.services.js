@@ -140,7 +140,7 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
 
     };
 
-    
+
     //get client details
     var clientLoad2 = null;
     ob.getCompetitorPricingForISell = function (id, occupancyDate, callback) {
@@ -154,8 +154,8 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
             callback(response);
         });
     };
-	
-	 //get client details
+
+    //get client details
     var clientLoad2 = null;
     ob.getRatesForISell = function (id, occupancyDate, callback) {
         if (clientLoad2 !== null) {
@@ -164,6 +164,61 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         clientLoad2 = $q.defer();
         var url = $rootScope.backend + '/clients/clients/getRates';
         $http.get(url, {params: {clientId: id, occupancyDate: occupancyDate}}).then(function (response) {
+            clientLoad2 = null;
+            callback(response);
+        });
+    };
+
+    //get client details
+    var clientLoad2 = null;
+    ob.getMinCompetitorPricing = function (id, occupancyDate, callback) {
+        if (clientLoad2 !== null) {
+            clientLoad2.resolve();
+        }
+        clientLoad2 = $q.defer();
+        var url = $rootScope.backend + '/clients/clients/getMinCompetitorPricing';
+        $http.get(url, {params: {clientId: id, occupancyDate: occupancyDate}}).then(function (response) {
+            clientLoad2 = null;
+            callback(response);
+        });
+    };
+
+    //get client details
+    var clientLoad2 = null;
+    ob.getMinCompetitor = function (id, checkinDate, callback) {
+        if (clientLoad2 !== null) {
+            clientLoad2.resolve();
+        }
+        clientLoad2 = $q.defer();
+        var url = $rootScope.backend + '/clients/clients/getAllCompetitors';
+        $http.get(url, {params: {clientId: id, checkinDate: checkinDate}}).then(function (response) {
+            clientLoad2 = null;
+            callback(response);
+        });
+    };
+
+//get client details
+    var clientLoad2 = null;
+    ob.getClientById = function (id, callback) {
+        if (clientLoad2 !== null) {
+            clientLoad2.resolve();
+        }
+        clientLoad2 = $q.defer();
+        var url = $rootScope.backend + '/clients/clients/getClientById';
+        $http.get(url, {params: {clientId: id}}).then(function (response) {
+            clientLoad2 = null;
+            callback(response);
+        });
+    };
+    //get client details
+    var clientLoad2 = null;
+    ob.getAllRecommendation = function (id, checkinDate, callback) {
+        if (clientLoad2 !== null) {
+            clientLoad2.resolve();
+        }
+        clientLoad2 = $q.defer();
+        var url = $rootScope.backend + '/clients/clients/getAllRecommendation';
+        $http.get(url, {params: {clientId: id, checkinDate: checkinDate}}).then(function (response) {
             clientLoad2 = null;
             callback(response);
         });

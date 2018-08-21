@@ -145,6 +145,22 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                     $scope.iSell_rates = response.data;
                 });
 
+                ClientsServices.getAllRecommendation(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.iSell_all_recommendation = response.data;
+                });
+
+                ClientsServices.getMinCompetitorPricing(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.iSell_min_all_competitor = response.data;
+                });
+
+                ClientsServices.getMinCompetitor(response.args.row.id, '2018-03-07', function (response) {
+                    $scope.loadMIGrid(response.data);
+                });
+
+                ClientsServices.getClientById(response.args.row.id, function (response) {
+                    $scope.client=response.data;
+                });
+
                 ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
                     $scope.client = response.data.details;
                     $scope.client_id = $scope.client.id;
@@ -181,7 +197,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                     $scope.cm_room_types = response.data.cm_room_types;
                     $scope.cm_rate_types = response.data.cm_rate_types;
                     //$scope.renderClientCharts(response.data.charts);
-                    $scope.loadMIGrid(response.data.rates);
+                   // $scope.loadMIGrid(response.data.rates);
                     $scope.loadingClient = false;
                 });
             }
@@ -252,19 +268,14 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
             var source_rates = {
                 datatype: "json",
                 datafields: [
-                    {name: 'hotel', type: 'string'},
-                    {name: 'hotel_id', type: 'int'},
-                    {name: 'client_id', type: 'int'},
-                    {name: 'website', type: 'string'},
-                    {name: 'check_in', type: 'string'},
-                    {name: 'check_out', type: 'string'},
-                    {name: 'date_collected', type: 'string'},
+                    {name: 'name', type: 'string'},
+                    {name: 'otaName', type: 'string'},
+                    {name: 'occupancyDate', type: 'string'},
+                    {name: 'regDate', type: 'string'},
                     {name: 'rate', type: 'string'},
-                    {name: 'onsiterate', type: 'string'},
+                    {name: 'min', type: 'string'},
                     {name: 'rate_type', type: 'string'},
-                    {name: 'room_type', type: 'string'},
-                    {name: 'currency', type: 'string'},
-                    {name: 'message', type: 'string'}
+                    {name: 'categoryName', type: 'string'}
                 ],
                 root: "rates",
                 //id: 'id',
@@ -321,15 +332,16 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                 showfilterrow: true,
                 selectionmode: 'singlerow',
                 columns: [
-                    {text: 'Hotel', datafield: 'hotel', width: '31%'},
-                    {text: 'Check In', datafield: 'check_in', width: '10%'},
-                    {text: 'Room Type', datafield: 'room_type', width: '12%'},
-                    {text: 'Website/OTA', datafield: 'website', width: '15%'},
+                    {text: 'Hotel', datafield: 'name', width: '31%'},
+                    {text: 'Check In', datafield: 'occupancyDate', width: '10%'},
+                    {text: 'Room Type', datafield: 'categoryName', width: '12%'},
+                    {text: 'Website/OTA', datafield: 'otaName', width: '15%'},
                     {text: 'Rate Type', datafield: 'rate_type', width: '12%'},
-                    {text: 'Rate', datafield: 'onsiterate', cellsrenderer: cellsrenderer, width: '10%'},
-                    {text: 'Date Collected', datafield: 'date_collected', cellsrenderer: cellsrenderer_stale, width: '10%'}
+                    {text: 'Rate', datafield: 'min', cellsrenderer: cellsrenderer, width: '10%'},
+                    {text: 'Date Collected-2', datafield: 'regDate', cellsrenderer: cellsrenderer_stale, width: '10%'}
                 ]
             };
+
             $scope.createMIWidget = true;
             $timeout(function() {
                 if(apply !== undefined) {
