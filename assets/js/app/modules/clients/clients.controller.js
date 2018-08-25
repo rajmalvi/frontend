@@ -768,7 +768,37 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
             $scope.active_panel = panel;
             $scope.active_panel_title = title;
         };
+
+        $scope.switchPanel_hk = function(panel,title) {
+             $http.get(
+                $rootScope.backend + '/hk/get/'+(title.replace(' ','').toLowerCase())+'?clientId=' + $scope.client_id
+            ).then(function(response){
+                eval('$scope.'+(title.replace(' ','_').toLowerCase())+'_hk = response.data;');
+                $scope.active_panel = panel;
+                $scope.active_panel_title = title;
+            });
+        };
         
+        // New switch pannel based on on the fly data
+
+       // $scope.switchPanelhk = function(panel,title) {
+       //     var params = {clientId=$scope.client_id};
+           // $http.get(
+           //     $rootScope.backend + '/hk/events/getEvents',
+           //     {params:params}
+           // ).then(function(response){
+           //     $scope.events_hk = response;
+           //     $scope.active_panel = panel;
+           //     $scope.active_panel_title = title;
+           // });
+            
+       // };
+
+
+
+
+
+
         //Room Types
         $scope.searchRoomtypes = function (keywords) {
             var params = {keywords: keywords};
