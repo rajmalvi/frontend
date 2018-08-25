@@ -57,13 +57,12 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configs <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li ng-class="{active:active_panel == 'client_details'}" ng-click="switchPanel('client_details','Details')"><a>Details1</a></li>
                                         <li ng-class="{active:active_panel == 'rate_horizon'}" ng-click="switchPanel('rate_horizon','Rate Horizon Table')"><a>Rate Horizon Table</a></li>
-                                        <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel('events','Events')"><a>Events</a></li>
+                                        <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel_hk('events','Events')"><a>Events</a></li>
                                         <li ng-class="{active:active_panel == 'qm'}" ng-click="switchPanel('qm','Quality Metrics')"><a>Quality Metrics</a></li>
-                                        <li ng-class="{active:active_panel == 'room_types'}" ng-click="switchPanel('room_types','Room Types')"><a>Room Types</a></li>
-                                        <li ng-class="{active:active_panel == 'ota_config'}" ng-click="switchPanel('ota_config','OTA Config')"><a>OTA Config</a></li>
-                                        <li ng-class="{active:active_panel == 'client_users'}" ng-click="switchPanel('client_users','User Accounts')"><a>User Accounts</a></li>
+                                        <li ng-class="{active:active_panel == 'room_types'}" ng-click="switchPanel_hk('room_types','Room Types')"><a>Room Types</a></li>
+                                        <li ng-class="{active:active_panel == 'ota_config'}" ng-click="switchPanel_hk('ota_config','OTA Config')"><a>OTA Config</a></li>
+                                        <li ng-class="{active:active_panel == 'client_users'}" ng-click="switchPanel_hk('client_users','User Accounts')"><a>User Accounts</a></li>
                                         <li ng-class="{active:active_panel == 'competitors'}" ng-click="switchPanel('competitors','Competitors')"><a>Competitors</a></li>
                                         <li ng-class="{active:active_panel == 'dow_definitions'}" ng-click="switchPanel('dow_definitions','DOW Definitions')"><a>DOW Definitions</a></li>
                                         <li ng-class="{active:active_panel == 'seasonality_definitions'}" ng-click="switchPanel('seasonality_definitions','Seasonality Definitions')"><a>Seasonality Definitions</a></li>
@@ -134,15 +133,15 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-show="user_account_data.length == 0"><td colspan="6">No users added.</td></tr>
-                                            <tr ng-repeat="user_act in user_account_data">
+                                            <tr ng-repeat="user_act in user_accounts_hk">
                                                 <td>{{$index+1}}</td>
-                                                <td>{{user_act.account_fname|ucwords}} {{user_act.account_lname|ucwords}}</td>
-                                                <td>{{user_act.account_email}}</td>
-                                                <td>{{user_act.account_regdate}}</td>
-                                                <td>{{user_act.account_status|ucwords}}</td>
+                                                <td>{{user_act.accountFirstName|ucwords}} {{user_act.accountLastName|ucwords}}</td>
+                                                <td>{{user_act.email}}</td>
+                                                <td>{{user_act.regdate}}</td>
+                                                <td>{{user_act.status|ucwords}}</td>
                                                 <td>
                                                     <button class="btn btn-info btn-xs" ng-click="editClientUser(user_act,$index)"><i class="fa fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-xs" ng-click="deleteClientUser(user_act.account_id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn btn-danger btn-xs" ng-click="deleteClientUser(user_act.accountId,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -226,13 +225,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-show="ota_config_data.length == 0">
+                                                    <tr ng-show="ota_config_hk.length == 0">
                                                         <td colspan="5">No OTAs have been mapped.</td>
                                                     </tr>
-                                                    <tr ng-repeat="ota_data in ota_config_data">
+                                                    <tr ng-repeat="ota_data in ota_config_hk">
                                                         <td>{{$index+1}}</td>
-                                                        <td>{{ota_data.client_ota|ucwords}}</td>
-                                                        <td>{{ota_data.system_name|ucwords}}</td>
+                                                        <td>{{ota_data.clientOta|ucwords}}</td>
+                                                        <td>{{ota_data.otaId.name|ucwords}}</td>
                                                         <td ng-show="ota_data.type != 'staah'">{{ota_data.type|ucwords}}</td>
                                                         <td ng-show="ota_data.type == 'staah'">{{ota_data.type|uppercase}}</td>
                                                         <td><button class="btn btn-info btn-xs" ng-click="editOtaModal(ota_data,false,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="setupRemoveOTA(false,ota_data.id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
@@ -302,7 +301,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="room_data in roomtypes_data track by $index">
+                                                    <tr ng-repeat="room_data in room_types_hk track by $index">
                                                         <td>{{$index+1}}</td>
                                                         <td>{{room_data.hotel_name}}</td>
                                                         <td>{{room_data.client_room_type|ucwords}}</td>
@@ -340,13 +339,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="event in events">
+                                                <tr ng-repeat="event in events_hk">
                                                     <td>{{$index + 1}}</td>
                                                     <td>{{event.name|ucwords}}</td>
                                                     <td>{{event.type|ucwords}}</td>
-                                                    <td>{{event.start_date}}</td>
-                                                    <td>{{event.end_date}}</td>
-                                                    <td>{{event.area_impact|ucwords}}</td>
+                                                    <td>{{event.startDate}}</td>
+                                                    <td>{{event.endDate}}</td>
+                                                    <td>{{event.areaImpact|ucwords}}</td>
                                                     <td><button class="btn btn-info btn-xs" ng-click="editEventModal(event,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_event(event.id, $index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
                                                 </tr>
                                                 <tr ng-show="events.length == 0"><td colspan="8">No events found.</td></tr>
