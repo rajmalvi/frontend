@@ -58,14 +58,14 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configs <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li ng-class="{active:active_panel == 'rate_horizon'}" ng-click="switchPanel('rate_horizon','Rate Horizon Table')"><a>Rate Horizon Table</a></li>
-                                        <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel_hk('events','Events')"><a>Events</a></li>
+                                        <li ng-class="{active:active_panel == 'events'}" ng-click="switchPanel_hk('events','Events','events')"><a>Events</a></li>
                                         <li ng-class="{active:active_panel == 'qm'}" ng-click="switchPanel('qm','Quality Metrics')"><a>Quality Metrics</a></li>
-                                        <li ng-class="{active:active_panel == 'room_types'}" ng-click="switchPanel_hk('room_types','Room Types')"><a>Room Types</a></li>
-                                        <li ng-class="{active:active_panel == 'ota_config'}" ng-click="switchPanel_hk('ota_config','OTA Config')"><a>OTA Config</a></li>
-                                        <li ng-class="{active:active_panel == 'client_users'}" ng-click="switchPanel_hk('client_users','User Accounts')"><a>User Accounts</a></li>
-                                        <li ng-class="{active:active_panel == 'competitors'}" ng-click="switchPanel('competitors','Competitors')"><a>Competitors</a></li>
-                                        <li ng-class="{active:active_panel == 'dow_definitions'}" ng-click="switchPanel('dow_definitions','DOW Definitions')"><a>DOW Definitions</a></li>
-                                        <li ng-class="{active:active_panel == 'seasonality_definitions'}" ng-click="switchPanel('seasonality_definitions','Seasonality Definitions')"><a>Seasonality Definitions</a></li>
+                                        <li ng-class="{active:active_panel == 'room_types'}" ng-click="switchPanel_hk('room_types','Room Types','roomTypes')"><a>Room Types</a></li>
+                                        <li ng-class="{active:active_panel == 'ota_config'}" ng-click="switchPanel_hk('ota_config','OTA Config','otaConfig')"><a>OTA Config</a></li>
+                                        <li ng-class="{active:active_panel == 'client_users'}" ng-click="switchPanel_hk('client_users','User Accounts','userAccounts')"><a>User Accounts</a></li>
+                                        <li ng-class="{active:active_panel == 'competitors'}" ng-click="switchPanel_hk('competitors','Competitors','competitors,competitorsSuggestions')"><a>Competitors</a></li>
+                                        <li ng-class="{active:active_panel == 'dow_definitions'}" ng-click="switchPanel_hk('dow_definitions','DOW Definitions','seasonalityDefinitions,dows')"><a>DOW Definitions</a></li>
+                                        <li ng-class="{active:active_panel == 'seasonality_definitions'}" ng-click="switchPanel_hk('seasonality_definitions','Seasonality Definitions','seasonalityDefinitions')"><a>Seasonality Definitions</a></li>
                                         <li ng-class="{active:active_panel == 'rateshop_settings'}" ng-click="switchPanel('rateshop_settings','Rate Shop Settings')"><a>Rate Shop Settings</a></li>
                                         <li ng-class="{active:active_panel == 'cm_settings'}" ng-click="switchPanel('cm_settings','Channel Manager Settings')"><a>Channel Manager Settings</a></li>
                                     </ul>
@@ -133,7 +133,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-show="user_account_data.length == 0"><td colspan="6">No users added.</td></tr>
-                                            <tr ng-repeat="user_act in user_accounts_hk">
+                                            <tr ng-repeat="user_act in userAccounts_hk">
                                                 <td>{{$index+1}}</td>
                                                 <td>{{user_act.accountFirstName|ucwords}} {{user_act.accountLastName|ucwords}}</td>
                                                 <td>{{user_act.email}}</td>
@@ -225,10 +225,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-show="ota_config_hk.length == 0">
+                                                    <tr ng-show="otaConfig_hk.length == 0">
                                                         <td colspan="5">No OTAs have been mapped.</td>
                                                     </tr>
-                                                    <tr ng-repeat="ota_data in ota_config_hk">
+                                                    <tr ng-repeat="ota_data in otaConfig_hk">
                                                         <td>{{$index+1}}</td>
                                                         <td>{{ota_data.clientOta|ucwords}}</td>
                                                         <td>{{ota_data.otaId.name|ucwords}}</td>
@@ -301,7 +301,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="room_data in room_types_hk track by $index">
+                                                    <tr ng-repeat="room_data in roomTypes_hk track by $index">
                                                         <td>{{$index+1}}</td>
                                                         <td>{{room_data.hotel_name}}</td>
                                                         <td>{{room_data.client_room_type|ucwords}}</td>
@@ -416,17 +416,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="season_data in seasonality_definitions">
+                                                <tr ng-repeat="season_data in seasonalityDefinitions_hk">
                                                     <td>{{$index + 1}}</td>
-                                                    <td>{{season_data.season_name|ucwords}}</td>
+                                                    <td>{{season_data.seasonName|ucwords}}</td>
                                                     <td>{{season_data.number}}</td>
-                                                    <td>{{season_data.start_week}}</td>
-                                                    <td>{{season_data.end_week}}</td>
-                                                    <td>{{season_data.max_capacity}}</td>
-                                                    <td>{{season_data.min_price}}</td>
+                                                    <td>{{season_data.startWeek}}</td>
+                                                    <td>{{season_data.endWeek}}</td>
+                                                    <td>{{season_data.maxCapacity}}</td>
+                                                    <td>{{season_data.minPrice}}</td>
                                                     <td><button class="btn btn-info btn-xs" ng-click="editSeasonModal(season_data,$index)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_season(season_data.id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
                                                 </tr>
-                                                <tr ng-show="seasonality_definitions.length == 0"><td colspan="6">No seasonality definitions found.</td></tr>
+                                                <tr ng-show="seasonalityDefinitions_hk.length == 0"><td colspan="6">No seasonality definitions found.</td></tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -445,17 +445,17 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr ng-repeat="season in seasonality_definitions">
+                                                                <tr ng-repeat="season in seasonalityDefinitions_hk">
                                                                     <td>{{ season.number }}</td>
                                                                     <td ng-repeat="day in days.get_day_two">
-                                                                        <select required name="day" ng-model="dows[$parent.$index][$index].type" class="form-control">
+                                                                        <select required name="day" ng-model="dows_hk[$parent.$index][$index].type" class="form-control">
                                                                             <option value="">Select</option>
                                                                             <option value="weekday">WD</option>
                                                                             <option value="weekend">WE</option>
                                                                         </select>
                                                                     </td>
                                                                 </tr>
-                                                                <tr ng-show="seasonality_definitions.length == 0"><td colspan="8">Please add seasonality definitions first.</td></tr>
+                                                                <tr ng-show="seasonalityDefinitions_hk.length == 0"><td colspan="8">Please add seasonality definitions first.</td></tr>
                                                             </tbody>
                                                         </table>
                                                         <div ng-show="dow_form.$invalid" class="alert alert-info text-left"><em>Please complete all the mandatory fields to submit this form.</em></div>
@@ -489,7 +489,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="competitor in competitors">
+                                                <tr ng-repeat="competitor in competitors_hk">
                                                     <td>{{$index + 1}}</td>
                                                     <td>{{competitor.name|ucwords}}</td>
                                                     <td><button class="btn btn-danger btn-xs" ng-click="delete_competitiors(competitor.id,$index)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
@@ -524,13 +524,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-show="(scompetitor.distance > distanceRange[0]) && (scompetitor.distance < distanceRange[1])" ng-repeat="scompetitor in competitors_suggestions">
+                                                <tr ng-show="(scompetitor.distance > distanceRange[0]) && (scompetitor.distance < distanceRange[1])" ng-repeat="scompetitor in competitorsSuggestions_hk">
                                                     <td>{{$index + 1}}</td>
                                                     <td>{{scompetitor.name|ucwords}}</td>
                                                     <td>{{scompetitor.distance}} mi</td>
                                                     <td><button class="btn btn-success btn-xs" ng-click="addAsCompetitor(scompetitor.id,scompetitor.name,$index)" style="margin-left:5px;" title="Add as Competitor"><i class="fa fa-check"></i></button></td>
                                                 </tr>
-                                                <tr ng-show="competitors_suggestions.length == 0"><td colspan="3">No suggestions found.</td></tr>
+                                                <tr ng-show="competitorsSuggestions_hk.length == 0"><td colspan="3">No suggestions found.</td></tr>
                                             </tbody>
                                         </table>
                                     </div>

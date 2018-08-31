@@ -647,7 +647,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.searchOTAs = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.otas_name = response.data.details;
@@ -769,13 +769,17 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
             $scope.active_panel_title = title;
         };
 
-        $scope.switchPanel_hk = function(panel,title) {
-             $http.get(
-                $rootScope.backend + '/hk/get/'+(title.replace(' ','').toLowerCase())+'?clientId=' + $scope.client_id
+        $scope.switchPanel_hk = function(panel,title,dataRest) {
+            $http.get(
+                $rootScope.backend + '/hk/get/'+(dataRest.split(',')[0])+'?clientId=' + $scope.client_id
             ).then(function(response){
-                eval('$scope.'+(title.replace(' ','_').toLowerCase())+'_hk = response.data;');
-                $scope.active_panel = panel;
-                $scope.active_panel_title = title;
+                eval('$scope.'+(dataRest.split(',')[0])+'_hk = response.data;');
+                if(dataRest.split(',').length>1){
+                    $scope.switchPanel_hk(panel,title,dataRest.split(',',2)[1]);
+                }else{
+                    $scope.active_panel = panel;
+                    $scope.active_panel_title = title;
+                }
             });
         };
         
@@ -986,7 +990,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.searchOTAs_new = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.otas_name = response.data.details;
@@ -2980,7 +2984,7 @@ app.controller('OtaConfigController', ['$scope', '$rootScope', '$uibModalInstanc
         $scope.searchSystemOtaName = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.ota_name_data = response.data.details;
@@ -3242,7 +3246,7 @@ app.controller('qualitymatController', ['$scope', '$rootScope', '$uibModalInstan
         $scope.searchSystemOtaName = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.ota_name_data = response.data.details;
