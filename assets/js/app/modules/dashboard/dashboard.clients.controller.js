@@ -8,62 +8,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 
                 console.log(charts);
                 
-                //Revenue Chart
-                $scope.chartInstances['dashboard_revenue'] = Highcharts.chart('dashboard_revenue', {
-                    chart: {
-                        type: 'area'
-                    },
-                    title: {
-                        text: ''
-                    },
-                    colors:['#cccccc','#7cb5ec'],
-                    xAxis: {
-                        allowDecimals: true,
-                        categories: charts.revenue.categories,
-                        labels: {
-                            formatter: function () {
-                                return this.value; // clean, unformatted number for year
-                            }
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Amount'
-                        },
-                        labels: {
-                            formatter: function () {
-                                return this.value / 1000 + 'k';
-                            }
-                        }
-                    },
-                    tooltip: {
-                        pointFormat: 'Total Revenue: <b>{point.y:,.0f}</b>'
-                    },
-                    plotOptions: {
-                        area: {
-                            marker: {
-                                enabled: false,
-                                symbol: 'circle',
-                                radius: 2,
-                                states: {
-                                    hover: {
-                                        enabled: true
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    series: [{
-                        name: charts.revenue.ly,
-                        data: charts.revenue.data_ly
-                    },
-                    {
-                        name: charts.revenue_pickup.ty,
-                        data: charts.revenue.data
-                    }]
-                });
-                
-                //Pickup Revenue Chart
+				 //Pickup Revenue Chart
                 $scope.chartInstances['dashboard_revenue_pickup'] = Highcharts.chart('dashboard_revenue_pickup', {
                     chart: {
                         type: 'area',
@@ -75,7 +20,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     colors:['#cccccc','#7cb5ec'],
                     xAxis: {
                         allowDecimals: true,
-                        categories: charts.revenue_pickup.categories,
+                        categories: Object.keys(charts.revenue_last_month),
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
@@ -110,11 +55,11 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                         }
                     },
                     series: [{
-                        name: charts.revenue_pickup.ly,
-                        data: charts.revenue_pickup.data_ly
+                        name: 'Last Year',
+                        data: Object.values(charts.revenue_last_month)
                     },{
-                        name: charts.revenue_pickup.ty,
-                        data: charts.revenue_pickup.data
+                        name: 'This Year',
+                        data: Object.values(charts.revenue_last_month)
                     }]
                 });
                 
@@ -129,7 +74,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     colors:['#cccccc','#7cb5ec'],
                     xAxis: {
                         allowDecimals: true,
-                        categories: charts.occupancy.categories,
+                        categories: Object.keys(charts.revenue_last_month),
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
@@ -159,14 +104,71 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                         }
                     },
                     series: [{
-                        name: charts.occupancy.ly,
-                        data: charts.occupancy.data_ly
+                        name: 'Last Year',
+                        data: Object.values(charts.revenue_last_month)
                     },{
-                        name: charts.occupancy.ty,
-                        data: charts.occupancy.data
+                        name: 'This Year',
+                        data: Object.values(charts.revenue_last_month)
                     }]
                 });
                 
+				
+                //Revenue Chart
+                $scope.chartInstances['dashboard_revenue'] = Highcharts.chart('dashboard_revenue', {
+                    chart: {
+                        type: 'area'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    colors:['#cccccc','#7cb5ec'],
+                    xAxis: {
+                        allowDecimals: true,
+                        categories: Object.keys(charts.revenue_last_month),
+                        labels: {
+                            formatter: function () {
+                                return this.value; // clean, unformatted number for year
+                            }
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Amount'
+                        },
+                        labels: {
+                            formatter: function () {
+                                return this.value / 1000 + 'k';
+                            }
+                        }
+                    },
+                    tooltip: {
+                        pointFormat: 'Total Revenue: <b>{point.y:,.0f}</b>'
+                    },
+                    plotOptions: {
+                        area: {
+                            marker: {
+                                enabled: false,
+                                symbol: 'circle',
+                                radius: 2,
+                                states: {
+                                    hover: {
+                                        enabled: true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Last Year',
+                        data: Object.values(charts.revenue_last_month)
+                    },
+                    {
+                        name: 'This Year',
+                        data: Object.values(charts.revenue_last_month)
+                    }]
+                });
+                
+               
                 //Pickup Occupancy Chart
                 $scope.chartInstances['dashboard_occupancy_pickup'] = Highcharts.chart('dashboard_occupancy_pickup', {
                     chart: {
@@ -179,7 +181,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     colors:['#cccccc','#7cb5ec'],
                     xAxis: {
                         allowDecimals: true,
-                        categories: charts.occupancy_pickup.categories,
+                        categories: Object.keys(charts.revenue_last_month),
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
@@ -209,11 +211,11 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                         }
                     },
                     series: [{
-                        name: charts.occupancy_pickup.ly,
-                        data: charts.occupancy_pickup.data_ly
+                        name: 'Last Year',
+                        data: Object.values(charts.revenue_last_month)
                     },{
-                        name: charts.occupancy_pickup.ty,
-                        data: charts.occupancy_pickup.data
+                        name: 'This Year',
+                        data: Object.values(charts.revenue_last_month)
                     }]
                 });
                 
@@ -543,44 +545,54 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                 
             },500);
         };
-        
+
         $scope.loadingClient = true;
-        $http.get($rootScope.backend2+'/clients/analysis/getDashboard',{ params:{ } }).then(function(response) {
+		
+		$http.get($rootScope.backend+'/clients/clients/getDashboard/getMinCompetitorPricingForNextTenDays',{ params:{clientId:17 } }).then(function(response) {
+            $scope.competitor_pricing= response.data;
+		});
+        //$http.get($rootScope.backend2+'/clients/analysis/getDashboard',{ params:{ } }).then(function(response) {
+       $http.get($rootScope.backend+'/clients/clients/getDashboard/getOtaPerformanceSummary',{ params:{clientId:17 } }).then(function(response) {
             $scope.loadingClient = false;
+			response.data.status = true;
             if(response.data.status == true) {
-                $scope.renderClientCharts(response.data.charts);  
-            
+				$scope.charts={};
+				$scope.charts.revenue_last_month=response.data.lastMonthRoomRevenueMap;
+				$scope.charts.sold_last_month=response.data.lastMonthRoomSoldMap;
+                $scope.renderClientCharts($scope.charts);  
                 $scope.stats = response.data.stats;
-                $scope.grid = response.data.grid;
                 $scope.competitor_pricing = response.data.competitor_pricing;
-                $scope.statBoxRevenuePopover = {
-                    revenue_yesterday: response.data.stats.revenue_yesterday,
-                    revenue_lm: response.data.stats.revenue_lm,
-                    revenue_tm: response.data.stats.revenue_tm,
+				
+				$scope.grid = response.data.nextTenDaysOtaList;
+
+                $scope.statBoxRevenuePopover  = {
+                    revenue_yesterday: response.data.yesterdaysOta.revenue,
+                    revenue_lm: response.data.lastMontOta.revenue,
+                    revenue_tm: response.data.thisMonthOta.revenue,
                     templateUrl: 'statBoxRevenuePopover.html',
                     title: 'Title'
                 };
 
                 $scope.statBoxADRPopover = {
-                    arr_yesterday: response.data.stats.arr_yesterday,
-                    arr_lm: response.data.stats.arr_lm,
-                    arr_tm: response.data.stats.arr_tm,
+                    arr_yesterday: response.data.yesterdaysOta.adr,
+                    arr_lm: response.data.lastMontOta.adr,
+                    arr_tm: response.data.thisMonthOta.adr,
                     templateUrl: 'statBoxADRPopover.html',
                     title: 'Title'
                 };
 
                 $scope.statBoxOccupancyPopover = {
-                    occupancy_yesterday: response.data.stats.occupancy_yesterday,
-                    occupancy_lm: response.data.stats.occupancy_lm,
-                    occupancy_tm: response.data.stats.occupancy_tm,
+                    occupancy_yesterday: response.data.yesterdaysOta.sold,
+                    occupancy_lm: response.data.lastMontOta.sold,
+                    occupancy_tm: response.data.thisMonthOta.sold,
                     templateUrl: 'statBoxOccupancyPopover.html',
                     title: 'Title'
                 };
 
                 $scope.statBoxPickupPopover = {
-                    pickups_yesterday: response.data.stats.pickups_yesterday,
-                    pickups_lm: response.data.stats.pickups_lm,
-                    pickups_tm: response.data.stats.pickups_tm,
+                    pickups_yesterday: response.data.yesterdaysOta.pickup,
+                    pickups_lm: response.data.lastMontOta.pickup,
+                    pickups_tm: response.data.thisMonthOta.pickup,
                     templateUrl: 'statBoxPickupPopover.html',
                     title: 'Title'
                 };

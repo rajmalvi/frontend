@@ -97,16 +97,16 @@
                             <th class="text-center">Avg</th>
                             <th class="text-center">Max</th>
                         </tr>
-                        <tr ng-repeat="fig in grid.records">
-                            <td class="text-right">{{ fig[0] }}</td>
-                            <td class="text-right">{{ fig[8] }}</td>
-                            <td class="text-right">{{ fig[1] }}</td>
-                            <td class="text-right">{{ fig[2] }}</td>
+                        <tr ng-repeat="fig in grid">
+                            <td class="text-right">{{ fig.occupancyDate }}</td>
+                            <td class="text-right">{{ fig.occupancyDate }}</td>
+                            <td class="text-right">{{ fig.revenue }}</td>
+                            <td class="text-right">{{ fig.adr }}</td>
                             <td class="text-right">{{ fig[3] }}</td>
                             <td class="text-right">{{ fig[4] }}</td>
-                            <td class="text-right">{{ fig[6] }}</td>
-                            <td class="text-right">{{ fig[7] }}</td>
-                            <td class="text-right">{{ fig[5] }}</td>
+                            <td class="text-right">{{ fig['min'] }}</td>
+                            <td class="text-right">{{ fig['avg'] }}</td>
+                            <td class="text-right">{{ fig['max'] }}</td>
                         </tr>
                     </table>
                 </div>
@@ -185,10 +185,13 @@
                         <tr>
                             <th style="width:100px;">Date</th>
                             <th style="width:75px;">DOW</th>
-                            <th ng-repeat="competitor in competitor_pricing.competitors">{{ competitor }}</th>
+                            <th ng-repeat="(key,value) in competitor_pricing[0].competitors">{{ key }}</th>
                         </tr>
-                        <tr ng-show="$index <= 9" ng-repeat="record in competitor_pricing.records track by $index">
-                            <td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>
+                        <tr ng-show="$index <= 9" ng-repeat="record in competitor_pricing track by $index">
+                            <!--<td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>-->
+							<td class="headcol1">{{ record['date'] }}</td>
+							<td ng-class="{ bgblue: (record['dow'] == 'Fri' || record['dow'] == 'Sat')}" class="headcol2">{{ record['dow'] }}</td>
+							<td ng-repeat="hotel in record['competitors']">{{ hotel }}</td>
                         </tr>
                     </table>
                 </div>
