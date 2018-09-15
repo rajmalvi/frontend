@@ -99,14 +99,14 @@
                         </tr>
                         <tr ng-repeat="fig in grid">
                             <td class="text-right">{{ fig.occupancyDate }}</td>
-                            <td class="text-right">{{ fig.occupancyDate }}</td>
+                            <td class="text-right">{{ fig.availableCapacity }}</td>
+                            <td class="text-right">{{ fig.sold }}</td>
                             <td class="text-right">{{ fig.revenue }}</td>
-                            <td class="text-right">{{ fig.adr }}</td>
-                            <td class="text-right">{{ fig[3] }}</td>
-                            <td class="text-right">{{ fig[4] }}</td>
-                            <td class="text-right">{{ fig['min'] }}</td>
-                            <td class="text-right">{{ fig['avg'] }}</td>
-                            <td class="text-right">{{ fig['max'] }}</td>
+                            <td class="text-right">{{ fig.adr  }}</td>
+                            <td class="text-right">{{ fig.rateOnCm }}</td>
+                            <td class="text-right">{{ fig.min }}</td>
+                            <td class="text-right">{{ fig.avg }}</td>
+                            <td class="text-right">{{ fig.max }}</td>
                         </tr>
                     </table>
                 </div>

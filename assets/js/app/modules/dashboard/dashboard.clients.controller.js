@@ -56,7 +56,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     },
                     series: [{
                         name: 'Last Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.revenue_last_year)
                     },{
                         name: 'This Year',
                         data: Object.values(charts.revenue_last_month)
@@ -74,7 +74,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     colors:['#cccccc','#7cb5ec'],
                     xAxis: {
                         allowDecimals: true,
-                        categories: Object.keys(charts.revenue_last_month),
+                        categories: Object.keys(charts.sold_current_month),
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
@@ -105,10 +105,10 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     },
                     series: [{
                         name: 'Last Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.sold_last_year_current)
                     },{
                         name: 'This Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.sold_current_month)
                     }]
                 });
                 
@@ -124,7 +124,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     colors:['#cccccc','#7cb5ec'],
                     xAxis: {
                         allowDecimals: true,
-                        categories: Object.keys(charts.revenue_last_month),
+                        categories: Object.keys(charts.revenue_current_month),
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
@@ -160,11 +160,11 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     },
                     series: [{
                         name: 'Last Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.revenue_last_year_current)
                     },
                     {
                         name: 'This Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.revenue_current_month)
                     }]
                 });
                 
@@ -212,21 +212,21 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     },
                     series: [{
                         name: 'Last Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.sold_last_year)
                     },{
                         name: 'This Year',
-                        data: Object.values(charts.revenue_last_month)
+                        data: Object.values(charts.sold_last_month)
                     }]
                 });
                 
                 //Revenue - 30 Days
                 var colors = Highcharts.getOptions().colors,
-                categories_booking_status = charts.revenue_30days.categories,
-                data_booking_status = charts.revenue_30days.values,
+                categories_booking_status = Object.keys(charts.revenue_current_month_by_ota),
+                data_booking_status = Object.values(charts.revenue_current_month_by_ota),
                 contributionData = [],
                 i,
                 j,
-                dataLen_booking_status = data_booking_status.length,
+                dataLen_booking_status = Object.keys(charts.revenue_current_month_by_ota).length,
                 drillDataLen,
                 brightness;
 
@@ -235,8 +235,8 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 
                     // add version data
                     contributionData.push({
-                        name: data_booking_status[i].name,
-                        y: data_booking_status[i].y,
+                        name: categories_booking_status[i],
+                        y: data_booking_status[i],
                         color: Highcharts.Color(data_booking_status[i].color).brighten(brightness).get()
                     });
                 }
@@ -302,12 +302,12 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                 
                 //Room Nights 30 Days
                 var colors = Highcharts.getOptions().colors,
-                categories_booking_count = charts.room_nights_30days.categories,
-                data_booking_count = charts.room_nights_30days.values,
+                categories_booking_count = Object.keys(charts.sold_current_month_by_ota),
+                data_booking_count = Object.values(charts.sold_current_month_by_ota),
                 contributionData = [],
                 i,
                 j,
-                dataLen_booking_count = data_booking_count.length,
+                dataLen_booking_count = Object.keys(charts.sold_current_month_by_ota).length,
                 drillDataLen,
                 brightness;
 
@@ -316,8 +316,8 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 
                     // add version data
                     contributionData.push({
-                        name: data_booking_count[i].name,
-                        y: data_booking_count[i].y,
+                        name: categories_booking_count[i],
+                        y: data_booking_count[i],
                         color: Highcharts.Color(data_booking_count[i].color).brighten(brightness).get()
                     });
                 }
@@ -383,12 +383,12 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                 
                 //Revenue 365
                 var colors = Highcharts.getOptions().colors,
-                categories_arrival = charts.revenue_365days.categories,
-                data_arrival = charts.revenue_365days.values,
+                categories_arrival = Object.keys(charts.revenue_last_year_current_by_ota),
+                data_arrival = Object.values(charts.revenue_last_year_current_by_ota),
                 contributionData = [],
                 i,
                 j,
-                dataLen_arrival = data_arrival.length,
+                dataLen_arrival = Object.keys(charts.revenue_last_year_current_by_ota).length,
                 drillDataLen,
                 brightness;
 
@@ -397,8 +397,8 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 
                     // add version data
                     contributionData.push({
-                        name: data_arrival[i].name,
-                        y: data_arrival[i].y,
+                        name: categories_arrival[i],
+                        y: data_arrival[i],
                         color: Highcharts.Color(data_arrival[i].color).brighten(brightness).get()
                     });
                 }
@@ -464,12 +464,12 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                 
                 //Room Nights 365
                 var colors = Highcharts.getOptions().colors,
-                categories_room_count = charts.room_nights_365days.categories,
-                data_room_count = charts.room_nights_365days.values,
+                categories_room_count = Object.keys(charts.sold_last_year_current_by_ota),
+                data_room_count = Object.values(charts.sold_last_year_current_by_ota),
                 contributionData = [],
                 i,
                 j,
-                dataLen_room_count = data_room_count.length,
+                dataLen_room_count = Object.keys(charts.sold_last_year_current_by_ota).length,
                 drillDataLen,
                 brightness;
 
@@ -478,8 +478,8 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 
                     // add version data
                     contributionData.push({
-                        name: data_room_count[i].name,
-                        y: data_room_count[i].y,
+                        name: categories_room_count[i],
+                        y: data_room_count[i],
                         color: Highcharts.Color(data_room_count[i].color).brighten(brightness).get()
                     });
                 }
@@ -557,8 +557,28 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 			response.data.status = true;
             if(response.data.status == true) {
 				$scope.charts={};
-				$scope.charts.revenue_last_month=response.data.lastMonthRoomRevenueMap;
-				$scope.charts.sold_last_month=response.data.lastMonthRoomSoldMap;
+				
+				//last 
+				$scope.charts.revenue_last_month = response.data.lastMonthRevenuePickup;
+				$scope.charts.sold_last_month = response.data.lastMonthRoomSoldPickup;
+				
+				$scope.charts.revenue_last_year = response.data.lastYearRevenuePickup;				
+				$scope.charts.sold_last_year = response.data.lastYearRoomSoldPickup;
+				
+				//current
+				$scope.charts.revenue_current_month = response.data.currentRevenueTrend;
+				$scope.charts.sold_current_month = response.data.currentRoomSoldTrend;
+				
+				$scope.charts.revenue_last_year_current = response.data.lastYearCurrentRevenueTrend;				
+				$scope.charts.sold_last_year_current = response.data.lastYearCurrentRoomSoldTrend;
+				
+				//byOta
+				$scope.charts.revenue_current_month_by_ota = response.data.currentRevenueTrendByOta;
+				$scope.charts.sold_current_month_by_ota = response.data.currentRoomSoldTrendByOta;
+				
+				$scope.charts.revenue_last_year_current_by_ota = response.data.lastYearCurrentRevenueTrendByOta;				
+				$scope.charts.sold_last_year_current_by_ota = response.data.lastYearCurrentRoomSoldTrendByOta;
+				
                 $scope.renderClientCharts($scope.charts);  
                 $scope.stats = response.data.stats;
                 $scope.competitor_pricing = response.data.competitor_pricing;
