@@ -23,6 +23,13 @@ app.factory('OtpServices', ['$http', '$q', '$rootScope', function ($http, $q, $r
        };
        
        ob.getOtaMappings = function(callback){
+           var url = $rootScope.backend + '/setup/otasetup/getOtaMappings';
+            $http.get(url).then(function (response) {
+                callback(response);
+            });
+       };
+
+       ob.getOtaMappings_hk = function(callback){
            var url = $rootScope.backend2 + '/setup/otasetup/getOtaMappings';
             $http.get(url).then(function (response) {
                 callback(response);

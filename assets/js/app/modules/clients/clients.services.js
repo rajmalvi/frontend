@@ -117,9 +117,9 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
             clientLoad.resolve();
         }
         clientLoad = $q.defer();
-        //var url = $rootScope.backend2 + '/clients/clients/getClientDetails';
-        var url = 'http://localhost:8080/static/data.json';
-        $http.get(url, {params: {client_id: id, cache: cache}, timeout: clientLoad.promise}).then(function (response) {
+        var url = $rootScope.backend + '/clients/clients/getClientDetails';
+        //var url = 'http://localhost:8181/clientData.json';
+        $http.get(url, {params: {clientId: id, cache: cache}, timeout: clientLoad.promise}).then(function (response) {
             clientLoad = null;
             callback(response);
         });

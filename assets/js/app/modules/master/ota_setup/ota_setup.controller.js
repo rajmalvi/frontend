@@ -110,11 +110,19 @@ app.controller('OtpController', ['$scope', '$rootScope', '$routeParams', '$windo
                 $scope.ota_mapping = response.data.ota_mapping;
             });
         };
+        $scope.getOtaMappings_hk = function () {
+            OtpServices.getOtaMappings_hk(function (response) {
+                $scope.ota_mapping_hk = response.data.ota_mapping;
+            });
+        };
         
         $rootScope.$on('reloadMapData', function (notice) {
             $scope.getOtaMappings();
+            $scope.getOtaMappings_hk();
         });
+
         $scope.getOtaMappings();
+        $scope.getOtaMappings_hk();
 
 
         $scope.openOtaSetupModal = function () {
