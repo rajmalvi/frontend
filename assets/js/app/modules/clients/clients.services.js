@@ -489,11 +489,22 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     //Historical Analysis
     ob.getHistoricalCharts = function (range, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getHistoricalAnalysis';
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
         $http.get(url, {params: {range: range}}).then(function (response) {
             callback(response);
         });
     };
 
+    //Historical Analysis
+    ob.getHistoricalCharts1 = function (range, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getHistoricalAnalysis';
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
+        $http.get(url, {params: {startDate: startDate,endDate:endDate,clientId:17 }}).then(function (response) {
+            callback(response);
+        });
+    };
     ob.getPatternCharts = function (range, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getPatternAnalysis';
         $http.get(url, {params: {range: range}}).then(function (response) {
