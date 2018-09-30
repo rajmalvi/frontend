@@ -47,10 +47,9 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         $scope.loadingClient = true;
                         ClientsServices.getHistoricalCharts(range,function(response){
                             $scope.loadingClient = false;
-                            if(response.data.status) {
-                                $scope.otas = response.data.otas;
-                                $scope.renderHistoricalCharts(response.data.analysis);
-                            }
+                            //$scope.otas = response.data.otas;
+                            $scope.renderHistoricalCharts(response.data);
+                            
                         });
                     };
                     $scope.reloadHistoricalGraphs('');
@@ -785,7 +784,19 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 
                 if($rootScope.enableCharts === false) { return false; }
 
-                //Room nights stacked bar chart
+                //Room nights stacked bar chart			
+				var i;
+				var values = [];
+			
+				for(var key in charts.thisYearRoomNightsOtaVsAllOta.values) {
+					var dataOta = {};
+					if(key == 'All OTAs'){
+						dataOta['type'] = 'spline';
+					}
+				    dataOta['name'] = key;
+				    dataOta['data'] = charts.thisYearRoomNightsOtaVsAllOta.values[key];		
+					values.push(dataOta);					
+				}
                 $scope.chartInstances['room_nights_stacked_bar'] = Highcharts.chart('room_nights_stacked_bar', {
                     chart: {
                         type: 'column',
@@ -796,10 +807,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Nights (This Year)'
                     },
                     subtitle: {
-                        text: charts.room_nights_stacked_bar.subtitle
+                        text: charts.subtitleThisYear
                     },
                     xAxis: {
-                        categories: charts.room_nights_stacked_bar.categories
+                        categories: charts.thisYearRoomNightsOtaVsAllOta.categories
                     },
                     yAxis: {
                         min: 0,
@@ -838,9 +849,22 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                             }
                         }
                     },
-                    series: charts.room_nights_stacked_bar.values
+                    series: values
                 });
+
                 
+				var i;
+				var values = [];
+			
+				for(var key in charts.lastYearRoomNightsOtaVsAllOta.values) {
+					var dataOta = {};
+					if(key == 'All OTAs'){
+						dataOta['type'] = 'spline';
+					}
+				    dataOta['name'] = key;
+				    dataOta['data'] = charts.lastYearRoomNightsOtaVsAllOta.values[key];		
+					values.push(dataOta);					
+				}
                 $scope.chartInstances['room_nights_stacked_bar_ly'] = Highcharts.chart('room_nights_stacked_bar_ly', {
                     chart: {
                         type: 'column',
@@ -851,10 +875,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Nights (Last Year)'
                     },
                     subtitle: {
-                        text: charts.room_nights_stacked_bar_ly.subtitle
+                        text: charts.subtitleLastYear
                     },
                     xAxis: {
-                        categories: charts.room_nights_stacked_bar_ly.categories
+                        categories: charts.lastYearRoomNightsOtaVsAllOta.categories
                     },
                     yAxis: {
                         min: 0,
@@ -893,9 +917,31 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                             }
                         }
                     },
-                    series: charts.room_nights_stacked_bar_ly.values
+                    series: values
                 });
                 
+				var i;
+				var values = [];
+				var data_val = [];
+				var dataOta = {};				
+
+				for(var key in charts.thisYearRoomNightsOta) {
+				    dataOta['name'] = 'TY';
+					data_val.push(charts.thisYearRoomNightsOta[key])
+				    dataOta['data'] = data_val;		
+				}
+				values.push(dataOta);					
+
+			    var data_val = [];
+
+				for(var key in charts.lastYearRoomNightsOta) {
+					var dataOta = {};				
+				    dataOta['name'] = 'LY';
+					data_val.push(charts.lastYearRoomNightsOta[key])
+				    dataOta['data'] = data_val;					
+				}
+				values.push(dataOta);					
+
                 $scope.chartInstances['room_nights_horizontal_bar'] = Highcharts.chart('room_nights_horizontal_bar', {
                     chart: {
                         type: 'bar'
@@ -904,13 +950,13 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Nights: LY v/s TY'
                     },
                     subtitle: {
-                        text: charts.room_nights_horizontal_bar.subtitle
+                        text: charts.subtitleLastYear
                     },
                     xAxis: {
-                        categories: charts.room_nights_horizontal_bar.categories,
+                        categories: Object.keys(charts.thisYearRoomNightsOta),
                         title: {
                             text: null
-                        }
+                        } 
                     },
                     yAxis: {
                         min: 0,
@@ -946,27 +992,27 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     credits: {
                         enabled: false
                     },
-                    series: charts.room_nights_horizontal_bar.values
+                    series: values
                 });
                 
                 var colors = Highcharts.getOptions().colors,
-                categories = charts.room_nights_donut.categories,
-                data = charts.room_nights_donut.values,
+                categories = Object.keys(charts.thisYearRoomNightsOta),
+                data = charts.thisYearRoomNightsOta,
                 contributionData = [],
                 i,
                 j,
                 dataLen = data.length,
                 drillDataLen,
                 brightness;
-
+				var total=0;
                 // Build the data arrays
-                for (i = 0; i < dataLen; i += 1) {
-
+                for(var key in charts.thisYearRoomNightsOta) {
+					total+=charts.thisYearRoomNightsOta[key]
                     // add version data
                     contributionData.push({
-                        name: data[i].name,
-                        y: data[i].y,
-                        color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        name: key,
+                        y: charts.thisYearRoomNightsOta[key],
+                        color: Highcharts.Color(charts.thisYearRoomNightsOta[key].color).get()
                     });
                 }
 
@@ -979,7 +1025,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Nights: OTA Contribution (This Year)'
                     },
                     subtitle: {
-                        text: charts.room_nights_donut.subtitle
+                        text: charts.subtitleThisYear
                     },
                     yAxis: {
                         title: {
@@ -1008,7 +1054,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                                 formatter: function () {
                                     // display only if larger than 1
                                     return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                                            (((this.y/charts.room_nights_donut.total)*100)).toFixed(2) + '%' : null;
+                                            (((this.y/total)*100)).toFixed(2) + '%' : null;
                                 }
                             },
                             id: 'versions'
@@ -1031,23 +1077,23 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 });
                 
                 var colors = Highcharts.getOptions().colors,
-                categories = charts.room_nights_donut_ly.categories,
-                data = charts.room_nights_donut_ly.values,
+                categories = Object.keys(charts.lastYearRoomNightsOta),
+                data = charts.lastYearRoomNightsOta,
                 contributionData = [],
                 i,
                 j,
                 dataLen = data.length,
                 drillDataLen,
                 brightness;
-
+				var total=0;
                 // Build the data arrays
-                for (i = 0; i < dataLen; i += 1) {
-
+                for(var key in charts.lastYearRoomNightsOta) {
+					total+=charts.lastYearRoomNightsOta[key]
                     // add version data
                     contributionData.push({
-                        name: data[i].name,
-                        y: data[i].y,
-                        color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        name: key,
+                        y: charts.lastYearRoomNightsOta[key],
+                        color: Highcharts.Color(charts.lastYearRoomNightsOta[key].color).get()
                     });
                 }
 
@@ -1060,7 +1106,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Nights: OTA Contribution (Last Year)'
                     },
                     subtitle: {
-                        text: charts.room_nights_donut_ly.subtitle
+                        text: charts.subtitleLastYear
                     },
                     yAxis: {
                         title: {
@@ -1089,7 +1135,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                                 formatter: function () {
                                     // display only if larger than 1
                                     return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                                            (((this.y/charts.room_nights_donut_ly.total)*100)).toFixed(2) + '%' : null;
+                                            (((this.y/total)*100)).toFixed(2) + '%' : null;
                                 }
                             },
                             id: 'versions'
@@ -1112,6 +1158,18 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 });
                 
                 //Revenue stacked bar chart
+				var i;
+				var values = [];
+			
+				for(var key in charts.thisYearRevenueOtaVsAllOta.values) {
+					var dataOta = {};
+					if(key == 'All OTAs'){
+						dataOta['type'] = 'spline';
+					}
+				    dataOta['name'] = key;
+				    dataOta['data'] = charts.thisYearRevenueOtaVsAllOta.values[key];		
+					values.push(dataOta);					
+				}
                 $scope.chartInstances['room_revenue_stacked_bar'] = Highcharts.chart('room_revenue_stacked_bar', {
                     chart: {
                         type: 'column',
@@ -1121,10 +1179,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Revenue (This Year)'
                     },
                     subtitle: {
-                        text: charts.revenue_stacked_bar.subtitle
+                        text: charts.subtitleThisYear
                     },
                     xAxis: {
-                        categories: charts.revenue_stacked_bar.categories
+                        categories: charts.thisYearRevenueOtaVsAllOta.categories
                     },
                     yAxis: {
                         min: 0,
@@ -1166,8 +1224,21 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                             }
                         }
                     },
-                    series: charts.revenue_stacked_bar.values
+                    series: values
                 });
+				
+				var i;
+				var values = [];
+			
+				for(var key in charts.lastYearRevenueOtaVsAllOta.values) {
+					var dataOta = {};
+					if(key == 'All OTAs'){
+						dataOta['type'] = 'spline';
+					}
+				    dataOta['name'] = key;
+				    dataOta['data'] = charts.lastYearRevenueOtaVsAllOta.values[key];		
+					values.push(dataOta);					
+				}
                 
                 $scope.chartInstances['room_revenue_stacked_bar_ly'] = Highcharts.chart('room_revenue_stacked_bar_ly', {
                     chart: {
@@ -1178,10 +1249,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Revenue (Last Year)'
                     },
                     subtitle: {
-                        text: charts.revenue_stacked_bar_ly.subtitle
+                        text: charts.subtitleLastYear
                     },
                     xAxis: {
-                        categories: charts.revenue_stacked_bar_ly.categories
+                        categories: charts.lastYearRevenueOtaVsAllOta.categories
                     },
                     yAxis: {
                         min: 0,
@@ -1223,9 +1294,30 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                             }
                         }
                     },
-                    series: charts.revenue_stacked_bar_ly.values
+                    series: values
                 });
                 
+				var i;
+				var values = [];
+				var data_val = [];
+				var dataOta = {};				
+
+				for(var key in charts.thisYearRoomNightsOta) {
+				    dataOta['name'] = 'TY';
+					data_val.push(charts.thisYearRoomNightsOta[key])
+				    dataOta['data'] = data_val;		
+				}
+				values.push(dataOta);					
+
+			    var data_val = [];
+
+				for(var key in charts.lastYearRoomNightsOta) {
+					var dataOta = {};				
+				    dataOta['name'] = 'LY';
+					data_val.push(charts.lastYearRoomNightsOta[key])
+				    dataOta['data'] = data_val;					
+				}
+				values.push(dataOta);	
                 $scope.chartInstances['room_revenue_horizontal_bar'] = Highcharts.chart('room_revenue_horizontal_bar', {
                     chart: {
                         type: 'bar'
@@ -1234,10 +1326,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Revenue: LY v/s TY'
                     },
                     subtitle: {
-                        text: charts.revenue_horizontal_bar.subtitle
+                        text: charts.subtitleThisYear
                     },
                     xAxis: {
-                        categories: charts.revenue_horizontal_bar.categories,
+                        categories: Object.keys(charts.thisYearRoomNightsOta),
                         title: {
                             text: null
                         }
@@ -1276,27 +1368,27 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     credits: {
                         enabled: false
                     },
-                    series: charts.revenue_horizontal_bar.values
+                    series: values
                 });
                 
                 var colors = Highcharts.getOptions().colors,
-                categories = charts.revenue_donut.categories,
-                data = charts.revenue_donut.values,
+                categories = Object.keys(charts.thisYearRevenueOta),
+                data = charts.thisYearRevenueOta,
                 contributionData = [],
                 i,
                 j,
                 dataLen = data.length,
                 drillDataLen,
                 brightness;
-
+				var total=0;
                 // Build the data arrays
-                for (i = 0; i < dataLen; i += 1) {
-
+                for(var key in charts.thisYearRevenueOta) {
+					total+=charts.thisYearRevenueOta[key]
                     // add version data
                     contributionData.push({
-                        name: data[i].name,
-                        y: data[i].y,
-                        color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        name: key,
+                        y: charts.thisYearRevenueOta[key],
+                        color: Highcharts.Color(charts.thisYearRevenueOta[key].color).get()
                     });
                 }
 
@@ -1309,7 +1401,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Revenue: OTA Contribution (This Year)'
                     },
                     subtitle: {
-                        text: charts.revenue_donut.subtitle
+                        text: charts.subtitleThisYear
                     },
                     yAxis: {
                         title: {
@@ -1338,7 +1430,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                                 formatter: function () {
                                     // display only if larger than 1
                                     return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                                            (((this.y/charts.revenue_donut.total)*100)).toFixed(2) + '%' : null;
+                                            (((this.y/total)*100)).toFixed(2) + '%' : null;
                                 }
                             },
                             id: 'versions'
@@ -1360,24 +1452,24 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     }
                 });
                 
-                var colors = Highcharts.getOptions().colors,
-                categories = charts.revenue_donut_ly.categories,
-                data = charts.revenue_donut_ly.values,
+                                var colors = Highcharts.getOptions().colors,
+                categories = Object.keys(charts.lastYearRevenueOta),
+                data = charts.lastYearRevenueOta,
                 contributionData = [],
                 i,
                 j,
                 dataLen = data.length,
                 drillDataLen,
                 brightness;
-
+				var total=0;
                 // Build the data arrays
-                for (i = 0; i < dataLen; i += 1) {
-
+                for(var key in charts.lastYearRevenueOta) {
+					total+=charts.lastYearRevenueOta[key]
                     // add version data
                     contributionData.push({
-                        name: data[i].name,
-                        y: data[i].y,
-                        color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        name: key,
+                        y: charts.lastYearRevenueOta[key],
+                        color: Highcharts.Color(charts.lastYearRevenueOta[key].color).get()
                     });
                 }
 
@@ -1390,7 +1482,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         text: 'Room Revenue: OTA Contribution (Last Year)'
                     },
                     subtitle: {
-                        text: charts.revenue_donut_ly.subtitle
+                        text: charts.subtitleLastYear
                     },
                     yAxis: {
                         title: {
@@ -1419,7 +1511,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                                 formatter: function () {
                                     // display only if larger than 1
                                     return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                                            (((this.y/charts.revenue_donut_ly.total)*100)).toFixed(2) + '%' : null;
+                                            (((this.y/total)*100)).toFixed(2) + '%' : null;
                                 }
                             },
                             id: 'versions'

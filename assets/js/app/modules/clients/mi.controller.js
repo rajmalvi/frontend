@@ -572,7 +572,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.searchOTAs = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.otas_name = response.data.details;
@@ -881,7 +881,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.searchOTAs_new = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/otasetup/getAllOtas',
+                    $rootScope.backend + '/setup/otasetup/getAllOtas',
                     {params: params}
             ).then(function (response) {
                 $scope.otas_name = response.data.details;

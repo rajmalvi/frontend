@@ -30,7 +30,7 @@ app.controller('UsersController', ['$scope', '$rootScope', '$routeParams', '$win
                         ],
                         root: "clients",
                         id: 'client_id',
-                        url: $rootScope.backend + '/clients/getAllClients',
+                        url: $rootScope.backend2 + '/clients/getAllClients',
                         beforeprocessing: function (data)
                         {
                             source_members.totalrecords = data.totalRows;
