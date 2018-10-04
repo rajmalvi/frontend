@@ -576,9 +576,17 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 
     //Rate Pace
-    ob.getRatePaceChart = function (rt, callback) {
+    ob.getRatePaceChart1 = function (rt, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getRatePace';
         $http.get(url, {params: {room_type: rt}}).then(function (response) {
+            callback(response);
+        });
+    };
+	
+	    //Rate Pace
+    ob.getRatePaceChart = function (rt,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getRatePace';
+        $http.get(url,  {params: { clientId:clientId,roomTypeId:rt }}).then(function (response) {
             callback(response);
         });
     };
