@@ -4,7 +4,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         $scope.view_title = '';
         $scope.view = view;
         $scope.daterange = '';
-        
+        $scope.clientId='';
         $timeout(function(){
             switch(view) {
                 case 'rate_disparity':
@@ -26,16 +26,15 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 case 'rate_pace':
                     $scope.view_title = 'Market Price Position';
                     $scope.getRatePace = function(rt) {
-                        $scope.loadingClient = true;
-                        ClientsServices.getRatePaceChart(rt,function(response){
+						$scope.loadingClient = true;
+                        ClientsServices.getRatePaceChart(rt,17,function(response){
                             $scope.loadingClient = false;
-                            if(response.data.status) {
-                                $scope.renderRatePaceChart(response.data.rate_pace);
-                                $scope.room_types = response.data.room_types;
-                            }
+						    $scope.renderRatePaceChart(response.data);
+                            $scope.room_types = response.data.roomTypes;
+                         
                         });
                     };
-                    $scope.getRatePace('');
+                    $scope.getRatePace(1);
                 break;
                 case 'rate_analysis':
                     $scope.view_title = 'Rate Analysis';
@@ -224,7 +223,27 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         
         $scope.renderRatePaceChart = function (chart) {
             
-            console.log('Loading rate pace chart..');
+			dataSeries=[];
+			
+		    for(var key in chart.analysisOtaData.values) {
+					var dataOta = {};
+				    dataOta['name'] = key;
+				    dataOta['marker'] = {'lineWidth':0};
+				    dataOta['zIndex'] = 1;
+				    dataOta['data'] = chart.analysisOtaData.values[key];		
+					dataSeries.push(dataOta);					
+			}   
+			var range = {};
+			range['name'] = 'range';
+			range['color'] = '#7cb5ec';
+			range['type'] = 'arearange';
+		    range['marker'] = {'enabled':false};
+		    range['lineWidth'] = 0;
+		    range['fillOpacity'] = 0.3;
+		    range['zIndex'] = 0;
+			range['data'] = Object.values(chart.rangeByCategoriesDto);				
+			dataSeries.push(range);
+			console.log('Loading rate pace chart..');
             $timeout(function(){
                 
                 if($rootScope.enableCharts === false) { return false; }
@@ -236,7 +255,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     },
 
                     xAxis: {
-                        categories: chart.categories
+                        categories: chart.analysisOtaData.categories
                     },
 
                     yAxis: {
@@ -253,7 +272,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
 
                     legend: {
                     },
-                    series: chart.series
+                    series: dataSeries
                 });
             },500);
             

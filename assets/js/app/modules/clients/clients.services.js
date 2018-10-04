@@ -21,7 +21,7 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     //Add and edit Client data
     ob.editClient = function (data, callback) {
         var url = $rootScope.backend2 + '/clients/postClientData';
-        $http.post(url, data).then(function (response) {
+        $http.post(url, data,).then(function (response) {
             callback(response);
         });
     };
@@ -576,9 +576,17 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 
     //Rate Pace
-    ob.getRatePaceChart = function (rt, callback) {
+    ob.getRatePaceChart1 = function (rt, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getRatePace';
         $http.get(url, {params: {room_type: rt}}).then(function (response) {
+            callback(response);
+        });
+    };
+	
+	    //Rate Pace
+    ob.getRatePaceChart = function (rt,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getRatePace';
+        $http.get(url,  {params: { clientId:clientId,roomTypeId:rt }}).then(function (response) {
             callback(response);
         });
     };
@@ -633,7 +641,7 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 
     ob.takeover = function (client_id, callback) {
-        var url = $rootScope.backend2 + '/clients/takeOver';
+        var url = $rootScope.backend + '/clients/takeOver';
         $http.post(url, {client_id: client_id}).then(function (response) {
             callback(response);
         });

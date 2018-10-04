@@ -547,7 +547,7 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
         };
 
         $scope.loadingClient = true;
-		
+		alert($rootScope.client.id);
 		$http.get($rootScope.backend+'/clients/clients/getDashboard/getMinCompetitorPricingForNextTenDays',{ params:{clientId:17 } }).then(function(response) {
             $scope.competitor_pricing= response.data;
 		});

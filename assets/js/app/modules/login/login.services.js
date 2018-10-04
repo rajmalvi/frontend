@@ -1,4 +1,4 @@
-app.factory('LoginServices', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+ app.factory('LoginServices', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
 
         var ob = {};
 

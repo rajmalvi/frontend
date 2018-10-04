@@ -18,6 +18,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.mapping_forms = false;
         $scope.loadingClient = false;
         $scope.client_data = {};
+       
         setTimeout(function () {
             $('.select2').select2();
         }, 100);
@@ -134,6 +135,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $rootScope.gridSettings.rowselect = function (response) {
             if (typeof (response.args.row !== undefined)) {
                 $scope.loadingClient = true;
+				$scope.clientId=response.args.row.id;
                 ClientsServices.getOtaPerformance(response.args.row.id, '2018-03-07', function (response) {
                     $scope.iSell_otaPerformance = response.data;
                 });
@@ -164,6 +166,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                 ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
                     $scope.client = response.data;
                     $scope.client_id = $scope.client.id;
+                    $rootScope.client = response.data;
                    // $scope.rateShopSettings.client.otas = response.data.rateshop.client.otas;
                    // $scope.rateShopSettings.client.horizon = response.data.rateshop.client.horizon;
                    // $scope.rateShopSettings.competitors.otas = response.data.rateshop.competitors.otas;
