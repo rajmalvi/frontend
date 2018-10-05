@@ -207,7 +207,7 @@
                             </ul>
                         </li>
                         <!-- inbox dropdown end -->
-                        <!-- notification dropdown start-->
+                        <!-- notification dropdown start
                         <li ng-show="sessionData.role == 'super' || sessionData.role == 'staff'" id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
@@ -259,9 +259,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <!-- notification dropdown end -->
+                        <!-- notification dropdown end 
                     </ul>
-                    <!--  notification end -->
+                      notification end -->
                 </div>
                 <div class="nav_hotel_name">
                     {{ current_hotel_name }}
@@ -275,13 +275,14 @@
                         <!-- user login dropdown start-->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <img alt="Profile Picture" style="width: 30px;height: 30px;" ng-src="{{uploadsURL}}/{{sessionData.member_attachment}}">
+                                <!--<img alt="Profile Picture" style="width: 30px;height: 30px;" ng-src="{{uploadsURL}}/{{sessionData.member_attachment}}">-->
+								<img alt="" style="width: 30px;height: 30px;" src="assets/img/user.png" >
                                 <span class="username">{{sessionData.account_fname|ucwords}} {{sessionData.account_lname|ucwords}}</span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu extended logout">
                                 <div class="log-arrow-up"></div>
-                                <li style="width:100%;"><a href="/profile"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                                <!--<li style="width:100%;"><a href="/profile"><i class=" fa fa-suitcase"></i>Profile</a></li>-->
                                 <li><a href="" ng-click="logout()"><i class="fa fa-key"></i> Log Out</a></li>
                             </ul>
                         </li>

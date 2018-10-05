@@ -479,9 +479,17 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 
     //Competitor Pricing
-    ob.getCompetitorPricing = function (room_type, callback) {
+    ob.getCompetitorPricing1 = function (room_type, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getCompetitorPricing';
         $http.get(url, {params: {room_type: room_type}}).then(function (response) {
+            callback(response);
+        });
+    };
+	
+	    //Competitor Pricing
+    ob.getCompetitorPricing = function (room_type, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getCompetitorPricing';
+        $http.get(url, {params: {clientId:17,roomCategoryTypeId: room_type}}).then(function (response) {
             callback(response);
         });
     };

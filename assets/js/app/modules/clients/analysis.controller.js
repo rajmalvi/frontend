@@ -108,13 +108,12 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                         $scope.loadingClient = true;
                         ClientsServices.getCompetitorPricing(rt, function(response){
                             $scope.loadingClient = false;
-                            if(response.data.status) {
-                                $scope.competitor_pricing = response.data.competitor_pricing;
-                                $scope.room_types = response.data.room_types;
-                            }
+                            $scope.competitor_pricing = response.data
+                           // $scope.room_types = response.data.room_types;
+                         
                         });
                     };
-                    $scope.getCompetitorComparison('');
+                    $scope.getCompetitorComparison('1');
                 break;
             }
         },200);

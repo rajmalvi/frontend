@@ -201,6 +201,7 @@ app.config(['$routeProvider', '$locationProvider', '$authProvider', function ($r
         $authProvider.withCredentials = false;
         $authProvider.tokenRoot = null;
         $authProvider.baseUrl = 'http://localhost/admin';
+       // $authProvider.baseUrl = 'http://localhost:8080/auth';
 //        $authProvider.baseUrl = 'http://backend.revseed.dev/clients';
         $authProvider.loginUrl = '/login/doLogin';
         $authProvider.signupUrl = '/signup';
