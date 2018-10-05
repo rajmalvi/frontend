@@ -200,8 +200,8 @@ app.config(['$routeProvider', '$locationProvider', '$authProvider', function ($r
         },
         $authProvider.withCredentials = false;
         $authProvider.tokenRoot = null;
-        $authProvider.baseUrl = 'http://localhost/admin';
-       // $authProvider.baseUrl = 'http://localhost:8080/auth';
+        //$authProvider.baseUrl = 'http://localhost/admin';
+       $authProvider.baseUrl = 'http://localhost:8080/auth';
 //        $authProvider.baseUrl = 'http://backend.revseed.dev/clients';
         $authProvider.loginUrl = '/login/doLogin';
         $authProvider.signupUrl = '/signup';
@@ -263,7 +263,7 @@ app.run(['$rootScope', '$location', '$http', '$auth', '$q', function ($rootScope
 
             $rootScope.hideSection = true;
 
-            var url = $rootScope.backend2 + '/clients/login/getSessionData';
+            var url = $rootScope.backend + '/clients/login/getSessionData';
             $http.get(url).then(function (response) {
                 $rootScope.sessionData = response.data;
                 $rootScope.sessionLoad.resolve($rootScope.sessionData);

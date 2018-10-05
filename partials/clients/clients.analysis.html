@@ -77,9 +77,9 @@
                             <tr>
                                 <th style="width:100px;">Date</th>
                                 <th style="width:75px;">DOW</th>
-                                <th ng-repeat="competitor in competitor_pricing.competitors">{{ competitor }}</th>
+                                <th ng-repeat="competitor in competitor_pricing.competitorName">{{ competitor }}</th>
                             </tr>
-                            <tr ng-repeat="record in competitor_pricing.records track by $index">
+                            <tr ng-repeat="record in competitor_pricing.value track by $index">
                                 <td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>
                             </tr>
                         </table>
