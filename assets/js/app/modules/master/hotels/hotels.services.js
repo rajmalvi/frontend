@@ -24,7 +24,7 @@ app.factory('HotelsServices', ['$http', '$q', '$rootScope', function ($http, $q,
 	};
      
        ob.getClientDetails = function(id,callback){
-           var url = $rootScope.backend2 + '/hotels/hotels/getClientDetails/?client_id=' + id;
+           var url = $rootScope.backend + '/hotels/hotels/getClientDetails/?client_id=' + id;
             $http.get(url).then(function (response) {
                 callback(response);
             });

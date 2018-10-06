@@ -28,12 +28,12 @@ app.controller('HotelsController', ['$scope', '$rootScope', '$routeParams', '$wi
                             {name: 'type', type: 'string'},
                             {name: 'status', type: 'string'}
                         ],
-                        root: "hotels",
+                        root: "content",
                         id: 'id',
-                        url: $rootScope.backend2 + '/hotels/hotels/getAllHotels',
+                        url: $rootScope.backend + '/hotels/hotels/getAllHotels',
                         beforeprocessing: function (data)
                         {
-                            source_members.totalrecords = data.totalRows;
+                            source_members.totalrecords = data.totalElements;
                         },
                         filter: function ()
                         {
