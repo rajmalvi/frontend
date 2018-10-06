@@ -13,21 +13,20 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     $scope.room_types = [];
                     $scope.getRateDisparity = function(rt) {
                         $scope.loadingClient = true;
-                        ClientsServices.getRateDisparity(rt, function(response){
+                        ClientsServices.getRateDisparity(localStorage.getItem("client_id"),rt, function(response){
                             $scope.loadingClient = false;
-                            if(response.data.status) {
-                                $scope.disparities = response.data.disparities;
-                                $scope.room_types = response.data.room_types;
-                            }
+                            $scope.disparities = response.data;
+                            $scope.room_types = response.data.roomTypes;
+                            
                         });
                     };
-                    $scope.getRateDisparity('');
+                    $scope.getRateDisparity('1');
                 break;
                 case 'rate_pace':
                     $scope.view_title = 'Market Price Position';
                     $scope.getRatePace = function(rt) {
 						$scope.loadingClient = true;
-                        ClientsServices.getRatePaceChart(rt,17,function(response){
+                        ClientsServices.getRatePaceChart(rt,localStorage.getItem("client_id"),function(response){
                             $scope.loadingClient = false;
 						    $scope.renderRatePaceChart(response.data);
                             $scope.room_types = response.data.roomTypes;
@@ -44,7 +43,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     $scope.reloadHistoricalGraphs = function(range) {
                         $scope.daterange = range;
                         $scope.loadingClient = true;
-                        ClientsServices.getHistoricalCharts(range,function(response){
+                        ClientsServices.getHistoricalCharts(localStorage.getItem("client_id"),range,function(response){
                             $scope.loadingClient = false;
                             //$scope.otas = response.data.otas;
                             $scope.renderHistoricalCharts(response.data);
@@ -106,10 +105,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     $scope.room_types = [];
                     $scope.getCompetitorComparison = function(rt) {
                         $scope.loadingClient = true;
-                        ClientsServices.getCompetitorPricing(rt, function(response){
+                        ClientsServices.getCompetitorPricing(localStorage.getItem("client_id"),rt, function(response){
                             $scope.loadingClient = false;
                             $scope.competitor_pricing = response.data
-                           // $scope.room_types = response.data.room_types;
+                            $scope.room_types = response.data.roomTypes;
                          
                         });
                     };

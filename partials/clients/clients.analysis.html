@@ -57,8 +57,10 @@
                                 <th style="width:75px;">DOW</th>
                                 <th ng-repeat="ota in disparities.otas">{{ ota }}</th>
                             </tr>
-                            <tr ng-repeat="record in disparities.records track by $index">
-                                <td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>
+                           <tr ng-repeat=" day in disparities.categories track by $index">
+							    <td class="headcol1">{{ day | date :'yyyy-MMM-dd'}}</td>
+							    <td ng-class="{ bgblue: (( day | date : 'EEE') == 'Fri' || (day | date : 'EEE') == 'Sat')}" class="headcol2">{{ day | date : 'EEE' }} </td>
+                                <td ng-repeat="ota in disparities.otas"> {{ disparities.data[(day | date : 'dd-MMM')] == null ? '-' : disparities.data[(day | date : 'dd-MMM')][ota].min == null ? '-' : disparities.data[(day | date : 'dd-MMM')][ota].min}}	</td>
                             </tr>
                         </table>
                     </div>
@@ -79,8 +81,10 @@
                                 <th style="width:75px;">DOW</th>
                                 <th ng-repeat="competitor in competitor_pricing.competitorName">{{ competitor }}</th>
                             </tr>
-                            <tr ng-repeat="record in competitor_pricing.value track by $index">
-                                <td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>
+                            <tr ng-repeat="(key,data) in competitor_pricing.value track by $index">
+							    <td class="headcol1">{{ key | date:'dd-MMM-yyyy' }}</td>
+							    <td ng-class="{ bgblue: ((key | date : 'EEE') == 'Fri' || (key | date : 'EEE') == 'Sat')}" class="headcol2">{{ key | date : 'EEE' }} </td>
+                                <td ng-repeat="name in competitor_pricing.competitorName"> {{ data[name].min== null? '-': data[name].min}}	</td>
                             </tr>
                         </table>
                     </div>

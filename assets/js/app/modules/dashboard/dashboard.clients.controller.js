@@ -547,12 +547,11 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
         };
 
         $scope.loadingClient = true;
-		alert($rootScope.client.id);
-		$http.get($rootScope.backend+'/clients/clients/getDashboard/getMinCompetitorPricingForNextTenDays',{ params:{clientId:17 } }).then(function(response) {
+		$http.get($rootScope.backend+'/clients/clients/getDashboard/getMinCompetitorPricingForNextTenDays',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
             $scope.competitor_pricing= response.data;
 		});
         //$http.get($rootScope.backend2+'/clients/analysis/getDashboard',{ params:{ } }).then(function(response) {
-       $http.get($rootScope.backend+'/clients/clients/getDashboard/getOtaPerformanceSummary',{ params:{clientId:17 } }).then(function(response) {
+       $http.get($rootScope.backend+'/clients/clients/getDashboard/getOtaPerformanceSummary',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
             $scope.loadingClient = false;
 			response.data.status = true;
             if(response.data.status == true) {

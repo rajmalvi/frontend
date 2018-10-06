@@ -616,15 +616,15 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         }
 
         //search currency
-        $scope.searchCurrency = function (keywords) {
-            var params = {keywords: keywords};
-            return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchCurrency',
-                    {params: params}
-            ).then(function (response) {
-                $scope.currency = response.data.results;
-            });
-        };
+       // $scope.searchCurrency = function (keywords) {
+         //   var params = {keywords: keywords};
+           // return $http.get(
+             //       $rootScope.backend2 + '/hotels/hotels/searchCurrency',
+               //     {params: params}
+            //).then(function (response) {
+              //  $scope.currency = response.data.results;
+            //});
+        //};
 
         //search city
         $scope.searchCity = function (keywords) {
@@ -2845,6 +2845,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                     localStorage.setItem('current_hotel_name',$scope.client.property_name);
                     $rootScope.current_hotel_name = $scope.client.property_name;
                     $rootScope.sessionData.role = 'admin_client';
+                    $rootScope.sessionData.client_id = localStorage.getItem("client_id");;
                     $location.path('dashboard');
                 }
             });

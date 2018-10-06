@@ -470,14 +470,14 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
 
-    //Rate Disparities
-    ob.getRateDisparity = function (room_type, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getDisparity';
-        $http.get(url, {params: {room_type: room_type}}).then(function (response) {
+	//Rate Disparities
+    ob.getRateDisparity = function (clientId,room_type, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getRateDisparity';
+        $http.get(url, {params: {clientId:clientId,roomTypeId: room_type}}).then(function (response) {
             callback(response);
         });
     };
-
+	
     //Competitor Pricing
     ob.getCompetitorPricing1 = function (room_type, callback) {
         var url = $rootScope.backend2 + '/clients/analysis/getCompetitorPricing';
@@ -487,9 +487,9 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 	
 	    //Competitor Pricing
-    ob.getCompetitorPricing = function (room_type, callback) {
+    ob.getCompetitorPricing = function (clientId,room_type, callback) {
         var url = $rootScope.backend + '/clients/analysis/getCompetitorPricing';
-        $http.get(url, {params: {clientId:17,roomCategoryTypeId: room_type}}).then(function (response) {
+        $http.get(url, {params: {clientId:clientId,roomCategoryTypeId: room_type}}).then(function (response) {
             callback(response);
         });
     };
@@ -505,11 +505,11 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     };
 
     //Historical Analysis
-    ob.getHistoricalCharts = function (range, callback) {
+    ob.getHistoricalCharts = function (clientId,range, callback) {
         var url = $rootScope.backend + '/clients/analysis/getHistoricalAnalysis';
 		var startDate= $.trim(range.split("to")[0]);
 		var endDate= $.trim(range.split("to")[1]);
-        $http.get(url, {params: {startDate: startDate,endDate:endDate,clientId:17 }}).then(function (response) {
+        $http.get(url, {params: {startDate: startDate,endDate:endDate,clientId:clientId }}).then(function (response) {
             callback(response);
         });
     };
