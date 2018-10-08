@@ -514,8 +514,8 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
     ob.getPatternCharts = function (range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getPatternAnalysis';
-        $http.get(url, {params: {range: range}}).then(function (response) {
+        var url = $rootScope.backend + '/clients/analysis/getPatternAnalysis';
+        $http.get(url, {params: {clientId:17 ,range: range}}).then(function (response) {
             callback(response);
         });
     };

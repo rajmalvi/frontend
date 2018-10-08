@@ -99,14 +99,14 @@
                         </tr>
                         <tr ng-repeat="fig in grid">
                             <td class="text-right">{{ fig.occupancyDate }}</td>
-                            <td class="text-right">{{ fig.availableCapacity }}</td>
-                            <td class="text-right">{{ fig.sold }}</td>
-                            <td class="text-right">{{ fig.revenue }}</td>
-                            <td class="text-right">{{ fig.adr  }}</td>
-                            <td class="text-right">{{ fig.rateOnCm }}</td>
-                            <td class="text-right">{{ fig.min }}</td>
-                            <td class="text-right">{{ fig.avg }}</td>
-                            <td class="text-right">{{ fig.max }}</td>
+                            <td class="text-right">{{ fig.availableCapacity == null ? '-' : fig.availableCapacity  }}</td>
+                            <td class="text-right">{{ fig.sold == null ? '-' : fig.sold }}</td>
+                            <td class="text-right">{{ fig.revenue == null ? '-' : fig.revenue | number:0 }}</td>
+                            <td class="text-right">{{ fig.adr == null ? '-' : fig.adr | number:0  }}</td>
+                            <td class="text-right">{{ fig.rateOnCm == null ? '-' : (fig.rateOnCm | number:0)}}</td>
+                            <td class="text-right">{{ fig.min == null ? '-' : fig.min | number:0 }}</td>
+                            <td class="text-right">{{ fig.avg == null ? '-' : fig.avg | number:0}}</td>
+                            <td class="text-right">{{ fig.max == null ? '-' : fig.max | number:0}}</td>
                         </tr>
                     </table>
                 </div>
@@ -185,13 +185,12 @@
                         <tr>
                             <th style="width:100px;">Date</th>
                             <th style="width:75px;">DOW</th>
-                            <th ng-repeat="(key,value) in competitor_pricing[0].competitors">{{ key }}</th>
+                            <th ng-repeat="name in competitor_pricing_data.competitorName">{{ name }}</th>
                         </tr>
-                        <tr ng-show="$index <= 9" ng-repeat="record in competitor_pricing track by $index">
-                            <!--<td ng-class="{ bgblue: $index == 1 && (cell == 'Fri' || cell == 'Sat')}" ng-repeat="cell in record track by $index">{{ cell }}</td>-->
-							<td class="headcol1">{{ record['date'] }}</td>
-							<td ng-class="{ bgblue: (record['dow'] == 'Fri' || record['dow'] == 'Sat')}" class="headcol2">{{ record['dow'] }}</td>
-							<td ng-repeat="hotel in record['competitors']">{{ hotel }}</td>
+                        <tr ng-show="$index <= 9" ng-repeat="(key,value) in competitor_pricing_data.value track by $index">
+							<td class="headcol1">{{ key | date :'dd-MMM-yy'}}</td>
+							<td ng-class="{ bgblue: (( key | date : 'EEE') == 'Fri' || (key | date : 'EEE') == 'Sat')}" class="headcol2">{{ key | date : 'EEE' }} </td>
+							<td ng-repeat="name in competitor_pricing_data.competitorName">{{ value[name].min== null ? '-' : value[name].min | number:0}}</td>
                         </tr>
                     </table>
                 </div>
@@ -354,10 +353,10 @@
 
 </section>
 <script type="text/ng-template" id="statBoxRevenuePopover.html">
-    <table><tr><td>Yesterday</td><td>: {{ statBoxRevenuePopover.revenue_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxRevenuePopover.revenue_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxRevenuePopover.revenue_lm }}</td></tr></table>
+    <table><tr><td>Yesterday</td><td>: {{ statBoxRevenuePopover.revenue_yesterday | number}}</td></tr><tr><td>This Month</td><td>: {{ statBoxRevenuePopover.revenue_tm | number}}</td></tr><tr><td>Last Month</td><td>: {{ statBoxRevenuePopover.revenue_lm | number}}</td></tr></table>
 </script>
 <script type="text/ng-template" id="statBoxADRPopover.html">
-    <table><tr><td>Yesterday</td><td>: {{ statBoxADRPopover.arr_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxADRPopover.arr_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxADRPopover.arr_lm }}</td></tr></table>
+    <table><tr><td>Yesterday</td><td>: {{ statBoxADRPopover.arr_yesterday | number}}</td></tr><tr><td>This Month</td><td>: {{ statBoxADRPopover.arr_tm | number}}</td></tr><tr><td>Last Month</td><td>: {{ statBoxADRPopover.arr_lm | number }}</td></tr></table>
 </script>
 <script type="text/ng-template" id="statBoxOccupancyPopover.html">
     <table><tr><td>Yesterday</td><td>: {{ statBoxOccupancyPopover.occupancy_yesterday }}</td></tr><tr><td>This Month</td><td>: {{ statBoxOccupancyPopover.occupancy_tm }}</td></tr><tr><td>Last Month</td><td>: {{ statBoxOccupancyPopover.occupancy_lm }}</td></tr></table>

@@ -798,13 +798,13 @@
                                                     <td class="text-right">{{ value['availableCapacity']==null ? 0 : value['availableCapacity'] }}</td>
                                                     <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="purplebg">{{ value['sold']==null ? 0 : value['sold']  }}</td>
                                                     <td ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'bookings',client_id)" class="text-right">{{ value['pickup']==null ? 0 : value['pickup']  }}</td>
-                                                    <td class="text-right">{{ value['revenue']==null ? 0 : value['revenue']}}</td>
-                                                    <td class="text-right">{{ value['adr']==null ? 0 : value['adr'] }}</td>
-                                                    <td class="text-right">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm'] }}</td>
-                                                    <td class="text-right">{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended']}}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']==null?0:iSell_competitorPricing[key]['min']}}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg']==null?0:iSell_competitorPricing[key]['avg'] }}</td>
-                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max']==null?0:iSell_competitorPricing[key]['max'] }}</td>
+                                                    <td class="text-right">{{ value['revenue']==null ? 0 : value['revenue'] | number:0}}</td>
+                                                    <td class="text-right">{{ value['adr']==null ? 0 : value['adr'] | number:0}}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm'] | number:0}}</td>
+                                                    <td class="text-right">{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended'] | number:0}}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']==null?0:iSell_competitorPricing[key]['min'] | number:0}}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg']==null?0:iSell_competitorPricing[key]['avg'] | number:0 }}</td>
+                                                    <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max']==null?0:iSell_competitorPricing[key]['max'] | number:0 }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -854,7 +854,7 @@
                                                     <td><a href="#" ng-click="overrideRate(record,$index)">{{ iSell_all_recommendation[key]['rateMpi']== null? 0:iSell_all_recommendation[key]['rateMpi'] }}</a></td>
                                                     <td><a href="#" ng-click="pushRate(record,$index)">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm']  }}</a></td>
                                                     <td>{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended']  }}</td>
-                                                    <td ng-repeat="hotel in (iSell_min_all_competitor[key]==null ? iSell_min_all_competitor['names'] : iSell_min_all_competitor[key])">{{ hotel }}</td>
+                                                    <td ng-repeat="hotel in (iSell_min_all_competitor[key]==null ? iSell_min_all_competitor['names'] : iSell_min_all_competitor[key])">{{ hotel | number:0 }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -263,8 +263,8 @@
                     </ul>
                       notification end -->
                 </div>
-                <div class="nav_hotel_name">
-                    {{ current_hotel_name }}
+                <div class="nav_hotel_name" ng-bind="current_hotel_name">
+                   
                 </div>
                 <div class="top-nav ">
                     <!--search & user info start-->
@@ -277,7 +277,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <!--<img alt="Profile Picture" style="width: 30px;height: 30px;" ng-src="{{uploadsURL}}/{{sessionData.member_attachment}}">-->
 								<img alt="" style="width: 30px;height: 30px;" src="assets/img/user.png" >
-                                <span class="username">{{sessionData.account_fname|ucwords}} {{sessionData.account_lname|ucwords}}</span>
+                                <span class="username" ng-bind="sessionData.account_fname" > </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu extended logout">

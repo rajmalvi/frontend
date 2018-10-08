@@ -547,11 +547,14 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
         };
 
         $scope.loadingClient = true;
-		$http.get($rootScope.backend+'/clients/clients/getDashboard/getMinCompetitorPricingForNextTenDays',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
-            $scope.competitor_pricing= response.data;
+		$http.get($rootScope.backend+'/clients/dashboard/getCompetitorPricing',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
+            $scope.competitor_pricing_data= response.data;
 		});
-        //$http.get($rootScope.backend2+'/clients/analysis/getDashboard',{ params:{ } }).then(function(response) {
-       $http.get($rootScope.backend+'/clients/clients/getDashboard/getOtaPerformanceSummary',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
+		
+		$http.get($rootScope.backend+'/clients/dashboard/getCompetitorPricing',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
+            $scope.competitor_pricing_min_max= response.data;
+		});
+        $http.get($rootScope.backend+'/clients/clients/getDashboard/getOtaPerformanceSummary',{ params:{clientId:localStorage.getItem("client_id") } }).then(function(response) {
             $scope.loadingClient = false;
 			response.data.status = true;
             if(response.data.status == true) {
@@ -585,17 +588,17 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 				$scope.grid = response.data.nextTenDaysOtaList;
 
                 $scope.statBoxRevenuePopover  = {
-                    revenue_yesterday: response.data.yesterdaysOta.revenue,
-                    revenue_lm: response.data.lastMontOta.revenue,
-                    revenue_tm: response.data.thisMonthOta.revenue,
+                    revenue_yesterday: Math.ceil(response.data.yesterdaysOta.revenue),
+                    revenue_lm: Math.ceil(response.data.lastMontOta.revenue),
+                    revenue_tm: Math.ceil(response.data.thisMonthOta.revenue),
                     templateUrl: 'statBoxRevenuePopover.html',
                     title: 'Title'
                 };
 
                 $scope.statBoxADRPopover = {
-                    arr_yesterday: response.data.yesterdaysOta.adr,
-                    arr_lm: response.data.lastMontOta.adr,
-                    arr_tm: response.data.thisMonthOta.adr,
+                    arr_yesterday: Math.ceil(response.data.yesterdaysOta.adr),
+                    arr_lm: Math.ceil(response.data.lastMontOta.adr),
+                    arr_tm: Math.ceil(response.data.thisMonthOta.adr),
                     templateUrl: 'statBoxADRPopover.html',
                     title: 'Title'
                 };
