@@ -42,7 +42,7 @@ app.controller('RMController', ['$scope', '$rootScope', '$routeParams', '$window
     $scope.fetchRates = function() {
         $scope.fetchingRates = true;
         $scope.fetchingFailed = false;
-        $http.post('http://revseed.backend.revnomix.com/import/fetchRates',$scope.rate).then(function(response){
+        $http.post($rootScope.backend+'/import/fetchRates',$scope.rate).then(function(response){
             if(response.data.status == true) {
                 $scope.showSummary = true;
                 $scope.showForm = $scope.fetchingRates = false;

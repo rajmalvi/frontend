@@ -24,13 +24,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Start Date<span style="color:red">*</span></label>
-                    <input ng-model="event_data.start_date" type="text" id="date_get" name="start_date" customdatez class="form-control" placeholder="Select start date" required>
+                    <input ng-model="event_data.start_date" type="text" id="date_get" name="startDate" customdatez class="form-control" placeholder="Select start date" required>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>End Date<span style="color:red">*</span></label>
-                    <input ng-model="event_data.end_date" type="text" id="end_date" name="end_date" customdatez class="form-control" minDate="{{ event_data.start_date }}" ng-disabled="event_data.start_date == ''" placeholder="Select end date" required>
+                    <input ng-model="event_data.end_date" type="text" id="end_date" name="endDate" customdatez class="form-control" minDate="{{ event_data.start_date }}" ng-disabled="event_data.start_date == ''" placeholder="Select end date" required>
                 </div>
             </div>
         </div> 
@@ -38,7 +38,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Select Area Impact<span style="color:red">*</span></label>
-                    <ui-select ng-model="event_data.area_impact" name="area_impact" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" id="event_area" required>
+                    <ui-select ng-model="event_data.area_impact" name="areaImpact" theme="bootstrap" on-select="selectArea($item,$model)" reset-search-input="false" style="width: 100%;" title="Select a area impact" id="event_area" required>
                         <ui-select-match placeholder="Enter keywords...">{{$select.selected.name}}
                         </ui-select-match>
                         <ui-select-choices repeat="area.name as area in areas track by $index"

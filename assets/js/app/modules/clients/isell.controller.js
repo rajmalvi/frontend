@@ -105,7 +105,7 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
 
     //$scope.gridOptions.data = data;
 
-    ClientsServices.getiSellData(function (response) {
+   /* ClientsServices.getiSellData(function (response) {
         if (response.data.status) {
             $scope.loadingClient = false;
             $scope.otas_rs = response.data.isell.otas_rs;
@@ -116,6 +116,35 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
             $scope.renderGrid();
         }
     });
+    */
+   var e = {};
+   e.finished=0;
+   e.finshedQuery=function(){
+       this.finished++;
+       if(this.finished==3){
+           $scope.loadingClient = false;
+           $scope.renderGrid();
+       }
+   }
+
+
+    ClientsServices.getOtaPerformance($rootScope.client.id, '2018-03-07', function (response) {
+        $scope.iSell_otaPerformance = response.data;
+        e.finshedQuery();
+    });
+    ClientsServices.getCompetitorPricingForISell($rootScope.client.id, '2018-03-07', function (response) {
+        $scope.iSell_competitorPricing = response.data;
+        e.finshedQuery();
+    });
+
+    ClientsServices.getRatesForISell($rootScope.client.id, '2018-03-07', function (response) {
+        $scope.iSell_rates = response.data;
+        e.finshedQuery();
+    });
+
+
+
+
 
     $scope.downloadiSell = function () {
         window.location = $rootScope.backend2 + '/export/clientiSell/?client_id=' + $rootScope.sessionData.client_id;
