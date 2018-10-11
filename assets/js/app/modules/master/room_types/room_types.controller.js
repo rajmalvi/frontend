@@ -277,7 +277,7 @@ app.controller('RoomMappingController', ['$scope', '$rootScope', '$uibModalInsta
         $scope.searchRoomTypes = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/Room_types/searchRoomTypes',
+                    $rootScope.backend + '/setup/Room_types/searchRoomTypes',
                     {params: params}
             ).then(function (response) {
                 $scope.room_details = response.data.room_details;

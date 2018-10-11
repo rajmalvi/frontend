@@ -238,7 +238,7 @@ app.controller('HotelsController', ['$scope', '$rootScope', '$routeParams', '$wi
        $scope.searchStates = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchState/?country_id=' + $scope.country_id,
+                    $rootScope.backend + '/hotels/hotels/searchState/?country_id=' + $scope.country_id,
                     {params: params}
             ).then(function (response) {
                 $scope.states = response.data.results;
@@ -255,7 +255,7 @@ app.controller('HotelsController', ['$scope', '$rootScope', '$routeParams', '$wi
          $scope.searchCity = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchCity/?state_id=' + $scope.state_id,
+                    $rootScope.backend + '/hotels/hotels/searchCity/?state_id=' + $scope.state_id,
                     {params: params}
             ).then(function (response) {
                 $scope.cities = response.data.results;
@@ -361,7 +361,7 @@ app.controller('competitorsfigController', ['$scope', '$rootScope', '$uibModalIn
         $scope.searchStates = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchState',
+                    $rootScope.backend + '/hotels/hotels/searchState',
                     {params: params}
             ).then(function (response) {
                 $scope.states = response.data.results;
@@ -370,7 +370,7 @@ app.controller('competitorsfigController', ['$scope', '$rootScope', '$uibModalIn
         $scope.searchCity = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchCity',
+                    $rootScope.backend + '/hotels/hotels/searchCity',
                     {params: params}
             ).then(function (response) {
                 $scope.cities = response.data.results;

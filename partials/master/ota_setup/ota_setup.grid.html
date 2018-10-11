@@ -32,10 +32,10 @@
                             <p> <strong>Name:</strong> {{ ota_details.name|ucwords}}</p>
                         </div>
                             <div class="col-md-3 col-lg-3 col-xs-12">
-                           <p><strong>Registration Date:</strong><span class="record_date"> {{ ota_details.datetime }} </span><br /></p>
+                           <p><strong>Registration Date:</strong><span class="record_date"> {{ota_details.regdate }} </span><br /></p>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
-                            <p><strong>Author:</strong><span class="record_author_name"> {{ ota_details.author_fname|ucwords}} {{ ota_details.author_lname|ucwords}}</span><br />
+                            <p><strong>Author:</strong><span class="record_author_name"> {{ ota_details.authorFname|ucwords}} {{ ota_details.authorLname|ucwords}}</span><br />
                          </div>
                             <div class="col-md-3 col-lg-3 col-xs-12">
                               <p> <strong>Status:</strong> 
@@ -43,8 +43,8 @@
                               <span class="disabled_status" ng-show="ota_details.status == 'disabled'">{{ ota_details.status|ucwords }}</span>
                               </p>
                             </div>
-                         <div class="col-md-12 col-lg-12 col-xs-12" ng-show="ota_details.domain_name != null">
-                            <p> <strong>Domain Name:</strong> {{ ota_details.domain_name}}</p>
+                         <div class="col-md-12 col-lg-12 col-xs-12" ng-show="ota_details.domainName != null">
+                            <p> <strong>Domain Name:</strong> {{ ota_details.domainName}}</p>
                          </div> 
                     </div> 
                 </div>                          
@@ -85,8 +85,8 @@
                                 <tr ng-repeat="ota_map in ota_mapping">
                                     <td>{{$index+1}}</td>
                                     <td>{{ota_map.type|ucwords}}</td>
-                                    <td>{{ota_map.client_ota_name|ucwords}}</td>
-                                    <td>{{ota_map.system_name|ucwords}}</td>
+                                    <td>{{ota_map.clientOtaName|ucwords}}</td>
+                                    <td>{{ota_map.systemName|ucwords}}</td>
                                     <td><button class="btn btn-info btn-xs" ng-click="editOtaMapModal(ota_map)"><i class="fa fa-edit"></i></button><button class="btn btn-danger btn-xs" ng-click="delete_otaMapping(ota_map.id)" style="margin-left:5px;"><i class="fa fa-trash-o"></i></button></td>
                                 </tr>
                             </tbody>
