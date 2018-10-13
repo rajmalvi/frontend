@@ -713,7 +713,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                 }
                 hotelSearch = $q.defer();
                 return $http.get(
-                        $rootScope.backend2 + '/hotels/hotels/searchHotels',
+                        $rootScope.backend + '/hotels/hotels/searchHotels',
                         {params: params,timeout: hotelSearch.promise}
                 ).then(function (response) {
                     hotelSearch = null;
@@ -3376,7 +3376,7 @@ app.controller('competitorsController', ['$scope', '$rootScope', '$uibModalInsta
         $scope.searchHotels1 = function (keywords) {
             var params = {keywords: keywords, cities:$scope.city_name };
             return $http.get(
-                    $rootScope.backend2 + '/hotels/hotels/searchHotels',
+                    $rootScope.backend + '/hotels/hotels/searchHotels',
                     {params: params}
             ).then(function (response) {
                 $scope.hotels = response.data.results;

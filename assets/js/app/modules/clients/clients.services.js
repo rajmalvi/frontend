@@ -513,9 +513,9 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
             callback(response);
         });
     };
-    ob.getPatternCharts = function (range, callback) {
+    ob.getPatternCharts = function (range, clientId, callback) {
         var url = $rootScope.backend + '/clients/analysis/getPatternAnalysis';
-        $http.get(url, {params: {clientId:17 ,range: range}}).then(function (response) {
+        $http.get(url, {params: {clientId:clientId ,range: range}}).then(function (response) {
             callback(response);
         });
     };
@@ -534,9 +534,9 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
 
-    ob.getPaceAnalysis = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getPaceAnalysis';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getPaceAnalysis = function (otas, range,clientId ,callback) {
+        var url = $rootScope.backend + '/clients/analysis/getPaceAnalysis';
+        $http.get(url, {params: {range: range, clientId: clientId, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
@@ -555,30 +555,30 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
 
-    ob.getArrivalvsLOS = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getArrivalvsLOS';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getArrivalvsLOS = function (otas, range,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getArrivalvsLOS';
+        $http.get(url, {params: {range: range,clientId: clientId, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
 
-    ob.getArrivalvsLOSLY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getArrivalvsLOSLY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getArrivalvsLOSLY = function (otas, range,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getArrivalvsLOSLY';
+        $http.get(url, {params: {range: range,clientId: clientId, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
 
-    ob.getRPDvsADR = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRPDvsADR';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRPDvsADR = function (otas, range,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getRPDvsADR';
+        $http.get(url, {params: {range: range,clientId: clientId, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
 
-    ob.getRPDvsADRLY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRPDvsADRLY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRPDvsADRLY = function (otas, range,clientId, callback) {
+        var url = $rootScope.backend + '/clients/analysis/getRPDvsADRLY';
+        $http.get(url, {params: {range: range, clientId: clientId, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };

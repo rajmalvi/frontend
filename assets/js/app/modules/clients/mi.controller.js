@@ -634,7 +634,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
                 }
                 hotelSearch = $q.defer();
                 return $http.get(
-                        $rootScope.backend2 + '/hotels/hotels/searchHotels',
+                        $rootScope.backend + '/hotels/hotels/searchHotels',
                         {params: params,timeout: hotelSearch.promise}
                 ).then(function (response) {
                     hotelSearch = null;

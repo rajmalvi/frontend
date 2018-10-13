@@ -89,7 +89,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     $scope.reloadHistoricalGraphs = function(range) {
                         $scope.loadingClient = true;
                         $scope.daterange = range;
-                        ClientsServices.getPatternCharts(range,function(response){
+                        ClientsServices.getPatternCharts(range,$scope.$parent.client.id,function(response){
                             $scope.loadingClient = false;
                             if(response.data.status) {
                                 $scope.otas = response.data.otas;
@@ -278,6 +278,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         
         $scope.selectGraphOTA = function(item,modal,type) {
             $scope.$apply();
+            $scope.clientId = $scope.$parent.client.id;
                 console.log($scope.daterange);
             if(type == 'room_nights_rate_band_ly') {
                 ClientsServices.getRoomNightsRateBandLY($scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){
@@ -294,7 +295,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 });
             }
             else if(type == 'pace_analysis') {
-                ClientsServices.getPaceAnalysis($scope.charts.pace_analysis.otas,$scope.daterange,function(response){
+                ClientsServices.getPaceAnalysis($scope.charts.pace_analysis.otas,$scope.daterange,$scope.clientId,function(response){
                     if(response.data.status) {
                         $scope.renderPaceAnalysis(response.data.data);
                     }
@@ -315,28 +316,28 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 });
             }
             else if(type == 'arrival_vs_los') {
-                ClientsServices.getArrivalvsLOS($scope.charts.arrival_vs_los.otas,$scope.daterange,function(response){
+                ClientsServices.getArrivalvsLOS($scope.charts.arrival_vs_los.otas,$scope.daterange,$scope.clientId,function(response){
                     if(response.data.status) {
                         $scope.renderArrivalvsLOS(response.data.data);
                     }
                 });
             }
             else if(type == 'arrival_vs_los_ly') {
-                ClientsServices.getArrivalvsLOSLY($scope.charts.arrival_vs_los_ly.otas,$scope.daterange,function(response){
+                ClientsServices.getArrivalvsLOSLY($scope.charts.arrival_vs_los_ly.otas,$scope.daterange,$scope.clientId,function(response){
                     if(response.data.status) {
                         $scope.renderArrivalvsLOSLY(response.data.data);
                     }
                 });
             }
             else if(type == 'rpd_vs_adr') {
-                ClientsServices.getRPDvsADR($scope.charts.rpd_vs_adr.otas,$scope.daterange,function(response){
+                ClientsServices.getRPDvsADR($scope.charts.rpd_vs_adr.otas,$scope.daterange,$scope.clientId,function(response){
                     if(response.data.status) {
                         $scope.renderRPDvsADR(response.data.data);
                     }
                 });
             }
             else if(type == 'rpd_vs_adr_ly') {
-                ClientsServices.getRPDvsADRLY($scope.charts.rpd_vs_adr_ly.otas,$scope.daterange,function(response){
+                ClientsServices.getRPDvsADRLY($scope.charts.rpd_vs_adr_ly.otas,$scope.daterange,$scope.clientId,function(response){
                     if(response.data.status) {
                         $scope.renderRPDvsADRLY(response.data.data);
                     }
