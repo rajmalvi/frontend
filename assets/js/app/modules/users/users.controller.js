@@ -1,4 +1,4 @@
-app.controller('UsersController', ['$scope', '$rootScope', '$routeParams', '$window', 'FileUploader', '$compile', 'UsersServices', '$uibModal', function ($scope, $rootScope, $routeParams, $window, FileUploader, $compile, MembersServices, $uibModal) {
+app.controller('UsersController', ['$scope', '$rootScope', '$routeParams', '$window', 'FileUploader', '$compile', 'UsersServices', '$uibModal', function ($scope, $rootScope, $routeParams, $window, FileUploader, $compile, UsersServices, $uibModal) {
 
      $scope.currentAccount = $routeParams.mID;
 

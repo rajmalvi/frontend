@@ -89,7 +89,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                     $scope.reloadHistoricalGraphs = function(range) {
                         $scope.loadingClient = true;
                         $scope.daterange = range;
-                        ClientsServices.getPatternCharts(range,$scope.$parent.client.id,function(response){
+                        ClientsServices.getPatternCharts(range,localStorage.getItem("client_id"),function(response){
                             $scope.loadingClient = false;
                             if(response.data.status) {
                                 $scope.otas = response.data.otas;
@@ -278,7 +278,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         
         $scope.selectGraphOTA = function(item,modal,type) {
             $scope.$apply();
-            $scope.clientId = $scope.$parent.client.id;
+            $scope.clientId = localStorage.getItem("clientId");
                 console.log($scope.daterange);
             if(type == 'room_nights_rate_band_ly') {
                 ClientsServices.getRoomNightsRateBandLY($scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){

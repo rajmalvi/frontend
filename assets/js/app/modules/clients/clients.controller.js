@@ -166,6 +166,8 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                 ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
                     $scope.client = response.data;
                     $scope.client_id = $scope.client.id;
+                    localStorage.setItem('client_id',$scope.client_id);
+                    localStorage.setItem('current_hotel_name',$scope.client.property_name);
                     $rootScope.client = response.data;
                    // $scope.rateShopSettings.client.otas = response.data.rateshop.client.otas;
                    // $scope.rateShopSettings.client.horizon = response.data.rateshop.client.horizon;
@@ -213,6 +215,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
                 $scope.client = response.data;
                 $scope.preclientid = $scope.client.id;
                 $scope.client_id = $scope.client.id;
+                localStorage.setItem('client_id',$scope.client_id);
               //  $scope.rateShopSettings.client.otas = response.data.rateshop.client.otas;
               //  $scope.rateShopSettings.client.horizon = response.data.rateshop.client.horizon;
               //  $scope.rateShopSettings.competitors.otas = response.data.rateshop.competitors.otas;
