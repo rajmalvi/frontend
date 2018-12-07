@@ -46,7 +46,7 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
     //Add and edit Events data
     ob.postEvent = function (data, id, callback) {
         data.clientId = id;
-        var url = $rootScope.backend2 + '/events/postClientEvent';
+        var url = $rootScope.backend + '/events/postClientEvent';
         $http.post(url, data).then(function (response) {
             callback(response);
         });

@@ -698,10 +698,10 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.searchRoomtypes = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/room_types/searchRoomtypesName',
+                    $rootScope.backend + '/setup/room_types/searchRoomtypesName',
                     {params: params}
             ).then(function (response) {
-                $scope.room_types_name = response.data.details;
+                $scope.room_types_name = response.data.room_details;
             });
         };
         
@@ -891,10 +891,10 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.searchRoomtypes_new = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/room_types/searchRoomtypesName',
+                    $rootScope.backend + '/setup/room_types/searchRoomtypesName',
                     {params: params}
             ).then(function (response) {
-                $scope.room_types_name = response.data.details;
+                $scope.room_types_name = response.data.room_details;
             });
         };
 

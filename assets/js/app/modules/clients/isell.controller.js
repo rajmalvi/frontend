@@ -128,16 +128,16 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
    }
 
 
-    ClientsServices.getOtaPerformance($rootScope.client.id, '2018-03-07', function (response) {
+    ClientsServices.getOtaPerformance(localStorage.getItem("client_id"), '2018-03-07', function (response) {
         $scope.iSell_otaPerformance = response.data;
         e.finshedQuery();
     });
-    ClientsServices.getCompetitorPricingForISell($rootScope.client.id, '2018-03-07', function (response) {
+    ClientsServices.getCompetitorPricingForISell(localStorage.getItem("client_id"), '2018-03-07', function (response) {
         $scope.iSell_competitorPricing = response.data;
         e.finshedQuery();
     });
 
-    ClientsServices.getRatesForISell($rootScope.client.id, '2018-03-07', function (response) {
+    ClientsServices.getRatesForISell(localStorage.getItem("client_id"), '2018-03-07', function (response) {
         $scope.iSell_rates = response.data;
         e.finshedQuery();
     });
@@ -147,8 +147,27 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
 
 
     $scope.downloadiSell = function () {
-        window.location = $rootScope.backend2 + '/export/clientiSell/?client_id=' + $rootScope.sessionData.client_id;
+        var link,filename='export.csv'
+        var csv = 'data:text/csv;charset=utf-8,sep=,\n' + getCsvDataFromTable();
+        var data = encodeURI(csv);
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+        
     };
+
+    function getCsvDataFromTable(){
+        var strcsv;
+        $('#pruebatabla tbody tr').each(function() {
+           var tds = $(this).find('td')
+            $.each(tds,function(index,value){
+                strcsv+=$(value).text()+",";
+            })
+            strcsv+="\n";
+        });
+        return strcsv;
+    }
 
     $scope.loadiSellModal = function (recordx, competitors, otas, mode, client_id) {
         if (mode == 'bookings') {

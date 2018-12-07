@@ -201,10 +201,10 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         $scope.searchRoomtypes = function (keywords) {
             var params = {keywords: keywords};
             return $http.get(
-                    $rootScope.backend2 + '/setup/room_types/searchRoomtypesName',
+                    $rootScope.backend + '/setup/room_types/searchRoomtypesName',
                     {params: params}
             ).then(function (response) {
-                $scope.room_types_name = response.data.details;
+                $scope.room_types_name = response.data.room_details;
             });
         };
                 
@@ -278,7 +278,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         
         $scope.selectGraphOTA = function(item,modal,type) {
             $scope.$apply();
-            $scope.clientId = localStorage.getItem("clientId");
+            $scope.clientId = localStorage.getItem("client_id");
                 console.log($scope.daterange);
             if(type == 'room_nights_rate_band_ly') {
                 ClientsServices.getRoomNightsRateBandLY($scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){

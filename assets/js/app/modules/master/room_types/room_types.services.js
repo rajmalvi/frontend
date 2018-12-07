@@ -2,15 +2,15 @@ app.factory('RoomsServices', ['$http', '$q', '$rootScope', function ($http, $q, 
 
        var ob = {};
         ob.postRoom = function (data,callback) {
-	var url = $rootScope.backend2 + '/setup/room_types/postRoom';
-         $http.post(url, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+	var url = $rootScope.backend + '/setup/room_types/postRoom';
+         $http.post(url, data, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 callback(response);
             });
 	};
      
         ob.postRoomMapping = function (data,callback) {
-	var url = $rootScope.backend2 + '/setup/room_types/postRoomMapping';
-         $http.post(url, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+	var url = $rootScope.backend + '/setup/room_types/postRoomMapping';
+         $http.post(url, data, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 callback(response);
             });
 	};

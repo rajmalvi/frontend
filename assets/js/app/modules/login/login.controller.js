@@ -23,7 +23,7 @@ app.controller('LoginController', ['$scope', '$rootScope', 'LoginServices', 'Fil
                             setTimeout(function () {
                                 if(response.data.role == 'client') {
                                     $window.location.href = '/dashboard';
-                                    //localStorage.setItem('client_id',$scope.client_id);
+                                    localStorage.setItem('client_id',response.data.clientId);
                                     localStorage.setItem('current_hotel_name',response.data.hotel_name);
                                 }
                                 else {
