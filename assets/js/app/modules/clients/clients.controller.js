@@ -136,76 +136,46 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
             if (typeof (response.args.row !== undefined)) {
                 $scope.loadingClient = true;
 				$scope.clientId=response.args.row.id;
-                ClientsServices.getOtaPerformance(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.iSell_otaPerformance = response.data;
-                });
-                ClientsServices.getCompetitorPricingForISell(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.iSell_competitorPricing = response.data;
-                });
-
-                ClientsServices.getRatesForISell(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.iSell_rates = response.data;
-                });
-
-                ClientsServices.getAllRecommendation(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.iSell_all_recommendation = response.data;
-                });
-
-                ClientsServices.getMinCompetitorPricing(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.iSell_min_all_competitor = response.data;
-                });
-
-                ClientsServices.getMinCompetitor(response.args.row.id, '2018-03-07', function (response) {
-                    $scope.loadMIGrid(response.data);
-                });
-
-                ClientsServices.getClientById(response.args.row.id, function (response) {
-                    $scope.client=response.data;
-                });
-
-                ClientsServices.getClientDetails(response.args.row.id, true, function (response) {
-                    $scope.client = response.data;
+				
+				ClientsServices.getClientById(response.args.row.id, function (response) {
+					 $scope.client = response.data;
                     $scope.client_id = $scope.client.id;
                     localStorage.setItem('client_id',$scope.client_id);
-                    localStorage.setItem('current_hotel_name',$scope.client.property_name);
-                    $rootScope.client = response.data;
-                   // $scope.rateShopSettings.client.otas = response.data.rateshop.client.otas;
-                   // $scope.rateShopSettings.client.horizon = response.data.rateshop.client.horizon;
-                   // $scope.rateShopSettings.competitors.otas = response.data.rateshop.competitors.otas;
-                   // $scope.rateShopSettings.competitors.horizon = response.data.rateshop.competitors.horizon;
-                   // $scope.rateShopSettings.currency = response.data.rateshop.currency;
-                   // $scope.rateShopSettings.los = response.data.rateshop.los;
-                   // $scope.rateShopSettings.ratetypes = response.data.rate_types;
-                   // $scope.rateShopSettings.roomtypes = response.data.roomtypes_data;
-                   // $scope.user_account_data = response.data.users;
-                   // $scope.roomtypes_data = response.data.roomtypesmap_data;
-                   // $scope.ota_config_data = response.data.ota_mapping;
-                   // $scope.ota_mapping.rate_ota = response.data.mapped_otas_rs;
-                   // $scope.ota_mapping.staah_ota = response.data.mapped_otas_staah;
-                   // $scope.room_type_map.rate_name = response.data.mapped_roomtype_rs;
-                   // $scope.room_type_map.staah_name = response.data.mapped_roomtype_staah;
-                   // $scope.dows = response.data.dow_data;
-                   // $scope.seasonality_definitions = response.data.seasonality_definitions;
-                   // $scope.clients_qm = response.data.qm;
-                   // $scope.hotels = response.data.hotels;
-                   // $scope.events = response.data.events;
-                   // $scope.isell = response.data.isell;
-                   // $scope.rro = response.data.rro;
-                   // $scope.competitors = response.data.competitors;
-                   // $scope.competitors_suggestions = response.data.competitors_suggestions;
-                   // $scope.cache_time = response.data.cache_time;
-                   // $scope.cm_form.cm_hotel = response.data.details.cm_hotel;
-                   // $scope.cm_form.cm_id = response.data.details.cm_username;
-                   // $scope.cm_form.cm_password = response.data.details.cm_password;
-                   // $scope.cm_form.cm_master_room = response.data.details.cm_master_room;
-                   // $scope.cm_form.cm_master_rate = response.data.details.cm_master_rate;
-                   // $scope.cm_room_types = response.data.cm_room_types;
-                   // $scope.cm_rate_types = response.data.cm_rate_types;
-                    //$scope.renderClientCharts(response.data.charts);
-                   // $scope.loadMIGrid(response.data.rates);
+                    localStorage.setItem('current_hotel_name',$scope.client.propertyName);
+					var date = new Date($scope.client.systemToday);
+					var stringDate = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+                    localStorage.setItem('client_syatem_today',stringDate);
+                    $rootScope.client = response.data;           
                     $scope.loadingClient = false;
                     console.log("active panel is: "+$scope.active_panel);
                 });
+							
+                ClientsServices.getOtaPerformance(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.iSell_otaPerformance = response.data;
+                });
+                ClientsServices.getCompetitorPricingForISell(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.iSell_competitorPricing = response.data;
+                });
+
+                ClientsServices.getRatesForISell(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.iSell_rates = response.data;
+                });
+
+                ClientsServices.getAllRecommendation(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.iSell_all_recommendation = response.data;
+                });
+
+                ClientsServices.getMinCompetitorPricing(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.iSell_min_all_competitor = response.data;
+                });
+
+                ClientsServices.getMinCompetitor(response.args.row.id, localStorage.getItem('client_syatem_today'), function (response) {
+                    $scope.loadMIGrid(response.data);
+                });
+
+          
+
+               
             }
         };
 
@@ -1699,7 +1669,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.downloadClientMI = function() {
             console.log( $scope.gridMISettings);
             $timeout(function() {
-                var name = $scope.client.property_name.toLowerCase();
+                var name = $scope.client.propertyName.toLowerCase();
                 window.location = $rootScope.backend2+'/export/clientMarketIntel/?client_id='+$scope.client_id;
             },1000);
         };
@@ -1707,7 +1677,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.downloadClientIsell = function() {
             console.log( $scope.gridMISettings);
             $timeout(function() {
-                var name = $scope.client.property_name.toLowerCase();
+                var name = $scope.client.propertyName.toLowerCase();
                 window.location = $rootScope.backend2+'/export/clientiSell/?client_id='+$scope.client_id;
             },1000);
         };
@@ -1715,7 +1685,7 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
         $scope.downloadClientRRO = function() {
             console.log( $scope.gridMISettings);
             $timeout(function() {
-                var name = $scope.client.property_name.toLowerCase();
+                var name = $scope.client.propertyName.toLowerCase();
                 window.location = $rootScope.backend2+'/export/clientRRO/?client_id='+$scope.client_id;
             },1000);
         };
@@ -2844,9 +2814,9 @@ app.controller('ClientsController', ['$scope', '$rootScope', '$routeParams', '$w
             ClientsServices.takeover($scope.client_id,function(response){
                 if(response.data.status == true) {
                     localStorage.setItem('satellizer_token',response.data.token);
-                    localStorage.setItem('client_id',$scope.client_id);
-                    localStorage.setItem('current_hotel_name',$scope.client.property_name);
-                    $rootScope.current_hotel_name = $scope.client.property_name;
+                    localStorage.setItem('client_id',$scope.clientId);
+                    localStorage.setItem('current_hotel_name',$scope.client.propertyName);
+                    $rootScope.current_hotel_name = $scope.client.propertyName;
                     $rootScope.sessionData.role = 'admin_client';
                     $rootScope.sessionData.client_id = localStorage.getItem("client_id");;
                     $location.path('dashboard');

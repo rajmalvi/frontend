@@ -1527,7 +1527,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
         $scope.downloadClientMI = function() {
             console.log( $scope.gridMISettings);
             $timeout(function() {
-                var name = $scope.client.property_name.toLowerCase();
+                var name = $scope.client.propertyName.toLowerCase();
                 $scope.gridMISettings.apply('exportdata', 'xls', name, true, null, true, $rootScope.backend2+'/export');
             },1000);
         };
@@ -1733,7 +1733,7 @@ app.controller('MarketIntelController', ['$scope', '$rootScope', '$routeParams',
                             }
 
                         }, {
-                            name: $scope.client.property_name,
+                            name: $scope.client.propertyName,
                             type: 'spline',
                             data: charts.rate_comparison.hotel,
                             tooltip: {

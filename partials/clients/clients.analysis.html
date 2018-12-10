@@ -14,7 +14,7 @@
                     {{ view_title }}
                     <div ng-if="view == 'historical' || view == 'pattern'" class="panel-heading-fields">
                         <div class="input-group" style="width:300px;">
-                        <input type="text" class="form-control" daterangepicker placeholder="Select date range" ng-model="daterange" />
+                        <input type="text"  name="daterange" class="form-control" daterangepicker  placeholder="Select date range" ng-model="daterange" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary" ng-click="reloadHistoricalGraphs(daterange)">Fetch</button>
                         </span>
@@ -291,7 +291,7 @@
                                                 <div ng-bind-html="ota.name | highlight: $select.search"></div>
                                             </ui-select-choices>
                                         </ui-select>
-                                        <h5 class="text-center">Rate Band by Day of Week This Year</h5>
+                                        <h5 class="text-center"></h5>
                                         <div style="height:400px; padding:0px; width:100%;" id="rate_band_dow_ty"></div>
                                     </div>
                                     <div class="col-md-6">
@@ -301,7 +301,7 @@
                                                 <div ng-bind-html="ota.name | highlight: $select.search"></div>
                                             </ui-select-choices>
                                         </ui-select>
-                                        <h5 class="text-center">Rate Band by Day of Week Last Year</h5>
+                                        <h5 class="text-center"></h5>
                                         <div style="height:400px;" id="rate_band_dow_ly"></div>
                                     </div>
                                 </div>

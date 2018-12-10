@@ -35,7 +35,7 @@
                                         <th class="bgblue" style="border-left:none;" colspan="2">Events</th>
                                         <th class="bgblue" style="border-left:none;" colspan="2">Capacity</th>
                                         <th class="bgblue" colspan="4">OTA Performance</th>
-                                        <th class="bgblue" colspan="2">Rate</th>
+                                        <th class="bgblue" colspan="1">Rate</th>
                                         <th class="bgblue" colspan="3">Competitor Pricing</th>
                                         <!-- <th class="greybg" colspan="{{ otas_cm.length }}">OTA Business on Books</th> -->
                                     </tr>
@@ -52,7 +52,7 @@
                                         <th class="bgblue" style="width:150px;">Revenue</th>
                                         <th class="bgblue" style="width:150px;">ADR</th>
                                         <th class="bgblue" style="width:150px;">Rate on CM</th>
-                                        <th class="bgblue" style="width:150px;">Recommended</th>
+                                        <!--<th class="bgblue" style="width:150px;">Recommended</th>-->
                                         <th class="bgblue" style="width:150px;">Min</th>
                                         <th class="bgblue" style="width:150px;">Avg</th>
                                         <th class="bgblue" style="width:150px;">Max</th>
@@ -97,7 +97,7 @@
                                     <td class="text-right">{{ value['revenue']==null ? 0 : value['revenue'] | number:0}}</td>
                                     <td class="text-right">{{ value['adr']==null ? 0 : value['adr'] | number:0}}</td>
                                     <td class="text-right">{{ iSell_rates[key]['rateOnCm']== null? 0:iSell_rates[key]['rateOnCm'] | number:0}}</td>
-                                    <td class="text-right">{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended'] | number:0}}</td>
+                                    <!--<td class="text-right">{{ iSell_rates[key]['recommended']== null? 0:iSell_rates[key]['recommended'] | number:0}}</td>-->
                                     <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['min']==null?0:iSell_competitorPricing[key]['min'] | number:0}}</td>
                                     <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['avg']==null?0:iSell_competitorPricing[key]['avg'] | number:0 }}</td>
                                     <td class="text-right" ng-click="loadiSellModal(record,isell.competitors,isell.otas_cm,'competitors')">{{ iSell_competitorPricing[key]['max']==null?0:iSell_competitorPricing[key]['max'] | number:0 }}</td>
