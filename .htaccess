@@ -1,12 +1,8 @@
-Options +FollowSymLinks
-RewriteEngine on
-RewriteBase /
+RewriteEngine On  
+# If an existing asset or directory is requested go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]  
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d  
+RewriteRule ^ - [L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*) index.html#$1 
-
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Headers "Access-Control-Allow-Headers, Content-Type, accept, authorization"
-
-
+# If the requested resource doesn't exist, use index.html
+RewriteRule ^ /index.html

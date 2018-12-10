@@ -8,7 +8,6 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
     $scope.iSell_rates={};
     $scope.iSell_all_recommendation={};
     $scope.iSell_min_all_competitor={};
-
     $scope.renderGrid = function () {
 
         var data = [];
@@ -128,16 +127,17 @@ app.controller('IsellController', ['$scope', '$rootScope', '$routeParams', '$win
    }
 
 
-    ClientsServices.getOtaPerformance(localStorage.getItem("client_id"), '2018-03-07', function (response) {
+    ClientsServices.getOtaPerformance(localStorage.getItem("client_id"), localStorage.getItem('client_syatem_today'), function (response) {
         $scope.iSell_otaPerformance = response.data;
         e.finshedQuery();
     });
-    ClientsServices.getCompetitorPricingForISell(localStorage.getItem("client_id"), '2018-03-07', function (response) {
-        $scope.iSell_competitorPricing = response.data;
+    ClientsServices.getCompetitorPricingForISell(localStorage.getItem("client_id"), localStorage.getItem('client_syatem_today'), function (response) {
+		$scope.iSell_competitorPricing = response.data;
         e.finshedQuery();
     });
 
-    ClientsServices.getRatesForISell(localStorage.getItem("client_id"), '2018-03-07', function (response) {
+
+    ClientsServices.getRatesForISell(localStorage.getItem("client_id"), localStorage.getItem('client_syatem_today'), function (response) {
         $scope.iSell_rates = response.data;
         e.finshedQuery();
     });

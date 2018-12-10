@@ -5,7 +5,8 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         $scope.view = view;
         $scope.daterange = '';
         $scope.clientId='';
-        $timeout(function(){
+		
+	$timeout(function(){
             switch(view) {
                 case 'rate_disparity':
                     $scope.view_title = 'Rate Disparity';
@@ -281,17 +282,15 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
             $scope.clientId = localStorage.getItem("client_id");
                 console.log($scope.daterange);
             if(type == 'room_nights_rate_band_ly') {
-                ClientsServices.getRoomNightsRateBandLY($scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){
-                    if(response.data.status) {
-                        $scope.renderRoomNightsRateBandLY(response.data.data);
-                    }
+                ClientsServices.getRoomNightsRateBandLY(localStorage.getItem("client_id"),$scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){
+                   $scope.renderRoomNightsRateBandLY(response.data);
+                    
                 });
             }
             else if(type == 'room_nights_rate_band_ty') {
-                ClientsServices.getRoomNightsRateBandTY($scope.charts.room_nights_rate_band_ty.otas,$scope.daterange,function(response){
-                    if(response.data.status) {
-                        $scope.renderRoomNightsRateBandTY(response.data.data);
-                    }
+                ClientsServices.getRoomNightsRateBandTY(localStorage.getItem("client_id"),$scope.charts.room_nights_rate_band_ty.otas,$scope.daterange,function(response){                   
+                    $scope.renderRoomNightsRateBandTY(response.data);
+                  
                 });
             }
             else if(type == 'pace_analysis') {
@@ -302,17 +301,13 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 });
             }
             else if(type == 'rate_band_dow_ly') {
-                ClientsServices.getRateBandDOWLY($scope.charts.rate_band_dow_ly.otas,$scope.daterange,function(response){
-                    if(response.data.status) {
-                        $scope.renderRateBandDOWLY(response.data.data);
-                    }
+                ClientsServices.getRateBandDOWLY(localStorage.getItem("client_id"),$scope.charts.rate_band_dow_ly.otas,$scope.daterange,function(response){                 
+                   $scope.renderRateBandDOWLY(response.data);             
                 });
             }
             else if(type == 'rate_band_dow_ty') {
-                ClientsServices.getRateBandDOWTY($scope.charts.rate_band_dow_ty.otas,$scope.daterange,function(response){
-                    if(response.data.status) {
-                        $scope.renderRateBandDOWTY(response.data.data);
-                    }
+                ClientsServices.getRateBandDOWTY(localStorage.getItem("client_id"),$scope.charts.rate_band_dow_ty.otas,$scope.daterange,function(response){
+                    $scope.renderRateBandDOWTY(response.data);                    
                 });
             }
             else if(type == 'arrival_vs_los') {
@@ -353,7 +348,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
 
                 title: {
                     text: 'Room Nights Rate Band Last Year'
-                },
+                 },
 
                 xAxis: {
                     type: 'category',
@@ -378,7 +373,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 series: [{
                     upColor: Highcharts.getOptions().colors[0],
                     color: Highcharts.getOptions().colors[3],
-                    data: room_nights_rate_band_ly.categories,
+                    data: room_nights_rate_band_ly,
                     dataLabels: {
                         enabled: true,
                         formatter: function () {
@@ -426,7 +421,7 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 series: [{
                     upColor: Highcharts.getOptions().colors[0],
                     color: Highcharts.getOptions().colors[3],
-                    data: room_nights_rate_band_ty.categories,
+                    data: room_nights_rate_band_ty,
                     dataLabels: {
                         enabled: true,
                         formatter: function () {
@@ -476,49 +471,172 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
         };
         
         $scope.renderRateBandDOWLY = function(rate_band_dow_ly) {
-            if(canLoadGoogleCharts) {
-                var data = google.visualization.arrayToDataTable(rate_band_dow_ly.values, true);
+			var categories=[];
+			var data=[];
+			var avgData=[];
+	
+			for ( i=0;i < rate_band_dow_ly.length;i++){
+				
+				categories.push(rate_band_dow_ly[i].dow);
+				var row = [];
+				row.push(rate_band_dow_ly[i].min);
+				row.push(rate_band_dow_ly[i].lowerQuartile);
+				row.push(rate_band_dow_ly[i].median);
+				row.push(rate_band_dow_ly[i].upperQuartile);
+				row.push(rate_band_dow_ly[i].max);
+				data.push(row);
+				var avgRow = [];
+				avgRow.push(i);
+				avgRow.push(rate_band_dow_ly[i].avg);
+				avgData.push(avgRow);				
+			}
+			$scope.chartInstances['rate_band_dow_ly'] =
+								Highcharts.chart('rate_band_dow_ly', {
 
-                var options = {
-                    //title:'Rate Band by Day of Week This Year',
-                    legend:'none',
-                    chartArea:{
-                        left:75,
-                        top: 50,
-                        right:0,
-                        bottom:50,
-                        width: '100%',
-                        height: '400',
-                    }
-                };
+									chart: {
+										type: 'boxplot'
+									},
 
-                var chart = new google.visualization.CandlestickChart(document.getElementById('rate_band_dow_ly'));
+									title: {
+										text: 'Rate Band by Day of Week Last Year'
+									},
 
-                chart.draw(data, options);
-            }
+									legend: {
+										enabled: false
+									},
+
+									xAxis: {
+										categories: categories,
+										title: {
+											text: 'Day Of Week'
+										}
+									},
+
+									yAxis: {
+										title: {
+											text: 'ADR'
+										}
+									},
+
+									plotOptions: {
+										boxplot: {
+											fillColor: '#F0F0E0',
+											lineWidth: 2,
+											medianColor: '#0C5DA5',
+											medianWidth: 3,
+											stemColor: '#A63400',
+											stemWidth: 1,
+											whiskerColor: '#3D9200',
+											whiskerLength: '20%',
+											whiskerWidth: 3
+										}
+									},
+
+									series: [{
+										name: 'Observations',
+										data: data
+									}, {
+										name: 'Avg',
+										color: Highcharts.getOptions().colors[0],
+										type: 'scatter',
+										data: avgData,
+										marker: {
+											fillColor: 'white',
+											symbol: 'diamond',
+											lineWidth: 1,
+											lineColor: Highcharts.getOptions().colors[1]
+										},
+										tooltip: {
+											pointFormat: 'Observation: {point.y}'
+										}
+									}]
+
+								});
+							   
         };
         
         $scope.renderRateBandDOWTY = function(rate_band_dow_ty) {
-            if(canLoadGoogleCharts) {
-                var data = google.visualization.arrayToDataTable(rate_band_dow_ty.values, true);
+           var categories=[];
+			var data=[];
+			var avgData=[];
+	
+			for ( i=0;i < rate_band_dow_ty.length;i++){
+				
+				categories.push(rate_band_dow_ty[i].dow);
+				var row = [];
+				row.push(rate_band_dow_ty[i].min);
+				row.push(rate_band_dow_ty[i].lowerQuartile);
+				row.push(rate_band_dow_ty[i].median);
+				row.push(rate_band_dow_ty[i].upperQuartile);
+				row.push(rate_band_dow_ty[i].max);
+				data.push(row);
+				var avgRow = [];
+				avgRow.push(i);
+				avgRow.push(rate_band_dow_ty[i].avg);
+				avgData.push(avgRow);				
+			}
+			$scope.chartInstances['rate_band_dow_ty'] =
+								Highcharts.chart('rate_band_dow_ty', {
 
-                var options = {
-                      //title:'Rate Band by Day of Week This Year',
-                      legend:'none',
-                      chartArea:{
-                          left:75,
-                          top: 50,
-                          right:0,
-                          bottom:50,
-                          width: '100%',
-                          height: '400',
-                      }
-                };
+									chart: {
+										type: 'boxplot'
+									},
 
-                var chart = new google.visualization.CandlestickChart(document.getElementById('rate_band_dow_ty'));
+									title: {
+										text: 'Rate Band by Day of Week This Year'
+									},
 
-                chart.draw(data, options);
-            }
+									legend: {
+										enabled: false
+									},
+
+									xAxis: {
+										categories: categories,
+										title: {
+											text: 'Day Of Week'
+										}
+									},
+
+									yAxis: {
+										title: {
+											text: 'ADR'
+										}
+									},
+
+									plotOptions: {
+										boxplot: {
+											fillColor: '#F0F0E0',
+											lineWidth: 2,
+											medianColor: '#0C5DA5',
+											medianWidth: 3,
+											stemColor: '#A63400',
+											stemWidth: 1,
+											whiskerColor: '#3D9200',
+											whiskerLength: '20%',
+											whiskerWidth: 3
+										}
+									},
+
+									series: [{
+										name: 'Observations',
+										data: data
+									}, {
+										name: 'Avg',
+										color: Highcharts.getOptions().colors[0],
+										type: 'scatter',
+										data: avgData,
+										marker: {
+											fillColor: 'white',
+											symbol: 'diamond',
+											lineWidth: 1,
+											lineColor: Highcharts.getOptions().colors[1]
+										},
+										tooltip: {
+											pointFormat: 'Observation: {point.y}'
+										}
+									}]
+
+								});
         };
         
         $scope.renderArrivalvsLOS = function(arrival_vs_los) {
@@ -1574,13 +1692,23 @@ app.controller('AnalysisController', ['$scope', '$rootScope', '$routeParams', '$
                 //Pace Analysis
                 $scope.renderPaceAnalysis(charts.pace_analysis);
                 
-                $scope.renderRoomNightsRateBandTY(charts.room_nights_rate_band_ty);
+                ClientsServices.getRoomNightsRateBandTY(localStorage.getItem("client_id"),$scope.charts.room_nights_rate_band_ty.otas,$scope.daterange,function(response){                   
+                    $scope.renderRoomNightsRateBandTY(response.data);
+                  
+                });
                 
-                $scope.renderRoomNightsRateBandLY(charts.room_nights_rate_band_ly);
+               ClientsServices.getRoomNightsRateBandLY(localStorage.getItem("client_id"),$scope.charts.room_nights_rate_band_ly.otas,$scope.daterange,function(response){                   
+                    $scope.renderRoomNightsRateBandLY(response.data);
+                  
+                });
                 
-                $scope.renderRateBandDOWLY(charts.rate_band_by_dow_ly);
+                ClientsServices.getRateBandDOWLY(localStorage.getItem("client_id"),$scope.charts.rate_band_dow_ly.otas,$scope.daterange,function(response){                 
+                   $scope.renderRateBandDOWLY(response.data);             
+                });
                 
-                $scope.renderRateBandDOWTY(charts.rate_band_by_dow_ty);
+                 ClientsServices.getRateBandDOWTY(localStorage.getItem("client_id"),$scope.charts.rate_band_dow_ty.otas,$scope.daterange,function(response){                 
+                   $scope.renderRateBandDOWTY(response.data);             
+                });
                 
                 //Day of Week Contribution
                 /*

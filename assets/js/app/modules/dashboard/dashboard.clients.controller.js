@@ -21,11 +21,17 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
                     xAxis: {
                         allowDecimals: true,
                         categories: Object.keys(charts.revenue_last_month),
+								plotLines: [{
+					color: '#FF0000',
+					width: 2,
+					value: 5.5
+				}],
                         labels: {
                             formatter: function () {
                                 return this.value; // clean, unformatted number for year
                             }
                         }
+						
                     },
                     yAxis: {
                         title: {
@@ -582,7 +588,20 @@ app.controller('DashboardController', ['$scope', '$rootScope', '$routeParams', '
 				$scope.charts.sold_last_year_current_by_ota = response.data.lastYearCurrentRoomSoldTrendByOta;
 				
                 $scope.renderClientCharts($scope.charts);  
-                $scope.stats = response.data.stats;
+				$stats={};
+				$stats['revenue']= Math.ceil(response.data.todaysOta.revenue);
+				$stats['revenue_growth']= (((response.data.todaysOta.revenue-response.data.yesterdaysOta.revenue)/response.data.todaysOta.revenue)*100).toFixed(2);
+				
+				$stats['arr']= Math.ceil(response.data.todaysOta.adr);
+				$stats['arr_growth']= (((response.data.todaysOta.adr-response.data.yesterdaysOta.adr)/response.data.todaysOta.adr)*100).toFixed(2);
+				
+				$stats['occupancy']= Math.ceil(response.data.todaysOta.sold);
+				$stats['occupancy_growth']= (((response.data.todaysOta.sold-response.data.yesterdaysOta.sold)/response.data.todaysOta.sold)*100).toFixed(2);	
+				 
+				$stats['pickups']= Math.ceil(response.data.todaysOta.pickup);
+				$stats['pickups_growth']= (((response.data.todaysOta.pickup-response.data.yesterdaysOta.pickup)/response.data.todaysOta.pickup)*100).toFixed(2);
+                
+				$scope.stats = $stats;
                 $scope.competitor_pricing = response.data.competitor_pricing;
 				
 				$scope.grid = response.data.nextTenDaysOtaList;

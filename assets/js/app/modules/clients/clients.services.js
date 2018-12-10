@@ -520,16 +520,20 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
 
-    ob.getRoomNightsRateBandLY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRoomNightsRateBandLY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRoomNightsRateBandLY = function (clientId,otas, range, callback) {
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
+        var url = $rootScope.backend + '/clients/analysis/getRoomNightsRateBandLY';
+        $http.get(url, {params: {clientId: clientId, otas: otas.join(','),startDate: startDate,endDate:endDate}}).then(function (response) {
             callback(response);
         });
     };
 
-    ob.getRoomNightsRateBandTY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRoomNightsRateBandTY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRoomNightsRateBandTY = function (clientId,otas, range, callback) {
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
+        var url = $rootScope.backend + '/clients/analysis/getRoomNightsRateBandTY';
+        $http.get(url, {params: {clientId: clientId, otas: otas.join(','),startDate: startDate,endDate:endDate}}).then(function (response) {
             callback(response);
         });
     };
@@ -541,16 +545,21 @@ app.factory('ClientsServices', ['$http', '$q', '$rootScope', function ($http, $q
         });
     };
 
-    ob.getRateBandDOWLY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRateBandDOWLY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRateBandDOWLY = function (clientId,otas, range, callback) {
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
+        var url = $rootScope.backend + '/clients/analysis/getRateBandDOWLY';
+        $http.get(url, {params: {clientId:clientId,startDate: startDate,endDate:endDate, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
 
-    ob.getRateBandDOWTY = function (otas, range, callback) {
-        var url = $rootScope.backend2 + '/clients/analysis/getRateBandDOWTY';
-        $http.get(url, {params: {range: range, otas: otas.join(',')}}).then(function (response) {
+    ob.getRateBandDOWTY = function (clientId,otas, range, callback) {
+		var startDate= $.trim(range.split("to")[0]);
+		var endDate= $.trim(range.split("to")[1]);
+        var url = $rootScope.backend + '/clients/analysis/getRateBandDOWTY';
+		
+        $http.get(url, {params: {clientId:clientId,startDate: startDate,endDate:endDate, otas: otas.join(',')}}).then(function (response) {
             callback(response);
         });
     };
